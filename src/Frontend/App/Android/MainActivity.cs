@@ -5,6 +5,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using System;
+using Xamarin.Forms.Platform.Android;
 
 namespace HikingPathFinder.App.Android
 {
@@ -16,7 +17,7 @@ namespace HikingPathFinder.App.Android
         Theme = "@style/MainTheme",
         MainLauncher = true,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    public class MainActivity : FormsAppCompatActivity
     {
         /// <summary>
         /// Called in the activity lifecycle when the activity is about to be created. This starts
@@ -25,8 +26,8 @@ namespace HikingPathFinder.App.Android
         /// <param name="bundle">bundle parameter; unused</param>
         protected override void OnCreate(Bundle bundle)
         {
-            this.TabLayoutResource = Resource.Layout.Tabbar;
-            this.ToolbarResource = Resource.Layout.Toolbar;
+            FormsAppCompatActivity.TabLayoutResource = Resource.Layout.Tabbar;
+            FormsAppCompatActivity.ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(bundle);
 

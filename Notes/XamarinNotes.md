@@ -37,3 +37,16 @@ Optional: Clear out the NuGet packages folder and the Xamarin packages cache at
 
     android.jar(java/lang/Object.class): major version 52 is newer than 51, the highest major version supported by this compiler.
 
+Solution: Install Java 1.8 JDK, which can handle .class files with major
+version 52. Then configure JDK under `Tools > Options > Xamarin > Android
+Tools`.
+
+# The one about the missing method AddDrawerListener
+
+Detail text is:
+
+    System.MissingMethodException: Method 'Android.Support.V4.Widget.DrawerLayout.AddDrawerListener' not found.
+
+Solution: Update to the latest Xamarin.Forms assemblies using NuGet. The
+support library that Xamarin.Forms is using was not matching the Google SDK
+anymore.

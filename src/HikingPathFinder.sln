@@ -9,8 +9,52 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend Projects", "Fronte
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend Projects", "Backend Projects", "{E42065AC-C9D5-4EFA-859E-5305AA97FBD6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{F429AF5D-989B-4746-BFAD-B39FD7F79E92}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet.config = NuGet.config
+		Settings.StyleCop = Settings.StyleCop
+		Shared\VersionAssemblyInfo.cs = Shared\VersionAssemblyInfo.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{A67E3938-894E-4D8C-BA81-6FCE6511A45A}"
+	ProjectSection(SolutionItems) = preProject
+		..\Notes\AndroidNotes.md = ..\Notes\AndroidNotes.md
+		..\Notes\AspNetCoreNotes.md = ..\Notes\AspNetCoreNotes.md
+		..\Notes\CSharpNotes.md = ..\Notes\CSharpNotes.md
+		..\Notes\VisualStudioNotes.md = ..\Notes\VisualStudioNotes.md
+		..\Notes\XamarinNotes.md = ..\Notes\XamarinNotes.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{37652B9A-5036-47B2-9853-5919C998E380}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikingPathFinder.App", "Frontend\App\Portable\HikingPathFinder.App.csproj", "{D28C59C2-AED1-49F7-A304-D4596F559115}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikingPathFinder.App.Android", "Frontend\App\Android\HikingPathFinder.App.Android.csproj", "{1051A7CF-EFF1-46A1-9768-158366565DDA}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D28C59C2-AED1-49F7-A304-D4596F559115}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D28C59C2-AED1-49F7-A304-D4596F559115}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D28C59C2-AED1-49F7-A304-D4596F559115}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D28C59C2-AED1-49F7-A304-D4596F559115}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1051A7CF-EFF1-46A1-9768-158366565DDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1051A7CF-EFF1-46A1-9768-158366565DDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1051A7CF-EFF1-46A1-9768-158366565DDA}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{1051A7CF-EFF1-46A1-9768-158366565DDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1051A7CF-EFF1-46A1-9768-158366565DDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1051A7CF-EFF1-46A1-9768-158366565DDA}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A67E3938-894E-4D8C-BA81-6FCE6511A45A} = {F429AF5D-989B-4746-BFAD-B39FD7F79E92}
+		{37652B9A-5036-47B2-9853-5919C998E380} = {6F9368B0-369C-4AA4-96D9-52D653CA1035}
+		{D28C59C2-AED1-49F7-A304-D4596F559115} = {37652B9A-5036-47B2-9853-5919C998E380}
+		{1051A7CF-EFF1-46A1-9768-158366565DDA} = {37652B9A-5036-47B2-9853-5919C998E380}
 	EndGlobalSection
 EndGlobal

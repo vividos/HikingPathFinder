@@ -1,6 +1,6 @@
-BSD 2-Clause License
+# BSD 2-Clause License
 
-Copyright (c) 2017, vividos
+Copyright (c) 2017, Michael Fink
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

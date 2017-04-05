@@ -45,6 +45,7 @@
     <Compile Include="..\..\..\Shared\VersionAssemblyInfo.cs">
       <Link>Properties\VersionAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Constants.cs" />
     <Compile Include="IMobileNetworkService.cs" />
     <Compile Include="IPlatform.cs" />
     <Compile Include="IPositionService.cs" />

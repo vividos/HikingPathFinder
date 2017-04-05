@@ -29,6 +29,16 @@ namespace HikingPathFinder.App.Android
         }
 
         /// <summary>
+        /// Called when main window is resumed
+        /// </summary>
+        protected override void OnResume()
+        {
+            base.OnResume();
+
+            HockeyApp.Android.CrashManager.Register(this, Constants.HockeyApp_AppId_Android);
+        }
+
+        /// <summary>
         /// Called when the user presses the back button.
         /// </summary>
         public override void OnBackPressed()

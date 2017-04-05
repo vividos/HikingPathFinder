@@ -251,6 +251,9 @@ paket-files/
 .idea/
 *.sln.iml
 
+# Visual Studio config files
+*.lock.json
+
 # Xamarin
 src/**/Resource.Designer.cs
 

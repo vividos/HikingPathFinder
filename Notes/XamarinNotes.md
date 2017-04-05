@@ -1,9 +1,15 @@
 # Xamarin Notes
 
-## Debug keystore
+## General
+
+### Debug keystore
 
 File
 %LocalAppData%\Xamarin\Mono for Android\debug.keystore
+
+## Xamarin.Forms
+
+
 
 ## Features
 
@@ -21,9 +27,18 @@ https://github.com/PumpingCode/Xamarin-NavigationDrawerDemo
 How to display DrawerLayout over the ActionBar:
 http://stackoverflow.com/questions/26440879/how-do-i-use-drawerlayout-to-display-over-the-actionbar-toolbar-and-under-the-st
 
+### SQLite.Net for Windows Phone 8
+
+Windows Phone 8 uses the WinRT platform. The SQLite database can be used via SQLite.Net using an
+extension that has to be installed in Visual Studio:
+
+http://stackoverflow.com/questions/31042772/unable-to-load-dll-sqlite3-in-sqlite-net-platform-winrt#31043793
+
+Search for the extension "SQLite for Windows Phone 8.1", version 3.18.0.
+
 ## Errors
 
-# The one about material resources error
+### The one about material resources error
 
     ...\obj\Debug\resourcecache\...\res\values-v23\values-v23.xml(6): error APT0000: Error retrieving parent for item: No resource found that matches the given name 'android:TextAppearance.Material.Widget.Button.Inverse'.
     ...\obj\Debug\resourcecache\...\res\values-v23\values-v23.xml(25): error APT0000: Error retrieving parent for item: No resource found that matches the given name 'android:Widget.Material.Button.Colored'.
@@ -33,7 +48,7 @@ latest one?). Set "Compile using Android version" to "Use latest version".
 Optional: Clear out the NuGet packages folder and the Xamarin packages cache at
 %LocalAppData%\Xamarin
 
-# The one about the major java class version number 52
+### The one about the major java class version number 52
 
     android.jar(java/lang/Object.class): major version 52 is newer than 51, the highest major version supported by this compiler.
 
@@ -41,7 +56,7 @@ Solution: Install Java 1.8 JDK, which can handle .class files with major
 version 52. Then configure JDK under `Tools > Options > Xamarin > Android
 Tools`.
 
-# The one about the missing method AddDrawerListener
+### The one about the missing method AddDrawerListener
 
 Detail text is:
 
@@ -50,3 +65,26 @@ Detail text is:
 Solution: Update to the latest Xamarin.Forms assemblies using NuGet. The
 support library that Xamarin.Forms is using was not matching the Google SDK
 anymore.
+
+### The one about the missing timestamp
+
+Detail error message is:
+
+    No -tsa or -tsacert is provided and this jar is not timestamped. Without a timestamp, users may not be able to validate this jar after the signer certificate's expiration date (2045-08-11) or after any future revocation date.
+
+Solution: https://bugzilla.xamarin.com/show_bug.cgi?id=34699#c3
+
+Use `<JarsignerTimestampAuthorityUrl>` property in the Android solution in order to specify the
+URL where timestamps are provided by the certificate authority that is used to sign the app.
+
+### The one about the Code Analysis error CA0001
+
+Detail error message is:
+
+    error : CA0001 : Rule=Microsoft.Usage#CA2214
+
+The error occurs when compiling a Xamarin.Forms project that has Code Analysis active, and has one
+or more xaml code-behind classes that are marked [XamlCompilation(XamlCompilationOptions.Compile)]
+
+Solution: Use only Code Analysis or Xaml compilation, not both, until this bug is fixed:
+https://bugzilla.xamarin.com/show_bug.cgi?id=44130

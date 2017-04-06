@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Ioc;
 using HikingPathFinder.App.Database;
+using Microsoft.HockeyApp;
 using Microsoft.Practices.ServiceLocation;
 using System;
 using System.Diagnostics;
@@ -55,7 +56,7 @@ namespace HikingPathFinder.App.WindowsPhone
         /// search results, and so forth.
         /// </summary>
         /// <param name="args">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs args)
+        protected async override void OnLaunched(LaunchActivatedEventArgs args)
         {
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
@@ -113,6 +114,12 @@ namespace HikingPathFinder.App.WindowsPhone
 
             // Ensure the current window is active
             Window.Current.Activate();
+
+            // checks for existing crashlogs and sends them to the server
+            await HockeyClient.Current.SendCrashesAsync(sendWithoutAsking: false);
+
+            // also check for updates
+            await HockeyClient.Current.CheckForAppUpdateAsync();
         }
 
         /// <summary>
@@ -147,6 +154,8 @@ namespace HikingPathFinder.App.WindowsPhone
         /// </summary>
         private void InitErrorHandling()
         {
+            Microsoft.HockeyApp.HockeyClient.Current.Configure(Constants.HockeyApp_AppId_WindowsPhone);
+
             this.UnhandledException += this.OnUnhandledException;
             TaskScheduler.UnobservedTaskException += this.OnUnobservedTaskException;
         }

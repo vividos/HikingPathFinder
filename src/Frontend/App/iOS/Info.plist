@@ -26,7 +26,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>HikingPathFinder.App</string>
 	<key>CFBundleIdentifier</key>
-	<string>de.vividos.app.iOS.HikingPathFinder.Demo</string>
+	<string>de.vividos.app.iOS.HikingPathFinder.beta</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>CFBundleIconFiles</key>
@@ -48,5 +48,7 @@
 	<string>LaunchScreen</string>
 	<key>CFBundleShortVersionString</key>
 	<string>Apple</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Grant access to the photo library in order to choose from stored images</string>
 </dict>
 </plist>

@@ -1,6 +1,7 @@
 ﻿using Foundation;
 using GalaSoft.MvvmLight.Ioc;
 using HikingPathFinder.App.Database;
+using HockeyApp.iOS;
 using Microsoft.Practices.ServiceLocation;
 using System;
 using System.Diagnostics;
@@ -49,6 +50,10 @@ namespace HikingPathFinder.App.iOS
         /// </summary>
         private void InitErrorHandling()
         {
+            var manager = BITHockeyManager.SharedHockeyManager;
+            manager.Configure(Constants.HockeyApp_AppId_iOS);
+            manager.StartManager();
+
             AppDomain.CurrentDomain.UnhandledException += this.OnUnhandledException;
             TaskScheduler.UnobservedTaskException += this.OnUnobservedTaskException;
         }

@@ -36,6 +36,29 @@ namespace HikingPathFinder.App.Android
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             this.LoadApplication(new App());
+
+            // register for HockeyApp updates
+            HockeyApp.Android.UpdateManager.Register(this, Constants.HockeyApp_AppId_Android);
+        }
+
+        /// <summary>
+        /// Called when activity is about to be paused
+        /// </summary>
+        protected override void OnPause()
+        {
+            base.OnPause();
+
+            HockeyApp.Android.UpdateManager.Unregister();
+        }
+
+        /// <summary>
+        /// Called when activity is about to be destroyed
+        /// </summary>
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            HockeyApp.Android.UpdateManager.Unregister();
         }
 
         /// <summary>

@@ -112,7 +112,9 @@
     <Content Include="Assets\map\leaflet.css" />
     <Content Include="Assets\map\leaflet.js" />
     <Content Include="Assets\map\map.html" />
+    <Content Include="Assets\map\map.js" />
     <Content Include="explore_map.png" />
+    <Content Include="my_location.png" />
     <Content Include="plan_tour.png" />
     <Content Include="settings.png" />
     <Content Include="start.png" />

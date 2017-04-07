@@ -4,7 +4,7 @@
              x:Class="HikingPathFinder.App.Views.AboutPage">
   <StackLayout Orientation="Vertical" HorizontalOptions="Center" Margin="0,20,0,0">
     <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-      <Image Source="about.png" />
+      <Image Source="icon.png" />
       <Label Text="{Binding Heading}" FontSize="32" />
     </StackLayout>
     <Label Text="{Binding SiteName}" FontSize="20" HorizontalOptions="Center" />

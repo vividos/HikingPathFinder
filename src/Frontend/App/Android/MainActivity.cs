@@ -1,12 +1,13 @@
-﻿using System;
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using GalaSoft.MvvmLight.Ioc;
 using HikingPathFinder.App.Database;
 using Microsoft.Practices.ServiceLocation;
-using Xamarin.Forms.Platform.Android;
+using Plugin.Permissions;
+using System;
 using System.Threading.Tasks;
+using Xamarin.Forms.Platform.Android;
 
 namespace HikingPathFinder.App.Android
 {
@@ -59,6 +60,18 @@ namespace HikingPathFinder.App.Android
             base.OnDestroy();
 
             HockeyApp.Android.UpdateManager.Unregister();
+        }
+
+        /// <summary>
+        /// Called when a permissions request result has been sent to the activity
+        /// </summary>
+        /// <param name="requestCode">request code</param>
+        /// <param name="permissions">list of permissions</param>
+        /// <param name="grantResults">list of grant results</param>
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
+        {
+            // let Plugin.Permissions handle the request
+            PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
         /// <summary>

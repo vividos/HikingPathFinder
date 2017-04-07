@@ -24,6 +24,7 @@ namespace HikingPathFinder.App.Views
         {
             this.Title = "Menu";
             this.Icon = "icon.png";
+            this.BackgroundColor = Color.FromHex(Constants.AppBackgroundColorHex);
 
             this.Menu = new MenuListView();
 
@@ -32,7 +33,7 @@ namespace HikingPathFinder.App.Views
                 Padding = new Thickness(10, 36, 0, 5),
                 Content = new Label
                 {
-                    TextColor = Color.Black,
+                    TextColor = Color.FromHex(Constants.AppForegroundColorHex),
                     Text = "Menu",
                 }
             };

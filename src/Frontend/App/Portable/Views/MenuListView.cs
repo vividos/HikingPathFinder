@@ -22,8 +22,8 @@ namespace HikingPathFinder.App.Views
             var cell = new DataTemplate(typeof(ImageCell));
             cell.SetBinding(TextCell.TextProperty, "Title");
             cell.SetBinding(ImageCell.ImageSourceProperty, "IconSource");
-            cell.SetValue(TextCell.TextColorProperty, Color.Black);
-            cell.SetValue(TextCell.DetailColorProperty, Color.FromHex("2898c8"));
+            cell.SetValue(TextCell.TextColorProperty, Color.FromHex(Constants.AppForegroundColorHex));
+            cell.SetValue(TextCell.DetailColorProperty, Color.FromHex(Constants.AppBackgroundColorHex));
 
             this.ItemTemplate = cell;
             this.SelectedItem = data[0];

@@ -29,9 +29,14 @@ namespace HikingPathFinder.App.Views
             menuPage.Menu.ItemSelected += this.OnMenuItemSelected;
 
             this.Master = menuPage;
-            this.Master.BackgroundColor = Color.FromHex("aaaaaa");
+            this.Master.BackgroundColor = Color.FromHex(Constants.AppBackgroundColorHex);
 
-            this.Detail = new NavigationPage(new StartPage());
+            var navigationPage = new NavigationPage(new StartPage());
+
+            navigationPage.BarBackgroundColor = Color.FromHex(Constants.AppBackgroundColorHex);
+            navigationPage.BarTextColor = Color.FromHex(Constants.AppForegroundColorHex);
+
+            this.Detail = navigationPage;
         }
 
         /// <summary>

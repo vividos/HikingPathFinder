@@ -19,5 +19,15 @@
         /// HockeyApp App ID for Windows Phone
         /// </summary>
         public static readonly string HockeyApp_AppId_WindowsPhone = "5cbbd419e80d451098d837152ff6a1d7";
+
+        /// <summary>
+        /// Background color for the app, as hex code; use Color.FromHex to conver to Xamarin.Forms color
+        /// </summary>
+        public static readonly string AppBackgroundColorHex = "2898c8";
+
+        /// <summary>
+        /// Foreground color for the app, as hex code
+        /// </summary>
+        public static readonly string AppForegroundColorHex = "ffffff";
     }
 }

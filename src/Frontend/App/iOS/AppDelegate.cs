@@ -39,6 +39,9 @@ namespace HikingPathFinder.App.iOS
             this.InitErrorHandling();
             this.InitServiceLocator();
 
+#if ENABLE_TEST_CLOUD
+            Xamarin.Calabash.Start();
+#endif
             global::Xamarin.Forms.Forms.Init();
             this.LoadApplication(new App());
 

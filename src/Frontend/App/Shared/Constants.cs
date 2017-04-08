@@ -8,7 +8,7 @@
         /// <summary>
         /// HockeyApp App ID for Android
         /// </summary>
-        public static readonly string HockeyApp_AppId_Android = "7f8752ee9f514af8beab45adc7e14066";
+        public const string HockeyApp_AppId_Android = "7f8752ee9f514af8beab45adc7e14066";
 
         /// <summary>
         /// HockeyApp App ID for iOS

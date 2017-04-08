@@ -1,4 +1,5 @@
 ﻿using Android.App;
+using HikingPathFinder.App;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -20,3 +21,6 @@ using System.Runtime.InteropServices;
 [assembly: UsesFeature("android.hardware.location", Required = false)]
 [assembly: UsesFeature("android.hardware.location.gps", Required = false)]
 [assembly: UsesFeature("android.hardware.location.network", Required = false)]
+
+// Add metadata
+[assembly: MetaData("net.hockeyapp.android.appIdentifier", Value = Constants.HockeyApp_AppId_Android)]

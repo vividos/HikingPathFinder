@@ -6,8 +6,8 @@
 
     <!-- quick start buttons-->
     <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-      <Button Image="plan_tour.png" Text="Plan Tour" Clicked="OnClicked_ButtonPlanTour" />
-      <Button Image="explore_map.png" Text="Explore Map" Clicked="OnClicked_ButtonExploreMap" />
+      <Button Image="plan_tour.png" Text="Plan Tour" Clicked="OnClicked_ButtonPlanTour" AutomationId="PlanTourButton" />
+      <Button Image="explore_map.png" Text="Explore Map" Clicked="OnClicked_ButtonExploreMap" AutomationId="ExploreMapButton" />
     </StackLayout>
 
   </StackLayout>

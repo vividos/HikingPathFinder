@@ -1,9 +1,8 @@
-﻿using System;
-using System.IO;
+﻿using NUnit.Framework;
+using System;
+using System.Diagnostics;
 using System.Linq;
-using NUnit.Framework;
 using Xamarin.UITest;
-using Xamarin.UITest.Queries;
 
 namespace UITest
 {
@@ -40,6 +39,19 @@ namespace UITest
         public void SetUp()
         {
             this.app = AppInitializer.StartApp(this.platform);
+
+            this.app.WaitForElement(
+                "Hiking Path Finder",
+                "failed waiting for start page",
+                TimeSpan.FromSeconds(10));
+        }
+
+        /// <summary>
+        /// Taps hamburger menu button
+        /// </summary>
+        public void TapMenuButton()
+        {
+            this.app.Tap(x => x.Class("ImageButton").Marked("OK"));
         }
 
         /// <summary>
@@ -48,12 +60,67 @@ namespace UITest
         [Test]
         public void TestAppLaunch()
         {
-            this.app.WaitForElement(
-                "Hiking Path Finder",
-                "failed waiting for main screen",
-                TimeSpan.FromSeconds(10));
-
             this.app.Screenshot("App main page");
+        }
+
+        /// <summary>
+        /// Tests "plan tour" page
+        /// </summary>
+        [Test]
+        public void TestPlanRoutePage()
+        {
+            this.TapMenuButton();
+
+            this.app.Tap(x => x.Marked("Plan Tour"));
+
+            this.app.Screenshot("Plan Tour page");
+        }
+
+        /// <summary>
+        /// Tests "explore map" page
+        /// </summary>
+        [Test]
+        public void TestExploreMapPage()
+        {
+            this.TapMenuButton();
+
+            this.app.Tap(x => x.Marked("Explore Map"));
+
+            this.app.Screenshot("Explore Map page");
+        }
+
+        /// <summary>
+        /// Tests settings page
+        /// </summary>
+        [Test]
+        public void TestSettingsPage()
+        {
+            this.TapMenuButton();
+
+            this.app.Tap(x => x.Marked("Settings"));
+
+            this.app.Screenshot("Settings page");
+        }
+
+        /// <summary>
+        /// Tests about page
+        /// </summary>
+        [Test]
+        public void TestAboutPage()
+        {
+            this.TapMenuButton();
+
+            this.app.Tap(x => x.Marked("About"));
+
+            this.app.Screenshot("About page");
+
+            var buttonResult = this.app.Query(x => x.Marked("AboutVisitHomepageButton"));
+            Assert.IsTrue(buttonResult.Any(), "homepage button element must be found");
+
+            var versionLabelResult = this.app.Query(x => x.Marked("AboutVersionNumber"));
+            Assert.IsTrue(versionLabelResult.Any(), "version number element must be found");
+
+            Debug.WriteLine("App version is: " + versionLabelResult[0].Label);
         }
     }
 }

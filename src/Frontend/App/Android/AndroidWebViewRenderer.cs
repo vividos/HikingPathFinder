@@ -1,3 +1,4 @@
+using Microsoft.Practices.ServiceLocation;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -33,7 +34,13 @@ namespace HikingPathFinder.App.Android
         {
             this.Control.Settings.JavaScriptEnabled = true;
             this.Control.Settings.DomStorageEnabled = true;
-            ////this.Control.Settings.CacheMode = Android.Webkit.CacheModes.CacheElseNetwork;
+
+            var platform = ServiceLocator.Current.GetInstance<IPlatform>();
+
+            this.Control.Settings.SetAppCacheMaxSize(32 * 1024 * 1024); // 128 MB
+            this.Control.Settings.SetAppCachePath(platform.CacheDataFolder);
+            this.Control.Settings.SetAppCacheEnabled(true);
+            this.Control.Settings.CacheMode = global::Android.Webkit.CacheModes.CacheElseNetwork;
         }
     }
 }

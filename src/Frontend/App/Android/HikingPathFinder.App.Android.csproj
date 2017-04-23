@@ -101,7 +101,7 @@
     <Reference Include="Mono.Data.Sqlite" />
     <Reference Include="mscorlib" />
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\Packages\NLog.4.4.5\lib\MonoAndroid10\NLog.dll</HintPath>
+      <HintPath>..\..\..\Packages\NLog.4.4.6\lib\MonoAndroid10\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Plugin.Connectivity, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">

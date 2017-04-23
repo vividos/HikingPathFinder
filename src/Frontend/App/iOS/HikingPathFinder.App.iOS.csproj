@@ -207,7 +207,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\Packages\NLog.4.4.5\lib\Xamarin.iOS10\NLog.dll</HintPath>
+      <HintPath>..\..\..\Packages\NLog.4.4.6\lib\Xamarin.iOS10\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Plugin.Connectivity, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">

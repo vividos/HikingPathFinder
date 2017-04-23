@@ -24,7 +24,7 @@ namespace HikingPathFinder.App.Logic
         /// <summary>
         /// Network service to retrieve data from remote server using available network
         /// </summary>
-        private readonly NetworkService networkService = new NetworkService();
+        private readonly INetworkService networkService = new DemoDataNetworkService();
 
         /// <summary>
         /// Creates a new data service object
@@ -78,7 +78,7 @@ namespace HikingPathFinder.App.Logic
 
             if (appInfo == null)
             {
-                appInfo = await this.LoadAppInfoAsync(token);
+                appInfo = (await this.LoadAppConfigAsync(token)).Info;
             }
 
             return appInfo;
@@ -86,20 +86,23 @@ namespace HikingPathFinder.App.Logic
         #endregion
 
         /// <summary>
-        /// Loads AppInfo object from network and stores it in database
+        /// Loads AppConfig object from network and stores the properties in the database, for
+        /// further access.
         /// </summary>
         /// <param name="token">token to cancel operation</param>
-        /// <returns>app info object</returns>
-        private async Task<AppInfo> LoadAppInfoAsync(CancellationToken token)
+        /// <returns>app config object</returns>
+        private async Task<AppConfig> LoadAppConfigAsync(CancellationToken token)
         {
-            AppInfo appInfo = await this.networkService.GetAppInfoAsync(token);
-            if (appInfo != null)
+            AppConfig appConfig = await this.networkService.GetAppConfigAsync(token);
+            if (appConfig != null)
             {
                 var connection = this.database.GetConnection();
-                connection.InsertOrReplace(appInfo);
+                connection.InsertOrReplace(appConfig.Info);
+
+                // TODO store remaining AppConfig properties
             }
 
-            return appInfo;
+            return appConfig;
         }
     }
 }

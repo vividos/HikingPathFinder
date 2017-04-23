@@ -4,12 +4,60 @@
 
 ### Debug keystore
 
-File
-%LocalAppData%\Xamarin\Mono for Android\debug.keystore
+Stored in file:
+
+    %LocalAppData%\Xamarin\Mono for Android\debug.keystore
 
 ## Xamarin.Forms
 
+PCL based UI programming, consumed by a simple platform specific startup
+project.
 
+Xaml dialect to define pages. App.xaml defines resource dictionary,
+app.xaml.cs has app lifecycle methods. Pages in xaml or code to show UI.
+
+Xaml compiler can translate xaml into code; XamlCompilation attribute.
+
+### Pages
+
+- Pages - fill the whole screen
+- Layouts - organize elements; e.g. StackLayout
+- View - single UI elements
+- Cells - elements of list views
+
+ContentPage - shows views
+
+NavigationPage - wraps a page and provides back navigation (PushAsync(),
+PopAsync())
+
+### Views
+
+TODO
+
+### Bindings
+
+Data from source to target and back.
+
+Source: ViewModel, set by property `BindingContext` of Page.
+
+Target: properties of UI controls. In xaml:
+
+    Text="{Binding PropertyName, Mode=OneWay|TwoWay|OneWayToSource}" 
+
+Implement `INotifyPropertyChanged` to notify target of source value changes.
+
+Binding parameter `StringFormat` to format values like `ToString()`.
+
+Converter: Implement `IValueConverter` to convert from source to target and
+back. Use in binding, or specify in `ResourceDictionary` of Page.xaml or
+App.xaml.
+
+x:Reference to reference values in other Targets
+
+### Commands
+
+Clicked or Tapped actions from UI controls directly to the ViewModel object.
+Implement ICommand or use `Command` or `Command<T>`.
 
 ## Features
 

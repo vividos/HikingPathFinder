@@ -86,7 +86,11 @@ namespace HikingPathFinder.App.Views
         /// <param name="args">event args</param>
         private void OnNavigating_WebView(object sender, WebNavigatingEventArgs args)
         {
-            //// TODO implement getting action arguments args.Cancel = true;
+            if (args.NavigationEvent == WebNavigationEvent.NewPage)
+            {
+                Device.OpenUri(new Uri(args.Url));
+                args.Cancel = true;
+            }
         }
 
         /// <summary>

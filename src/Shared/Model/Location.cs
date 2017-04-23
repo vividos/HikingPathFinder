@@ -8,6 +8,11 @@ namespace HikingPathFinder.Model
     public class Location
     {
         /// <summary>
+        /// Location ID
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
         /// Name of location
         /// </summary>
         public string Name { get; set; }

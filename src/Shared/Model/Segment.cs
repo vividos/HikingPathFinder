@@ -20,43 +20,39 @@ namespace HikingPathFinder.Model
         public string Description { get; set; }
 
         /// <summary>
-        /// The description for this segment, in reverse walking direction
+        /// Rating of the segment, space separated; e.g. alpine hiking or skiing ratings
         /// </summary>
-        public string ReverseDescription { get; set; }
+        public string Rating { get; set; }
 
         /// <summary>
-        /// Indicates in which way the segment should be used when displaying
-        /// to the user; when true, the ReverseDescription should be used, the
-        /// MapStart and MapEnd points have to be swapped, the ReverseDuration
-        /// is to be used, and and the TrackPointsList array has to be
-        /// reversed.
+        /// Start location of segment
         /// </summary>
-        public bool UseReverseSegment { get; set; }
+        public LocationRef LocationStart { get; set; }
 
         /// <summary>
-        /// Start of segment on map
+        /// End location of segment
         /// </summary>
-        public MapPoint MapStart { get; set; }
+        public LocationRef LocationEnd { get; set; }
 
         /// <summary>
-        /// End of segment on map
+        /// Segment length, in km
         /// </summary>
-        public MapPoint MapEnd { get; set; }
+        public double SegmentLengthInKm { get; set; }
 
         /// <summary>
-        /// Duration of segment in 100% walking speed
+        /// Duration of segment
         /// </summary>
         public TimeSpan Duration { get; set; }
 
         /// <summary>
-        /// Duration of segment, when going in reverse direction
+        /// Altitude difference walking up, in meters
         /// </summary>
-        public TimeSpan ReverseDuration { get; set; }
+        public int AltitudeUpInMeters { get; set; }
 
         /// <summary>
-        /// Segment length in km
+        /// Altitude difference walking down, in meters
         /// </summary>
-        public double SegmentLengthInKm { get; set; }
+        public int AltitudeDownInMeters { get; set; }
 
         /// <summary>
         /// List of track points describing the segment (in normal direction)

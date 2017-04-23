@@ -1,4 +1,6 @@
-﻿namespace HikingPathFinder.Model
+﻿using System.Globalization;
+
+namespace HikingPathFinder.Model
 {
     /// <summary>
     /// A point on a map, in WGS84 decimal coordinates. Negative values are
@@ -26,5 +28,17 @@
         /// Longitude, from west to east, 0.0 at Greenwich line; e.g. 11.575416
         /// </summary>
         public double Longitude { get; set; }
+
+        /// <summary>
+        /// Returns a printable representation of this object
+        /// </summary>
+        /// <returns>printable text</returns>
+        public override string ToString()
+        {
+            return string.Format(
+                "Lat={0}, Long={1}",
+                this.Latitude.ToString("F6", CultureInfo.InvariantCulture),
+                this.Longitude.ToString("F6", CultureInfo.InvariantCulture));
+        }
     }
 }

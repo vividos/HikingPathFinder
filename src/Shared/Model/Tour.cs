@@ -29,6 +29,16 @@ namespace HikingPathFinder.Model
         public TimeSpan Duration { get; set; }
 
         /// <summary>
+        /// Altitude difference walking up, in meters
+        /// </summary>
+        public double AltitudeUpInMeters { get; set; }
+
+        /// <summary>
+        /// Altitude difference walking down, in meters
+        /// </summary>
+        public double AltitudeDownInMeters { get; set; }
+
+        /// <summary>
         /// A list of locations in order
         /// </summary>
         public List<Location> LocationList { get; set; }

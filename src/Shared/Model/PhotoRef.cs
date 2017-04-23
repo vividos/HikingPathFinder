@@ -24,5 +24,19 @@
         /// Photo location; may be null
         /// </summary>
         public MapPoint PhotoLocation { get; set; }
+
+        /// <summary>
+        /// Returns a printable representation of this object
+        /// </summary>
+        /// <returns>printable text</returns>
+        public override string ToString()
+        {
+            return string.Format(
+                "ID={0}, Desc={1}, Author={2}, Location={3}",
+                this.Id,
+                this.Description,
+                this.Author,
+                this.PhotoLocation.ToString());
+        }
     }
 }

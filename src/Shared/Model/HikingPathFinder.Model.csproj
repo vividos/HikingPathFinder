@@ -39,16 +39,21 @@
     <Compile Include="..\VersionAssemblyInfo.cs">
       <Link>Properties\VersionAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AppConfig.cs" />
     <Compile Include="AppInfo.cs" />
     <Compile Include="Location.cs" />
+    <Compile Include="LocationRef.cs" />
     <Compile Include="LocationType.cs" />
     <Compile Include="MapPoint.cs" />
     <Compile Include="MapRectangle.cs" />
+    <Compile Include="Path.cs" />
     <Compile Include="Photo.cs" />
     <Compile Include="PhotoRef.cs" />
+    <Compile Include="PlanTourParameters.cs" />
     <Compile Include="PrePlannedTour.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Segment.cs" />
+    <Compile Include="StaticPageInfo.cs" />
     <Compile Include="Tour.cs" />
     <Compile Include="TrackPoint.cs" />
   </ItemGroup>

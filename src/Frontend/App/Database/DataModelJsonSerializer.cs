@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using SQLite.Net;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
@@ -13,15 +14,24 @@ namespace HikingPathFinder.App.Database
     internal class DataModelJsonSerializer : IBlobSerializer
     {
         /// <summary>
+        /// List of supported types
+        /// </summary>
+        private readonly List<Type> supportedTypes = new List<Type>
+        {
+            typeof(MapRectangle),
+            typeof(MapPoint),
+            typeof(Tour),
+            typeof(List<PhotoRef>),
+        };
+
+        /// <summary>
         /// Returns if the given .NET type can be deserialized by this serializer
         /// </summary>
         /// <param name="type">.NET type to check</param>
         /// <returns>true when deserialisation can be done, false when not</returns>
         public bool CanDeserialize(Type type)
         {
-            return
-                type == typeof(MapRectangle) ||
-                type == typeof(MapPoint);
+            return supportedTypes.Contains(type);
         }
 
         /// <summary>
@@ -35,17 +45,12 @@ namespace HikingPathFinder.App.Database
         {
             string json = Encoding.UTF8.GetString(data, 0, data.Length);
 
-            if (type == typeof(MapRectangle))
+            if (this.CanDeserialize(type))
             {
-                return JsonConvert.DeserializeObject<MapRectangle>(json);
+                return JsonConvert.DeserializeObject(json, type);
             }
 
-            if (type == typeof(MapPoint))
-            {
-                return JsonConvert.DeserializeObject<MapPoint>(json);
-            }
-
-            string message = string.Format("deserializing of .NET type {0} not implemented", type.FullName);
+            string message = string.Format("deserializing of .NET type {0} not supported", type.FullName);
             throw new NotImplementedException(message);
         }
 

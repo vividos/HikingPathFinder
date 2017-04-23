@@ -101,8 +101,12 @@ namespace HikingPathFinder.App.Database
         {
             var connection = this.database.GetConnection();
 
-            // initial: table AppInfo
+            // initial: tables
             connection.CreateTable<AppInfo>();
+            connection.CreateTable<PhotoRef>();
+            connection.CreateTable<Location>();
+            connection.CreateTable<PrePlannedTour>();
+            connection.CreateTable<StaticPageInfo>();
 
             this.SetNewDatabaseVersion(1);
         }

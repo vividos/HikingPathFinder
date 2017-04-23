@@ -96,13 +96,27 @@ namespace HikingPathFinder.App.Logic
             AppConfig appConfig = await this.networkService.GetAppConfigAsync(token);
             if (appConfig != null)
             {
-                var connection = this.database.GetConnection();
-                connection.InsertOrReplace(appConfig.Info);
-
-                // TODO store remaining AppConfig properties
+                this.StoreAppConfig(appConfig);
             }
 
             return appConfig;
+        }
+
+        /// <summary>
+        /// Stores AppConfig properties in database
+        /// </summary>
+        /// <param name="appConfig">app config object</param>
+        private void StoreAppConfig(AppConfig appConfig)
+        {
+            var connection = this.database.GetConnection();
+            connection.InsertOrReplace(appConfig.Info);
+
+            connection.InsertAll(appConfig.PrePlannedToursList);
+
+            connection.InsertAll(appConfig.StartEndLocationList);
+            connection.InsertAll(appConfig.TourLocationList);
+
+            connection.InsertAll(appConfig.StaticPageInfoList);
         }
     }
 }

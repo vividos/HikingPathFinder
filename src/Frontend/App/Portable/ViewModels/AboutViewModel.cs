@@ -1,7 +1,9 @@
 ﻿using HikingPathFinder.App.Logic;
 using Microsoft.Practices.ServiceLocation;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace HikingPathFinder.App.ViewModels
 {
@@ -29,6 +31,11 @@ namespace HikingPathFinder.App.ViewModels
         /// Main text of about page
         /// </summary>
         public string MainText { get; private set; }
+
+        /// <summary>
+        /// Command to execute when the visit website button has been clicked
+        /// </summary>
+        public Command VisitWebsiteCommand { get; private set; }
 
         /// <summary>
         /// Creates a new view model object for about page
@@ -65,6 +72,11 @@ locations in a hiking area.
 Hiking Path Finder uses the following libraries:
 - GalaSoft MvvmLight
 - SQLite.Net";
+
+            this.VisitWebsiteCommand = new Command(() =>
+            {
+                Device.OpenUri(new Uri("https://github.com/vividos/HikingPathFinder"));
+            });
         }
     }
 }

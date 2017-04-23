@@ -1,5 +1,4 @@
 ﻿using HikingPathFinder.App.ViewModels;
-using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,16 +19,6 @@ namespace HikingPathFinder.App.Views
             this.BindingContext = new AboutViewModel();
 
             this.InitializeComponent();
-        }
-
-        /// <summary>
-        /// Called when user clicked on the "visit webpage" button
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="args">event args</param>
-        private void OnClicked_ButtonVisitWebpage(object sender, EventArgs args)
-        {
-            Device.OpenUri(new Uri("https://github.com/vividos/HikingPathFinder"));
         }
     }
 }

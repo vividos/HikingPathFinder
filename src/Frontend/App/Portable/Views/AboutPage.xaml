@@ -12,7 +12,7 @@
     <Button Text="Visit Hiking Path Finder Homepage"
             FontSize="20"
             HorizontalOptions="Center"
-            Clicked="OnClicked_ButtonVisitWebpage"
+            Command="{Binding VisitWebsiteCommand}"
             AutomationId="AboutVisitHomepageButton" />
     <Label Text="{Binding MainText}" FontSize="14" HorizontalOptions="Center" />
   </StackLayout>

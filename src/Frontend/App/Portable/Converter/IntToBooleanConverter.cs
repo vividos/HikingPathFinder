@@ -11,7 +11,7 @@ namespace HikingPathFinder.App.Converter
     /// parameter passed to the converter. Use it e.g. like this:
     /// IsVisible="{Binding IntValue, Mode=OneWay, Converter={StaticResource IntToBooleanConverter}, ConverterParameter=42}"
     /// </summary>
-    class IntToBooleanConverter : IValueConverter
+    public class IntToBooleanConverter : IValueConverter
     {
         /// <summary>
         /// Converts integer value to boolean by comparing value with parameter.

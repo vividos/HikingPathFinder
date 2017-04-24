@@ -24,6 +24,9 @@
   "frameworks": {
     "netcoreapp1.0": {
       "dependencies": {
+        "HikingPathFinder.DemoData": {
+          "target": "project"
+        },
         "HikingPathFinder.Model": {
           "target": "project"
         }

@@ -1,14 +1,59 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="HikingPathFinder.App.Views.StartPage">
-  <StackLayout Orientation="Vertical" Margin="0,20,0,0">
+             x:Class="HikingPathFinder.App.Views.StartPage"
+             xmlns:converter="clr-namespace:HikingPathFinder.App.Converter">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <converter:IntToBooleanConverter x:Key="IntToBooleanConverter" />
+    </ResourceDictionary>
+  </ContentPage.Resources>
 
-    <!-- quick start buttons-->
-    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-      <Button Image="plan_tour.png" Text="Plan Tour" Clicked="OnClicked_ButtonPlanTour" AutomationId="PlanTourButton" />
-      <Button Image="explore_map.png" Text="Explore Map" Clicked="OnClicked_ButtonExploreMap" AutomationId="ExploreMapButton" />
+  <ScrollView Orientation="Vertical" VerticalOptions="StartAndExpand" HorizontalOptions="Fill">
+
+    <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" Margin="0,20,0,0">
+
+      <!-- quick start buttons-->
+      <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+        <Button Image="plan_tour.png" Text="Plan Tour" Command="{Binding PlanTourCommand}" AutomationId="PlanTourButton" />
+        <Button Image="explore_map.png" Text="Explore Map" Command="{Binding ExploreMapCommand}" AutomationId="ExploreMapButton" />
+      </StackLayout>
+
+      <!-- news entries-->
+      <Label x:Name="newsLabel" FontSize="Large" Margin="20,0,20,0"
+             IsVisible="{Binding NewsList.Count, Mode=OneWay, Converter={StaticResource IntToBooleanConverter}, ConverterParameter=1}">News</Label>
+      <ListView x:Name="newsList"
+                ItemsSource="{Binding NewsList, Mode=OneWay}"
+                BackgroundColor="#cfcfcf"
+                Margin="20,0,20,0"
+                IsPullToRefreshEnabled="False"
+                IsVisible="{Binding NewsList.Count, Mode=OneWay, Converter={StaticResource IntToBooleanConverter}, ConverterParameter=1}"
+                AutomationId="NewsList" />
+
+      <!-- pre-planned tours -->
+      <Label x:Name="prePlannedToursLabel" FontSize="Large" Margin="20,0,20,0">Pre-planned tours</Label>
+      <StackLayout Orientation="Vertical"
+                   VerticalOptions="FillAndExpand"
+                   HeightRequest="300">
+        <ListView x:Name="prePlannedToursList"
+                  ItemsSource="{Binding PrePlannedToursList, Mode=OneWay}"
+                  ItemTapped="OnItemTapped_PrePlannedToursList"
+                  BackgroundColor="#cfcfcf"
+                  Margin="20,0,20,0"
+                  IsPullToRefreshEnabled="False"
+                  IsVisible="{Binding PrePlannedToursList.Count, Mode=OneWay, Converter={StaticResource IntToBooleanConverter}, ConverterParameter=1}"
+                  AutomationId="PrePlannedToursList">
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <!-- Note: ListView cells don't support binding commands to the ViewModel directly yet,
+                 so we just use ItemTapped of the parent ListView -->
+              <TextCell Text="{Binding TourName, Mode=OneWay}" TextColor="Black" Detail="{Binding ShortDescription, Mode=OneWay}" />
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+      </StackLayout>
+
     </StackLayout>
+  </ScrollView>
 
-  </StackLayout>
 </ContentPage>

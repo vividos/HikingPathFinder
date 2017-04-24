@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HikingPathFinder.App.ViewModels;
+using HikingPathFinder.Model;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,29 +17,27 @@ namespace HikingPathFinder.App.Views
         /// </summary>
         public StartPage()
         {
-            this.InitializeComponent();
-
             this.Title = "Hiking Path Finder";
+
+            var viewModel = new StartViewModel();
+            Task.Factory.StartNew(viewModel.LoadData);
+
+            this.BindingContext = viewModel;
+
+            this.InitializeComponent();
         }
 
         /// <summary>
-        /// Called when user clicked on the "Plan Tour" button
+        /// Called when an item was tapped on the pre-planned tours list
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnClicked_ButtonPlanTour(object sender, EventArgs args)
+        private void OnItemTapped_PrePlannedToursList(object sender, ItemTappedEventArgs args)
         {
-            App.Navigation.Navigate(typeof(PlanTourPage), true);
-        }
+            var viewModel = this.BindingContext as StartViewModel;
 
-        /// <summary>
-        /// Called when user clicked on the "Explore Map" button
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="args">event args</param>
-        private void OnClicked_ButtonExploreMap(object sender, EventArgs args)
-        {
-            App.Navigation.Navigate(typeof(ExploreMapPage), true);
+            var prePlannedTour = args.Item as PrePlannedTour;
+            viewModel.PrePlannedTourItemTappedCommand.Execute(prePlannedTour);
         }
     }
 }

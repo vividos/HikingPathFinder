@@ -1,8 +1,11 @@
 ﻿using HikingPathFinder.App.Database;
 using HikingPathFinder.Model;
 using Microsoft.Practices.ServiceLocation;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using SQLite.Net;
+using System;
 
 namespace HikingPathFinder.App.Logic
 {
@@ -76,12 +79,31 @@ namespace HikingPathFinder.App.Logic
 
             var appInfo = connection.Table<AppInfo>().FirstOrDefault();
 
-            if (appInfo == null)
+            if (appInfo != null)
             {
-                appInfo = (await this.LoadAppConfigAsync(token)).Info;
+                return appInfo;
             }
 
-            return appInfo;
+            var appConfig = await this.LoadAppConfigAsync(token);
+            return appConfig.Info;
+        }
+
+        /// <summary>
+        /// Returns list of pre-planned tours
+        /// </summary>
+        /// <param name="token">token to cancel operation</param>
+        /// <returns></returns>
+        public async Task<List<PrePlannedTour>> GetPrePlannedToursListAsync(CancellationToken token)
+        {
+            // ensure that app config has been loaded
+            await GetAppInfoAsync(token);
+
+            var connection = this.database.GetConnection();
+
+            var tableQuery = connection.Table<PrePlannedTour>();
+
+            var prePlannedToursList = new List<PrePlannedTour>(tableQuery);
+            return prePlannedToursList;
         }
         #endregion
 

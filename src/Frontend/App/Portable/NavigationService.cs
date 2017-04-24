@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Views;
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace HikingPathFinder.App
@@ -45,7 +46,21 @@ namespace HikingPathFinder.App
         /// <param name="parameter">parameter object to pass</param>
         public void Navigate(Type pageType, bool topPage = true, object parameter = null)
         {
-            Page displayPage = (Page)Activator.CreateInstance(pageType);
+            var task = this.NavigateAsync(pageType, topPage, parameter);
+            task.Wait();
+        }
+
+        /// <summary>
+        /// Navigates to a page with given type and parameters; async version
+        /// </summary>
+        /// <param name="pageType">page type</param>
+        /// <param name="topPage">indicates if new page should become the top page on the
+        /// navigation stack</param>
+        /// <param name="parameter">parameter object to pass</param>
+        /// <returns>task to wait on</returns>
+        public async Task NavigateAsync(Type pageType, bool topPage, object parameter = null)
+        {
+            Page displayPage = (Page)Activator.CreateInstance(pageType, parameter);
 
             if (topPage)
             {
@@ -53,8 +68,10 @@ namespace HikingPathFinder.App
             }
             else
             {
-                var task = App.Current.MainPage.Navigation.PushAsync(displayPage);
-                task.Wait();
+                var navigationPage = this.rootPage.Detail as NavigationPage;
+                Debug.Assert(navigationPage != null, "detail page must be a navigation page");
+
+                await navigationPage.PushAsync(displayPage);
             }
         }
 

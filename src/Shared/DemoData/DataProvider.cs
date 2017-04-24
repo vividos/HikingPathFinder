@@ -80,6 +80,44 @@ namespace HikingPathFinder.DemoData
             };
 
         /// <summary>
+        /// Finds pre-planned tour from given plan tour parameters
+        /// </summary>
+        /// <param name="planTourParams">plan tour params</param>
+        /// <returns>pre-planned tour, or null when no tour was found</returns>
+        public static PrePlannedTour FindPrePlannedTourList(PlanTourParameters planTourParams)
+        {
+            var prePlannedTourList = DemoData.DataProvider.GetPrePlannedTourList();
+
+            foreach (var prePlannedTour in prePlannedTourList)
+            {
+                if (planTourParams.StartLocation.Id == prePlannedTour.Tour.StartLocation.Id &&
+                    planTourParams.EndLocation.Id == prePlannedTour.Tour.EndLocation.Id &&
+                    planTourParams.TourLocationList.Count == prePlannedTour.Tour.LocationList.Count)
+                {
+                    bool hasSameLocations = true;
+
+                    int maxLocationIndex = prePlannedTour.Tour.LocationList.Count;
+                    for (int locationIndex = 0; locationIndex < maxLocationIndex; locationIndex++)
+                    {
+                        if (planTourParams.TourLocationList[locationIndex].Id !=
+                            prePlannedTour.Tour.LocationList[locationIndex].Id)
+                        {
+                            hasSameLocations = false;
+                            break;
+                        }
+                    }
+
+                    if (hasSameLocations)
+                    {
+                        return prePlannedTour;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// A bus station
         /// </summary>
         private static Location busStation =

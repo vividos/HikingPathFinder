@@ -60,32 +60,11 @@ namespace HikingPathFinder.App.Logic
         /// <returns>planned tour</returns>
         public Task<Tour> PlanTourAsync(PlanTourParameters planTourParams, CancellationToken token)
         {
-            var prePlannedTourList = DemoData.DataProvider.GetPrePlannedTourList();
+            var prePlannedTourList = DemoData.DataProvider.FindPrePlannedTourList(planTourParams);
 
-            foreach (var prePlannedTour in prePlannedTourList)
+            if (prePlannedTourList != null)
             {
-                if (planTourParams.StartLocation.Id == prePlannedTour.Tour.StartLocation.Id &&
-                    planTourParams.EndLocation.Id == prePlannedTour.Tour.EndLocation.Id &&
-                    planTourParams.TourLocationList.Count == prePlannedTour.Tour.LocationList.Count)
-                {
-                    bool hasSameLocations = true;
-
-                    int maxLocationIndex = prePlannedTour.Tour.LocationList.Count;
-                    for (int locationIndex = 0; locationIndex < maxLocationIndex; locationIndex++)
-                    {
-                        if (planTourParams.TourLocationList[locationIndex].Id !=
-                            prePlannedTour.Tour.LocationList[locationIndex].Id)
-                        {
-                            hasSameLocations = false;
-                            break;
-                        }
-                    }
-
-                    if (hasSameLocations)
-                    {
-                        return Task.FromResult(prePlannedTour.Tour);
-                    }
-                }
+                return Task.FromResult(prePlannedTourList.Tour);
             }
 
             throw new System.Exception("Tour couldn't be calculated");

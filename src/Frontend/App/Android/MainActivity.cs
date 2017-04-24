@@ -35,6 +35,8 @@ namespace HikingPathFinder.App.Android
 
             base.OnCreate(bundle);
 
+            HockeyApp.Android.CrashManager.Register(this, Constants.HockeyApp_AppId_Android);
+
             global::Xamarin.Forms.Forms.Init(this, bundle);
             this.LoadApplication(new App());
 

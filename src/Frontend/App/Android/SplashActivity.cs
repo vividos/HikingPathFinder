@@ -24,18 +24,10 @@ namespace HikingPathFinder.App.Android
         {
             base.OnCreate(savedInstanceState);
 
+            HockeyApp.Android.CrashManager.Register(this, Constants.HockeyApp_AppId_Android);
+
             var intent = new Intent(this, typeof(MainActivity));
             this.StartActivity(intent);
-        }
-
-        /// <summary>
-        /// Called when main window is resumed
-        /// </summary>
-        protected override void OnResume()
-        {
-            base.OnResume();
-
-            HockeyApp.Android.CrashManager.Register(this, Constants.HockeyApp_AppId_Android);
         }
 
         /// <summary>

@@ -80,7 +80,7 @@ namespace HikingPathFinder.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task NavigateToPrePlannedTour(PrePlannedTour prePlannedTour)
         {
-            //await App.Navigation.NavigateAsync(typeof(ShowTourPage), false, prePlannedTour.Tour);
+            await App.Navigation.NavigateAsync(typeof(ShowTourPage), false, prePlannedTour.Tour);
         }
 
         /// <summary>

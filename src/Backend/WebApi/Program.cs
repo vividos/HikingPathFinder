@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 
-namespace HikingPathFinder.WebApi
+namespace HikingPathFinder.Backend.WebApi
 {
     /// <summary>
     /// Program class for the Web API project

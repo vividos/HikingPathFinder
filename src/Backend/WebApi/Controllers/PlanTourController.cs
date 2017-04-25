@@ -1,7 +1,7 @@
 ﻿using HikingPathFinder.Model;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HikingPathFinder.WebApi.Controllers
+namespace HikingPathFinder.Backend.WebApi.Controllers
 {
     /// <summary>
     /// Controller to return planned tours

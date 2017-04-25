@@ -34,7 +34,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikingPathFinder.App.Androi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikingPathFinder.Model", "Shared\Model\HikingPathFinder.Model.csproj", "{8C97FD6E-8A02-4B46-9DFF-24FBC05A9024}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "HikingPathFinder.WebApi", "Backend\WebApi\HikingPathFinder.WebApi.xproj", "{9C99C16B-05FF-48D5-B94D-680ECABD197B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HikingPathFinder.Backend.WebApi", "Backend\WebApi\HikingPathFinder.Backend.WebApi.csproj", "{9C99C16B-05FF-48D5-B94D-680ECABD197B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikingPathFinder.App.Database", "Frontend\App\Database\HikingPathFinder.App.Database.csproj", "{4BB458FB-55D5-42DB-B3A9-C5D8665CEF05}"
 EndProject

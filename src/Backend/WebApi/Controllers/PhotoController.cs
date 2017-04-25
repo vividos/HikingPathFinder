@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HikingPathFinder.WebApi.Controllers
+namespace HikingPathFinder.Backend.WebApi.Controllers
 {
     /// <summary>
     /// Controller for photos that are referenced by a PhotoRef object

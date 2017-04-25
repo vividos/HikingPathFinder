@@ -21,6 +21,11 @@
         public static readonly string HockeyApp_AppId_WindowsPhone = "5cbbd419e80d451098d837152ff6a1d7";
 
         /// <summary>
+        /// HockeyApp App ID for UWP
+        /// </summary>
+        public static readonly string HockeyApp_AppId_Uwp = "4e6bf03d41bf4a15b29362c3d17a7f51";
+
+        /// <summary>
         /// Background color for the app, as hex code; use Color.FromHex to conver to Xamarin.Forms color
         /// </summary>
         public static readonly string AppBackgroundColorHex = "2898c8";

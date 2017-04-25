@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+﻿using GalaSoft.MvvmLight.Ioc;
+using HikingPathFinder.App.Database;
+using Microsoft.HockeyApp;
+using Microsoft.Practices.ServiceLocation;
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace HikingPathFinder.App.UWP
@@ -20,7 +16,7 @@ namespace HikingPathFinder.App.UWP
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    sealed partial class App : Application
+    public sealed partial class App : Application
     {
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -28,18 +24,33 @@ namespace HikingPathFinder.App.UWP
         /// </summary>
         public App()
         {
+            this.InitErrorHandling();
+            this.InitServiceLocator();
+
             this.InitializeComponent();
-            this.Suspending += OnSuspending;
+            this.Suspending += this.OnSuspending;
+        }
+
+        /// <summary>
+        /// Initializes service locator used throughout the app; uses MvvmLight's SimpleIoc.
+        /// </summary>
+        private void InitServiceLocator()
+        {
+            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+
+            SimpleIoc.Default.Register<ISQLiteDatabaseProvider, UwpSQLiteDatabaseProvider>();
+            SimpleIoc.Default.Register<IPlatform, UwpPlatform>();
+
+            HikingPathFinder.App.App.InitServiceLocator(SimpleIoc.Default);
         }
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
-        /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        /// <param name="args">Details about the launch request and process.</param>
+        protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
@@ -58,9 +69,9 @@ namespace HikingPathFinder.App.UWP
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
-                Xamarin.Forms.Forms.Init(e);
+                Xamarin.Forms.Forms.Init(args);
 
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+                if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     //TODO: Load state from previously suspended application
                 }
@@ -74,7 +85,7 @@ namespace HikingPathFinder.App.UWP
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                rootFrame.Navigate(typeof(MainPage), args.Arguments);
             }
             // Ensure the current window is active
             Window.Current.Activate();
@@ -84,10 +95,10 @@ namespace HikingPathFinder.App.UWP
         /// Invoked when Navigation to a certain page fails
         /// </summary>
         /// <param name="sender">The Frame which failed navigation</param>
-        /// <param name="e">Details about the navigation failure</param>
-        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+        /// <param name="args">Details about the navigation failure</param>
+        private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
         {
-            throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
+            throw new Exception("Failed to load Page " + args.SourcePageType.FullName);
         }
 
         /// <summary>
@@ -96,12 +107,43 @@ namespace HikingPathFinder.App.UWP
         /// of memory still intact.
         /// </summary>
         /// <param name="sender">The source of the suspend request.</param>
-        /// <param name="e">Details about the suspend request.</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
+        /// <param name="args">Details about the suspend request.</param>
+        private void OnSuspending(object sender, SuspendingEventArgs args)
         {
-            var deferral = e.SuspendingOperation.GetDeferral();
+            var deferral = args.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
+        }
+
+        /// <summary>
+        /// Initializes error handling
+        /// </summary>
+        private void InitErrorHandling()
+        {
+            Microsoft.HockeyApp.HockeyClient.Current.Configure(Constants.HockeyApp_AppId_Uwp);
+
+            this.UnhandledException += this.OnUnhandledException;
+            TaskScheduler.UnobservedTaskException += this.OnUnobservedTaskException;
+        }
+
+        /// <summary>
+        /// Called when an exception occured that was unhandled by any code
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void OnUnhandledException(object sender, UnhandledExceptionEventArgs args)
+        {
+            Debug.WriteLine("Unhandled exception occured: " + args.Exception.ToString());
+        }
+
+        /// <summary>
+        /// Called when an exception occured in a task that wasn't handled
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void OnUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs args)
+        {
+            Debug.WriteLine("Unhandled exception occured: " + args.Exception.ToString());
         }
     }
 }

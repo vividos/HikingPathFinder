@@ -6,3 +6,4 @@
 [assembly: AssemblyTitle("HikingPathFinder.App.UWP")]
 [assembly: AssemblyDescription("HikingPathFinder Windows 10 app")]
 [assembly: AssemblyConfiguration("")]
+[assembly: ComVisible(false)]

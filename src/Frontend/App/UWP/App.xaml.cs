@@ -67,13 +67,13 @@ namespace HikingPathFinder.App.UWP
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
 
-                rootFrame.NavigationFailed += OnNavigationFailed;
+                rootFrame.NavigationFailed += this.OnNavigationFailed;
 
                 Xamarin.Forms.Forms.Init(args);
 
                 if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
-                    //TODO: Load state from previously suspended application
+                    ////TODO: Load state from previously suspended application
                 }
 
                 // Place the frame in the current Window
@@ -87,6 +87,7 @@ namespace HikingPathFinder.App.UWP
                 // parameter
                 rootFrame.Navigate(typeof(MainPage), args.Arguments);
             }
+
             // Ensure the current window is active
             Window.Current.Activate();
         }
@@ -111,7 +112,8 @@ namespace HikingPathFinder.App.UWP
         private void OnSuspending(object sender, SuspendingEventArgs args)
         {
             var deferral = args.SuspendingOperation.GetDeferral();
-            //TODO: Save application state and stop any background activity
+
+            ////TODO: Save application state and stop any background activity
             deferral.Complete();
         }
 

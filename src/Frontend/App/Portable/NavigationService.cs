@@ -60,7 +60,15 @@ namespace HikingPathFinder.App
         /// <returns>task to wait on</returns>
         public async Task NavigateAsync(Type pageType, bool topPage, object parameter = null)
         {
-            Page displayPage = (Page)Activator.CreateInstance(pageType, parameter);
+            Page displayPage;
+            if (parameter == null)
+            {
+                displayPage = (Page)Activator.CreateInstance(pageType);
+            }
+            else
+            {
+                displayPage = (Page)Activator.CreateInstance(pageType, parameter);
+            }
 
             if (topPage)
             {

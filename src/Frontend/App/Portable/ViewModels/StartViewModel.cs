@@ -56,14 +56,14 @@ namespace HikingPathFinder.App.ViewModels
         /// </summary>
         private void SetupBindings()
         {
-            this.PlanTourCommand = new Command(() =>
+            this.PlanTourCommand = new Command(async () =>
             {
-                App.Navigation.Navigate(typeof(PlanTourPage), true);
+                await App.Navigation.NavigateAsync(typeof(PlanTourPage), true);
             });
 
-            this.ExploreMapCommand = new Command(() =>
+            this.ExploreMapCommand = new Command(async () =>
             {
-                App.Navigation.Navigate(typeof(ExploreMapPage), true);
+                await App.Navigation.NavigateAsync(typeof(ExploreMapPage), true);
             });
 
             this.PrePlannedTourItemTappedCommand =

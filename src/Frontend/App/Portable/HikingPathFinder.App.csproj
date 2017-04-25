@@ -42,6 +42,7 @@
     </Compile>
     <Compile Include="App.cs" />
     <Compile Include="Converter\IntToBooleanConverter.cs" />
+    <Compile Include="Converter\PhotoToImageSourceConverter.cs" />
     <Compile Include="Models\MenuEntry.cs" />
     <Compile Include="ViewModels\MenuListData.cs" />
     <Compile Include="NavigationService.cs" />

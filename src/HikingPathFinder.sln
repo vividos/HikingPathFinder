@@ -63,6 +63,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikingPathFinder.DemoData",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikingPathFinder.App.UnitTest.Android", "Frontend\App\UnitTest\HikingPathFinder.App.UnitTest.Android.csproj", "{3980DFD4-68BF-4AC2-BA12-AB0FFCC99BC2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikingPathFinder.App.UWP", "Frontend\App\UWP\HikingPathFinder.App.UWP.csproj", "{B5790372-D87E-430E-80AA-39D3E341A0FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -115,6 +117,12 @@ Global
 		{3980DFD4-68BF-4AC2-BA12-AB0FFCC99BC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3980DFD4-68BF-4AC2-BA12-AB0FFCC99BC2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3980DFD4-68BF-4AC2-BA12-AB0FFCC99BC2}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{B5790372-D87E-430E-80AA-39D3E341A0FB}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{B5790372-D87E-430E-80AA-39D3E341A0FB}.Debug|Any CPU.Build.0 = Debug|x64
+		{B5790372-D87E-430E-80AA-39D3E341A0FB}.Debug|Any CPU.Deploy.0 = Debug|x64
+		{B5790372-D87E-430E-80AA-39D3E341A0FB}.Release|Any CPU.ActiveCfg = Release|x64
+		{B5790372-D87E-430E-80AA-39D3E341A0FB}.Release|Any CPU.Build.0 = Release|x64
+		{B5790372-D87E-430E-80AA-39D3E341A0FB}.Release|Any CPU.Deploy.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -135,5 +143,6 @@ Global
 		{69513118-4D44-476A-B07F-779F9C4C34F0} = {F429AF5D-989B-4746-BFAD-B39FD7F79E92}
 		{1468E713-BFE1-4A0C-AA85-42046EC4E3CE} = {F6333713-C5B9-46FA-917A-35CB61CA189D}
 		{3980DFD4-68BF-4AC2-BA12-AB0FFCC99BC2} = {A67B9C6C-9593-4953-BEF2-48A04C568908}
+		{B5790372-D87E-430E-80AA-39D3E341A0FB} = {37652B9A-5036-47B2-9853-5919C998E380}
 	EndGlobalSection
 EndGlobal

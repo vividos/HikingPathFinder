@@ -1,9 +1,9 @@
-﻿using System;
-using Microsoft.Practices.ServiceLocation;
-using Xamarin.Forms;
-using System.Threading.Tasks;
+﻿using Microsoft.Practices.ServiceLocation;
 using Plugin.Geolocator.Abstractions;
+using System;
 using System.Globalization;
+using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace HikingPathFinder.App.Views
 {

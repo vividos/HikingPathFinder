@@ -41,8 +41,11 @@
       <Link>Properties\VersionAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="App.cs" />
+    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Converter\IntToBooleanConverter.cs" />
     <Compile Include="Converter\PhotoToImageSourceConverter.cs" />
+    <Compile Include="Converter\ResourcePathToImageSourceConverter.cs" />
+    <Compile Include="ImageResourceExtension.cs" />
     <Compile Include="Models\MenuEntry.cs" />
     <Compile Include="ViewModels\MenuListData.cs" />
     <Compile Include="NavigationService.cs" />

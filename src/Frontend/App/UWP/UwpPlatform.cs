@@ -46,14 +46,14 @@ namespace HikingPathFinder.App.UWP
         }
 
         /// <summary>
-        /// Property containing the web view base path for Windows Phone. This project stores the
-        /// resources in the Assets folder, so the base path automatically contains this path.
+        /// Property containing the web view base path for UWP. This project stores the resources
+        /// in the Assets folder, so the base path automatically contains this path.
         /// </summary>
         public string WebViewBasePath
         {
             get
             {
-                return "ms-appx:///Assets/";
+                return "ms-appx-web:///Assets/";
             }
         }
 
@@ -79,28 +79,18 @@ namespace HikingPathFinder.App.UWP
         }
 
         /// <summary>
-        /// Loads a text asset from Windows Phone assets
+        /// Loads a text asset from UWP assets
         /// </summary>
         /// <param name="assetPath">relative asset path</param>
         /// <returns>loaded text asset</returns>
         public string LoadTextAsset(string assetPath)
         {
-            string fullPath = Path.Combine(this.WebViewBasePath, assetPath);
-            return LoadTextAssetAsync(fullPath).Result;
-        }
+            string fullAssetPath = "ms-appx:///Assets/" + assetPath;
+            var uri = new Uri(fullAssetPath);
 
-        /// <summary>
-        /// Loads a text asset from Windows Phone assets; async version
-        /// </summary>
-        /// <param name="assetPath">asset path to use</param>
-        /// <returns>task with text as result</returns>
-        private static async Task<string> LoadTextAssetAsync(string assetPath)
-        {
-            StorageFile file =
-                await StorageFile.GetFileFromApplicationUriAsync(new Uri(assetPath));
+            var file = StorageFile.GetFileFromApplicationUriAsync(uri).AsTask().Result;
 
-            string contents = await FileIO.ReadTextAsync(file);
-            return contents;
+            return File.ReadAllText(file.Path);
         }
     }
 }

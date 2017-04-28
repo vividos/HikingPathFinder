@@ -1,6 +1,9 @@
 ﻿using Microsoft.Practices.ServiceLocation;
 using Plugin.Geolocator.Abstractions;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -115,7 +118,26 @@ namespace HikingPathFinder.App.Views
         /// <returns>task to wait on</returns>
         private async Task OnClicked_ToolbarButtonLocateMe()
         {
-            var position = await this.geolocator.GetPositionAsync(timeoutMilliseconds: 1, includeHeading: false);
+            if (!await this.CheckPermissionAsync())
+            {
+                return;
+            }
+
+            Position position = null;
+            try
+            {
+                position = await this.geolocator.GetPositionAsync(timeoutMilliseconds: 10, includeHeading: false);
+            }
+            catch (Exception ex)
+            {
+                // no position service activated, or timeout reached
+                Debug.WriteLine(ex.ToString());
+
+                // zoom at next update
+                this.zoomToMyPosition = true;
+
+                return;
+            }
 
             if (position != null &&
                 Math.Abs(position.Latitude) < 1e5 &&
@@ -127,6 +149,41 @@ namespace HikingPathFinder.App.Views
             {
                 // zoom at next update
                 this.zoomToMyPosition = true;
+            }
+        }
+
+        /// <summary>
+        /// Checks for permission to use geolocator. See
+        /// https://github.com/jamesmontemagno/PermissionsPlugin
+        /// </summary>
+        /// <returns>true when everything is ok, false when permission wasn't given</returns>
+        private async Task<bool> CheckPermissionAsync()
+        {
+            try
+            {
+                var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
+
+                if (status != PermissionStatus.Granted)
+                {
+                    if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Location))
+                    {
+                        await DisplayAlert(
+                            "Hiking Path Finder",
+                            "The location permission is needed in order to locate your position on the map",
+                            "OK");
+                    }
+
+                    var results = await CrossPermissions.Current.RequestPermissionsAsync(new[] { Permission.Location });
+
+                    status = results[Permission.Location];
+                }
+
+                return status == PermissionStatus.Granted;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+                throw;
             }
         }
 

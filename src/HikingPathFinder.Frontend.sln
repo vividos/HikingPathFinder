@@ -1,0 +1,143 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Projects", "Shared Projects", "{F6333713-C5B9-46FA-917A-35CB61CA189D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend Projects", "Frontend Projects", "{6F9368B0-369C-4AA4-96D9-52D653CA1035}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{F429AF5D-989B-4746-BFAD-B39FD7F79E92}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet.config = NuGet.config
+		..\README.md = ..\README.md
+		Settings.StyleCop = Settings.StyleCop
+		Shared\VersionAssemblyInfo.cs = Shared\VersionAssemblyInfo.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{A67E3938-894E-4D8C-BA81-6FCE6511A45A}"
+	ProjectSection(SolutionItems) = preProject
+		..\Notes\AndroidNotes.md = ..\Notes\AndroidNotes.md
+		..\Notes\AspNetCoreNotes.md = ..\Notes\AspNetCoreNotes.md
+		..\Notes\CSharpNotes.md = ..\Notes\CSharpNotes.md
+		..\Notes\VisualStudioNotes.md = ..\Notes\VisualStudioNotes.md
+		..\Notes\XamarinNotes.md = ..\Notes\XamarinNotes.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{37652B9A-5036-47B2-9853-5919C998E380}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikingPathFinder.App", "Frontend\App\Portable\HikingPathFinder.App.csproj", "{D28C59C2-AED1-49F7-A304-D4596F559115}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikingPathFinder.App.Android", "Frontend\App\Android\HikingPathFinder.App.Android.csproj", "{1051A7CF-EFF1-46A1-9768-158366565DDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikingPathFinder.Model", "Shared\Model\HikingPathFinder.Model.csproj", "{8C97FD6E-8A02-4B46-9DFF-24FBC05A9024}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikingPathFinder.App.Database", "Frontend\App\Database\HikingPathFinder.App.Database.csproj", "{4BB458FB-55D5-42DB-B3A9-C5D8665CEF05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikingPathFinder.App.Logic", "Frontend\App\Logic\HikingPathFinder.App.Logic.csproj", "{2D98F59A-E337-4DE7-805E-12C44A335065}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikingPathFinder.App.Shared", "Frontend\App\Shared\HikingPathFinder.App.Shared.csproj", "{E444360C-69C0-4AF0-BD11-04CEA0F87CC9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{A67B9C6C-9593-4953-BEF2-48A04C568908}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikingPathFinder.App.UITest", "Frontend\App\UITest\HikingPathFinder.App.UITest.csproj", "{D388C4D6-3A13-40EE-BDB3-A01071426ACE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1051A7CF-EFF1-46A1-9768-158366565DDA} = {1051A7CF-EFF1-46A1-9768-158366565DDA}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikingPathFinder.App.iOS", "Frontend\App\iOS\HikingPathFinder.App.iOS.csproj", "{3DA7F6BE-F451-456E-9E23-DCC2362540AC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{69513118-4D44-476A-B07F-779F9C4C34F0}"
+	ProjectSection(SolutionItems) = preProject
+		..\Credits.md = ..\Credits.md
+		..\LICENSE.md = ..\LICENSE.md
+		..\Specification.md = ..\Specification.md
+		..\TODO.md = ..\TODO.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikingPathFinder.DemoData", "Shared\DemoData\HikingPathFinder.DemoData.csproj", "{1468E713-BFE1-4A0C-AA85-42046EC4E3CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikingPathFinder.App.UnitTest.Android", "Frontend\App\UnitTest\HikingPathFinder.App.UnitTest.Android.csproj", "{3980DFD4-68BF-4AC2-BA12-AB0FFCC99BC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikingPathFinder.App.UWP", "Frontend\App\UWP\HikingPathFinder.App.UWP.csproj", "{B5790372-D87E-430E-80AA-39D3E341A0FB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D28C59C2-AED1-49F7-A304-D4596F559115}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D28C59C2-AED1-49F7-A304-D4596F559115}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D28C59C2-AED1-49F7-A304-D4596F559115}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D28C59C2-AED1-49F7-A304-D4596F559115}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1051A7CF-EFF1-46A1-9768-158366565DDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1051A7CF-EFF1-46A1-9768-158366565DDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1051A7CF-EFF1-46A1-9768-158366565DDA}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{1051A7CF-EFF1-46A1-9768-158366565DDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1051A7CF-EFF1-46A1-9768-158366565DDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1051A7CF-EFF1-46A1-9768-158366565DDA}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{8C97FD6E-8A02-4B46-9DFF-24FBC05A9024}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C97FD6E-8A02-4B46-9DFF-24FBC05A9024}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C97FD6E-8A02-4B46-9DFF-24FBC05A9024}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C97FD6E-8A02-4B46-9DFF-24FBC05A9024}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BB458FB-55D5-42DB-B3A9-C5D8665CEF05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BB458FB-55D5-42DB-B3A9-C5D8665CEF05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BB458FB-55D5-42DB-B3A9-C5D8665CEF05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BB458FB-55D5-42DB-B3A9-C5D8665CEF05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D98F59A-E337-4DE7-805E-12C44A335065}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D98F59A-E337-4DE7-805E-12C44A335065}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D98F59A-E337-4DE7-805E-12C44A335065}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D98F59A-E337-4DE7-805E-12C44A335065}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E444360C-69C0-4AF0-BD11-04CEA0F87CC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E444360C-69C0-4AF0-BD11-04CEA0F87CC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E444360C-69C0-4AF0-BD11-04CEA0F87CC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E444360C-69C0-4AF0-BD11-04CEA0F87CC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D388C4D6-3A13-40EE-BDB3-A01071426ACE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D388C4D6-3A13-40EE-BDB3-A01071426ACE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D388C4D6-3A13-40EE-BDB3-A01071426ACE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D388C4D6-3A13-40EE-BDB3-A01071426ACE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DA7F6BE-F451-456E-9E23-DCC2362540AC}.Debug|Any CPU.ActiveCfg = Debug|iPhone
+		{3DA7F6BE-F451-456E-9E23-DCC2362540AC}.Debug|Any CPU.Build.0 = Debug|iPhone
+		{3DA7F6BE-F451-456E-9E23-DCC2362540AC}.Debug|Any CPU.Deploy.0 = Debug|iPhone
+		{3DA7F6BE-F451-456E-9E23-DCC2362540AC}.Release|Any CPU.ActiveCfg = Release|iPhone
+		{3DA7F6BE-F451-456E-9E23-DCC2362540AC}.Release|Any CPU.Build.0 = Release|iPhone
+		{3DA7F6BE-F451-456E-9E23-DCC2362540AC}.Release|Any CPU.Deploy.0 = Release|iPhone
+		{1468E713-BFE1-4A0C-AA85-42046EC4E3CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1468E713-BFE1-4A0C-AA85-42046EC4E3CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1468E713-BFE1-4A0C-AA85-42046EC4E3CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1468E713-BFE1-4A0C-AA85-42046EC4E3CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3980DFD4-68BF-4AC2-BA12-AB0FFCC99BC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3980DFD4-68BF-4AC2-BA12-AB0FFCC99BC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3980DFD4-68BF-4AC2-BA12-AB0FFCC99BC2}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{3980DFD4-68BF-4AC2-BA12-AB0FFCC99BC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3980DFD4-68BF-4AC2-BA12-AB0FFCC99BC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3980DFD4-68BF-4AC2-BA12-AB0FFCC99BC2}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{B5790372-D87E-430E-80AA-39D3E341A0FB}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{B5790372-D87E-430E-80AA-39D3E341A0FB}.Debug|Any CPU.Build.0 = Debug|x64
+		{B5790372-D87E-430E-80AA-39D3E341A0FB}.Debug|Any CPU.Deploy.0 = Debug|x64
+		{B5790372-D87E-430E-80AA-39D3E341A0FB}.Release|Any CPU.ActiveCfg = Release|x64
+		{B5790372-D87E-430E-80AA-39D3E341A0FB}.Release|Any CPU.Build.0 = Release|x64
+		{B5790372-D87E-430E-80AA-39D3E341A0FB}.Release|Any CPU.Deploy.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A67E3938-894E-4D8C-BA81-6FCE6511A45A} = {F429AF5D-989B-4746-BFAD-B39FD7F79E92}
+		{37652B9A-5036-47B2-9853-5919C998E380} = {6F9368B0-369C-4AA4-96D9-52D653CA1035}
+		{D28C59C2-AED1-49F7-A304-D4596F559115} = {37652B9A-5036-47B2-9853-5919C998E380}
+		{1051A7CF-EFF1-46A1-9768-158366565DDA} = {37652B9A-5036-47B2-9853-5919C998E380}
+		{8C97FD6E-8A02-4B46-9DFF-24FBC05A9024} = {F6333713-C5B9-46FA-917A-35CB61CA189D}
+		{4BB458FB-55D5-42DB-B3A9-C5D8665CEF05} = {37652B9A-5036-47B2-9853-5919C998E380}
+		{2D98F59A-E337-4DE7-805E-12C44A335065} = {37652B9A-5036-47B2-9853-5919C998E380}
+		{E444360C-69C0-4AF0-BD11-04CEA0F87CC9} = {37652B9A-5036-47B2-9853-5919C998E380}
+		{A67B9C6C-9593-4953-BEF2-48A04C568908} = {37652B9A-5036-47B2-9853-5919C998E380}
+		{D388C4D6-3A13-40EE-BDB3-A01071426ACE} = {A67B9C6C-9593-4953-BEF2-48A04C568908}
+		{3DA7F6BE-F451-456E-9E23-DCC2362540AC} = {37652B9A-5036-47B2-9853-5919C998E380}
+		{69513118-4D44-476A-B07F-779F9C4C34F0} = {F429AF5D-989B-4746-BFAD-B39FD7F79E92}
+		{1468E713-BFE1-4A0C-AA85-42046EC4E3CE} = {F6333713-C5B9-46FA-917A-35CB61CA189D}
+		{3980DFD4-68BF-4AC2-BA12-AB0FFCC99BC2} = {A67B9C6C-9593-4953-BEF2-48A04C568908}
+		{B5790372-D87E-430E-80AA-39D3E341A0FB} = {37652B9A-5036-47B2-9853-5919C998E380}
+	EndGlobalSection
+EndGlobal

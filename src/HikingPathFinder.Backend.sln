@@ -1,0 +1,70 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Projects", "Shared Projects", "{F6333713-C5B9-46FA-917A-35CB61CA189D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend Projects", "Backend Projects", "{E42065AC-C9D5-4EFA-859E-5305AA97FBD6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{F429AF5D-989B-4746-BFAD-B39FD7F79E92}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet.config = NuGet.config
+		..\README.md = ..\README.md
+		Settings.StyleCop = Settings.StyleCop
+		Shared\VersionAssemblyInfo.cs = Shared\VersionAssemblyInfo.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{A67E3938-894E-4D8C-BA81-6FCE6511A45A}"
+	ProjectSection(SolutionItems) = preProject
+		..\Notes\AndroidNotes.md = ..\Notes\AndroidNotes.md
+		..\Notes\AspNetCoreNotes.md = ..\Notes\AspNetCoreNotes.md
+		..\Notes\CSharpNotes.md = ..\Notes\CSharpNotes.md
+		..\Notes\VisualStudioNotes.md = ..\Notes\VisualStudioNotes.md
+		..\Notes\XamarinNotes.md = ..\Notes\XamarinNotes.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikingPathFinder.Model", "Shared\Model\HikingPathFinder.Model.csproj", "{8C97FD6E-8A02-4B46-9DFF-24FBC05A9024}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HikingPathFinder.Backend.WebApi", "Backend\WebApi\HikingPathFinder.Backend.WebApi.csproj", "{9C99C16B-05FF-48D5-B94D-680ECABD197B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{69513118-4D44-476A-B07F-779F9C4C34F0}"
+	ProjectSection(SolutionItems) = preProject
+		..\Credits.md = ..\Credits.md
+		..\LICENSE.md = ..\LICENSE.md
+		..\Specification.md = ..\Specification.md
+		..\TODO.md = ..\TODO.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikingPathFinder.DemoData", "Shared\DemoData\HikingPathFinder.DemoData.csproj", "{1468E713-BFE1-4A0C-AA85-42046EC4E3CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8C97FD6E-8A02-4B46-9DFF-24FBC05A9024}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C97FD6E-8A02-4B46-9DFF-24FBC05A9024}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C97FD6E-8A02-4B46-9DFF-24FBC05A9024}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C97FD6E-8A02-4B46-9DFF-24FBC05A9024}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C99C16B-05FF-48D5-B94D-680ECABD197B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C99C16B-05FF-48D5-B94D-680ECABD197B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C99C16B-05FF-48D5-B94D-680ECABD197B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C99C16B-05FF-48D5-B94D-680ECABD197B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1468E713-BFE1-4A0C-AA85-42046EC4E3CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1468E713-BFE1-4A0C-AA85-42046EC4E3CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1468E713-BFE1-4A0C-AA85-42046EC4E3CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1468E713-BFE1-4A0C-AA85-42046EC4E3CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A67E3938-894E-4D8C-BA81-6FCE6511A45A} = {F429AF5D-989B-4746-BFAD-B39FD7F79E92}
+		{8C97FD6E-8A02-4B46-9DFF-24FBC05A9024} = {F6333713-C5B9-46FA-917A-35CB61CA189D}
+		{9C99C16B-05FF-48D5-B94D-680ECABD197B} = {E42065AC-C9D5-4EFA-859E-5305AA97FBD6}
+		{69513118-4D44-476A-B07F-779F9C4C34F0} = {F429AF5D-989B-4746-BFAD-B39FD7F79E92}
+		{1468E713-BFE1-4A0C-AA85-42046EC4E3CE} = {F6333713-C5B9-46FA-917A-35CB61CA189D}
+	EndGlobalSection
+EndGlobal

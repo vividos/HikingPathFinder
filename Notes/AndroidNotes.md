@@ -11,6 +11,9 @@ A list, because I never can remember what is what.
     API Level 24 - Android 7.0 - Nougat
     API Level 25 - Android 7.1 - Nougat
 
+The currently used Android versions can be seen here, monthly updated:
+https://developer.android.com/about/dashboards/index.html
+
 ## Source Code
 
 Android source code is open source and can be viewed here.
@@ -31,3 +34,10 @@ On these screen densities, the splash screen is at least this high and wide:
     xhdpi - 640x960px
     xxhdpi - 960x1440px
     xxxhdpi - 1280x1920px
+
+## Icons
+
+Material Design icons for Android, from Google:
+http://google.github.io/material-design-icons/
+https://material.io/icons/
+

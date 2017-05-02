@@ -15,6 +15,9 @@ Ctrl+F10 - Run to cursor
 
 Tools > Extensions and Updates...
 
-Markdown Editor by Mads Kristensen
+Web Essentials 2017
+- Markdown Editor by Mads Kristensen
+
+Productivity Power Tools 2017
 
 ## NuGet

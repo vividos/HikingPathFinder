@@ -2,6 +2,16 @@
 
 ## General
 
+### Mono
+
+Sourcecode can be found under:
+https://github.com/mono/mono/tree/master/mcs/class
+
+## Android
+
+Android API levels to adjust in the IDE:
+http://redth.codes/such-android-api-levels-much-confuse-wow/
+
 ### Debug keystore
 
 Stored in file:
@@ -29,6 +39,8 @@ ContentPage - shows views
 
 NavigationPage - wraps a page and provides back navigation (PushAsync(),
 PopAsync())
+
+Layouts - just see https://developer.xamarin.com/guides/xamarin-forms/user-interface/controls/layouts/
 
 ### Views
 

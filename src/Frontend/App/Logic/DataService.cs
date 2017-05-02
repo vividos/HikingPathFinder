@@ -92,7 +92,7 @@ namespace HikingPathFinder.App.Logic
         /// Returns list of pre-planned tours
         /// </summary>
         /// <param name="token">token to cancel operation</param>
-        /// <returns></returns>
+        /// <returns>list of pre-planned tours</returns>
         public async Task<List<PrePlannedTour>> GetPrePlannedToursListAsync(CancellationToken token)
         {
             // ensure that app config has been loaded
@@ -104,6 +104,24 @@ namespace HikingPathFinder.App.Logic
 
             var prePlannedToursList = new List<PrePlannedTour>(tableQuery);
             return prePlannedToursList;
+        }
+
+        /// <summary>
+        /// Returns list of locations
+        /// </summary>
+        /// <param name="token">token to cancel operation</param>
+        /// <returns>list of locations</returns>
+        public async Task<List<Location>> GetLocationListAsync(CancellationToken token)
+        {
+            // ensure that app config has been loaded
+            await GetAppInfoAsync(token);
+
+            var connection = this.database.GetConnection();
+
+            var tableQuery = connection.Table<Location>();
+
+            var locationList = new List<Location>(tableQuery);
+            return locationList;
         }
         #endregion
 

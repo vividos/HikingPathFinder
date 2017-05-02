@@ -1,5 +1,6 @@
 ﻿using HikingPathFinder.App.ViewModels;
 using HikingPathFinder.Model;
+using System.Diagnostics;
 using Xamarin.Forms;
 
 namespace HikingPathFinder.App.Views
@@ -15,10 +16,12 @@ namespace HikingPathFinder.App.Views
         /// <param name="tour">tour to show</param>
         public ShowTourPage(Tour tour)
         {
-            this.BindingContext = new ShowTourViewModel(tour);
-            this.tourSummary.BindingContext = new TourSummaryViewModel(tour);
+            Debug.Assert(tour != null, "tour must be non-null");
 
             this.InitializeComponent();
+
+            this.BindingContext = new ShowTourViewModel(tour);
+            this.tourSummary.BindingContext = new TourSummaryViewModel(tour);
         }
     }
 }

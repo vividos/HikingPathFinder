@@ -1,224 +1,272 @@
-﻿// ***********************************************************************
-// Assembly         : XLabs.Forms
-// Author           : XLabs Team
-// Created          : 12-27-2015
-// 
-// Last Modified By : XLabs Team
-// Last Modified On : 01-04-2016
-// ***********************************************************************
-// <copyright file="AutoCompleteView.cs" company="XLabs Team">
-//     Copyright (c) XLabs Team. All rights reserved.
-// </copyright>
-// <summary>
-//       This project is licensed under the Apache 2.0 license
-//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
-//       
-//       XLabs is a open source project that aims to provide a powerfull and cross 
-//       platform set of controls tailored to work with Xamarin Forms.
-// </summary>
-// ***********************************************************************
-// 
-
-using System;
-using System.Collections;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Windows.Input;
-using Xamarin.Forms;
-
-namespace XLabs.Forms.Controls
+﻿/// <copyright file="AutoCompleteView.cs" company="XLabs Team">
+///     Copyright (c) XLabs Team. All rights reserved.
+///     Copyright (c) 2017 Michael Fink.
+/// </copyright>
+/// <summary>
+///       This project is licensed under the Apache 2.0 license
+///       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+///
+///       XLabs is a open source project that aims to provide a powerfull and cross
+///       platform set of controls tailored to work with Xamarin Forms.
+/// </summary>
+namespace HikingPathFinder.App.Controls
 {
+    using System;
+    using System.Collections;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+    using System.Windows.Input;
+    using Xamarin.Forms;
+
     /// <summary>
-    /// Define the AutoCompleteView control.
+    /// Provides an entry control with optional search button that shows suggestions for auto-
+    /// completion of the entry, based on previously typed text. Many aspects of the control can
+    /// be configured using properties.
     /// </summary>
     public class AutoCompleteView : ContentView
     {
+        #region Bindable properties
+        #pragma warning disable CS0618 // Type or member is obsolete
         /// <summary>
-        /// The execute on suggestion click property.
+        /// Property that indicates if suggestion clicks should result in an "execute" of the
+        /// search; allowed values: True, False.
         /// </summary>
-        public static readonly BindableProperty ExecuteOnSuggestionClickProperty = BindableProperty.Create<AutoCompleteView, bool>(p => p.ExecuteOnSuggestionClick, false);
+        public static readonly BindableProperty ExecuteOnSuggestionClickProperty =
+            BindableProperty.Create<AutoCompleteView, bool>(p => p.ExecuteOnSuggestionClick, false);
 
         /// <summary>
-        /// The placeholder property.
+        /// Property to store placeholder text for text entry control.
         /// </summary>
-        public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create<AutoCompleteView, string>(p => p.Placeholder, string.Empty, BindingMode.TwoWay, null, PlaceHolderChanged);
+        public static readonly BindableProperty PlaceholderProperty =
+            BindableProperty.Create<AutoCompleteView, string>(p => p.Placeholder, string.Empty, BindingMode.TwoWay, null, OnPlaceholderChanged);
 
         /// <summary>
-        /// The search background color property.
+        /// Property to store background color for the search button.
         /// </summary>
-        public static readonly BindableProperty SearchBackgroundColorProperty = BindableProperty.Create<AutoCompleteView, Color>(p => p.SearchBackgroundColor, Color.Red, BindingMode.TwoWay, null, SearchBackgroundColorChanged);
+        public static readonly BindableProperty SearchBackgroundColorProperty =
+            BindableProperty.Create<AutoCompleteView, Color>(p => p.SearchBackgroundColor, Color.Red, BindingMode.TwoWay, null, OnSearchBackgroundColorChanged);
 
         /// <summary>
-        /// The search border color property.
+        /// Property to store the border color for the search button.
         /// </summary>
-        public static readonly BindableProperty SearchBorderColorProperty = BindableProperty.Create<AutoCompleteView, Color>(p => p.SearchBorderColor, Color.White, BindingMode.TwoWay, null, SearchBorderColorChanged);
+        public static readonly BindableProperty SearchBorderColorProperty =
+            BindableProperty.Create<AutoCompleteView, Color>(p => p.SearchBorderColor, Color.White, BindingMode.TwoWay, null, OnSearchBorderColorChanged);
 
         /// <summary>
-        /// The search border radius property.
+        /// Property to store the border radius for the search button.
         /// </summary>
-        public static readonly BindableProperty SearchBorderRadiusProperty = BindableProperty.Create<AutoCompleteView, int>(p => p.SearchBorderRadius, 0, BindingMode.TwoWay, null, SearchBorderRadiusChanged);
+        public static readonly BindableProperty SearchBorderRadiusProperty =
+            BindableProperty.Create<AutoCompleteView, int>(p => p.SearchBorderRadius, 0, BindingMode.TwoWay, null, OnSearchBorderRadiusChanged);
 
         /// <summary>
-        /// The search border width property.
+        /// Property to store the border width for the search button.
         /// </summary>
-        public static readonly BindableProperty SearchBorderWidthProperty = BindableProperty.Create<AutoCompleteView, int>(p => p.SearchBorderWidth, 1, BindingMode.TwoWay, null, SearchBorderWidthChanged);
+        public static readonly BindableProperty SearchBorderWidthProperty =
+            BindableProperty.Create<AutoCompleteView, int>(p => p.SearchBorderWidth, 1, BindingMode.TwoWay, null, OnSearchBorderWidthChanged);
 
         /// <summary>
-        /// The search command property.
+        /// Property to store the search command that is sent when the search button is pressed.
         /// </summary>
-        public static readonly BindableProperty SearchCommandProperty = BindableProperty.Create<AutoCompleteView, ICommand>(p => p.SearchCommand, null);
+        public static readonly BindableProperty SearchCommandProperty =
+            BindableProperty.Create<AutoCompleteView, ICommand>(p => p.SearchCommand, null);
 
         /// <summary>
-        /// The search horizontal options property
+        /// Property to store the horizontal options for the search button.
         /// </summary>
-        public static readonly BindableProperty SearchHorizontalOptionsProperty = BindableProperty.Create<AutoCompleteView, LayoutOptions>(p => p.SearchHorizontalOptions, LayoutOptions.FillAndExpand, BindingMode.TwoWay, null, SearchHorizontalOptionsChanged);
+        public static readonly BindableProperty SearchHorizontalOptionsProperty =
+            BindableProperty.Create<AutoCompleteView, LayoutOptions>(p => p.SearchHorizontalOptions, LayoutOptions.FillAndExpand, BindingMode.TwoWay, null, OnSearchHorizontalOptionsChanged);
 
         /// <summary>
-        /// The search text color property.
+        /// Property to store the text color for the search button.
         /// </summary>
-        public static readonly BindableProperty SearchTextColorProperty = BindableProperty.Create<AutoCompleteView, Color>(p => p.SearchTextColor, Color.Red, BindingMode.TwoWay, null, SearchTextColorChanged);
+        public static readonly BindableProperty SearchTextColorProperty =
+            BindableProperty.Create<AutoCompleteView, Color>(p => p.SearchTextColor, Color.Red, BindingMode.TwoWay, null, OnSearchTextColorChanged);
 
         /// <summary>
-        /// The search text property.
+        /// Property to store the text for the search button.
         /// </summary>
-        public static readonly BindableProperty SearchTextProperty = BindableProperty.Create<AutoCompleteView, string>(p => p.SearchText, "Search", BindingMode.TwoWay, null, SearchTextChanged);
+        public static readonly BindableProperty SearchTextProperty =
+            BindableProperty.Create<AutoCompleteView, string>(p => p.SearchText, "Search", BindingMode.TwoWay, null, OnSearchTextChanged);
 
         /// <summary>
-        /// The search vertical options property
+        /// Property to store the vertical options for the search button.
         /// </summary>
-        public static readonly BindableProperty SearchVerticalOptionsProperty = BindableProperty.Create<AutoCompleteView, LayoutOptions>(p => p.SearchVerticalOptions, LayoutOptions.Center, BindingMode.TwoWay, null, SearchVerticalOptionsChanged);
+        public static readonly BindableProperty SearchVerticalOptionsProperty =
+            BindableProperty.Create<AutoCompleteView, LayoutOptions>(p => p.SearchVerticalOptions, LayoutOptions.Center, BindingMode.TwoWay, null, OnSearchVerticalOptionsChanged);
 
         /// <summary>
-        /// The selected command property.
+        /// Property to store the command that is sent when a suggested item has been clicked.
         /// </summary>
-        public static readonly BindableProperty SelectedCommandProperty = BindableProperty.Create<AutoCompleteView, ICommand>(p => p.SelectedCommand, null);
+        public static readonly BindableProperty SelectedCommandProperty =
+            BindableProperty.Create<AutoCompleteView, ICommand>(p => p.SelectedCommand, null);
 
         /// <summary>
-        /// The selected item property.
+        /// Property to store the item selected from the suggestion list.
         /// </summary>
-        public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create<AutoCompleteView, object>(p => p.SelectedItem, null, BindingMode.TwoWay);
+        public static readonly BindableProperty SelectedItemProperty =
+            BindableProperty.Create<AutoCompleteView, object>(p => p.SelectedItem, null, BindingMode.TwoWay);
 
         /// <summary>
-        /// The show search property.
+        /// Property to store if the search button should appear at all.
         /// </summary>
-        public static readonly BindableProperty ShowSearchProperty = BindableProperty.Create<AutoCompleteView, bool>(p => p.ShowSearchButton, true, BindingMode.TwoWay, null, ShowSearchChanged);
+        public static readonly BindableProperty ShowSearchProperty =
+            BindableProperty.Create<AutoCompleteView, bool>(p => p.ShowSearchButton, true, BindingMode.TwoWay, null, OnShowSearchChanged);
 
         /// <summary>
-        /// The suggestion background color property.
+        /// Property to store the background color of the suggestion list.
         /// </summary>
-        public static readonly BindableProperty SuggestionBackgroundColorProperty = BindableProperty.Create<AutoCompleteView, Color>(p => p.SuggestionBackgroundColor, Color.Red, BindingMode.TwoWay, null, SuggestionBackgroundColorChanged);
+        public static readonly BindableProperty SuggestionBackgroundColorProperty =
+            BindableProperty.Create<AutoCompleteView, Color>(p => p.SuggestionBackgroundColor, Color.Red, BindingMode.TwoWay, null, OnSuggestionBackgroundColorChanged);
 
         /// <summary>
-        /// The suggestion item data template property.
+        /// Property to store the DataTemplate that should be used for every suggestion list item.
         /// </summary>
-        public static readonly BindableProperty SuggestionItemDataTemplateProperty = BindableProperty.Create<AutoCompleteView, DataTemplate>(p => p.SuggestionItemDataTemplate, null, BindingMode.TwoWay, null, SuggestionItemDataTemplateChanged);
+        public static readonly BindableProperty SuggestionItemDataTemplateProperty =
+            BindableProperty.Create<AutoCompleteView, DataTemplate>(p => p.SuggestionItemDataTemplate, null, BindingMode.TwoWay, null, OnSuggestionItemDataTemplateChanged);
 
         /// <summary>
-        /// The suggestion height request property.
+        /// Property to store the height request of the suggestions list.
         /// </summary>
-        public static readonly BindableProperty SuggestionsHeightRequestProperty = BindableProperty.Create<AutoCompleteView, double>(p => p.SuggestionsHeightRequest, 250, BindingMode.TwoWay, null, SuggestionHeightRequestChanged);
+        public static readonly BindableProperty SuggestionsHeightRequestProperty =
+            BindableProperty.Create<AutoCompleteView, double>(p => p.SuggestionsHeightRequest, 250, BindingMode.TwoWay, null, OnSuggestionHeightRequestChanged);
 
         /// <summary>
-        /// The suggestions property.
+        /// Property to store the list of (view model) items that can be presented as suggestions.
         /// </summary>
-        public static readonly BindableProperty SuggestionsProperty = BindableProperty.Create<AutoCompleteView, IEnumerable>(p => p.Suggestions, null);
+        public static readonly BindableProperty SuggestionsProperty =
+            BindableProperty.Create<AutoCompleteView, IEnumerable>(p => p.Suggestions, null);
 
         /// <summary>
-        /// The text background color property.
+        /// Property to store the background color of the text entry element.
         /// </summary>
-        public static readonly BindableProperty TextBackgroundColorProperty = BindableProperty.Create<AutoCompleteView, Color>(p => p.TextBackgroundColor, Color.Transparent, BindingMode.TwoWay, null, TextBackgroundColorChanged);
+        public static readonly BindableProperty TextBackgroundColorProperty =
+            BindableProperty.Create<AutoCompleteView, Color>(p => p.TextBackgroundColor, Color.Transparent, BindingMode.TwoWay, null, OnTextBackgroundColorChanged);
 
         /// <summary>
-        /// The text color property.
+        /// Property to store the text color of the text entry element.
         /// </summary>
-        public static readonly BindableProperty TextColorProperty = BindableProperty.Create<AutoCompleteView, Color>(p => p.TextBackgroundColor, Color.Black, BindingMode.TwoWay, null, TextColorChanged);
+        public static readonly BindableProperty TextColorProperty =
+            BindableProperty.Create<AutoCompleteView, Color>(p => p.TextColor, Color.Black, BindingMode.TwoWay, null, OnTextColorChanged);
 
         /// <summary>
-        /// The text horizontal options property
+        /// Property to store the horizontal options for the text entry element.
         /// </summary>
-        public static readonly BindableProperty TextHorizontalOptionsProperty = BindableProperty.Create<AutoCompleteView, LayoutOptions>(p => p.TextHorizontalOptions, LayoutOptions.FillAndExpand, BindingMode.TwoWay, null, TextHorizontalOptionsChanged);
+        public static readonly BindableProperty TextHorizontalOptionsProperty =
+            BindableProperty.Create<AutoCompleteView, LayoutOptions>(p => p.TextHorizontalOptions, LayoutOptions.FillAndExpand, BindingMode.TwoWay, null, OnTextHorizontalOptionsChanged);
 
         /// <summary>
-        /// The text property.
+        /// Property to store the text that was entered into the text entry element. The text may
+        /// or may not correspond to a selected item. Use SelectedItem property to identify
+        /// selected item instead.
         /// </summary>
-        public static readonly BindableProperty TextProperty = BindableProperty.Create<AutoCompleteView, string>(p => p.Text, string.Empty, BindingMode.TwoWay, null, TextValueChanged);
+        public static readonly BindableProperty TextProperty =
+            BindableProperty.Create<AutoCompleteView, string>(p => p.Text, string.Empty, BindingMode.TwoWay, null, OnTextValueChanged);
 
         /// <summary>
-        /// The text vertical options property.
+        /// Property to store the vertical options for the text entry element.
         /// </summary>
-        public static readonly BindableProperty TextVerticalOptionsProperty = BindableProperty.Create<AutoCompleteView, LayoutOptions>(p => p.TextVerticalOptions, LayoutOptions.Start, BindingMode.TwoWay, null, TestVerticalOptionsChanged);
-        private readonly ObservableCollection<object> _availableSuggestions;
-        private readonly Button _btnSearch;
-        private readonly Entry _entText;
-        private readonly ListView _lstSuggestions;
-        private readonly StackLayout _stkBase;
+        public static readonly BindableProperty TextVerticalOptionsProperty =
+            BindableProperty.Create<AutoCompleteView, LayoutOptions>(p => p.TextVerticalOptions, LayoutOptions.Start, BindingMode.TwoWay, null, OnTextVerticalOptionsChanged);
+#pragma warning restore CS0618 // Type or member is obsolete
+        #endregion
+
+        /// <summary>
+        /// List of currently available suggestions.
+        /// </summary>
+        private readonly ObservableCollection<object> availableSuggestions;
+
+        /// <summary>
+        /// Search button to start searching for text
+        /// </summary>
+        private readonly Button searchButton;
+
+        /// <summary>
+        /// Entry element to enter text
+        /// </summary>
+        private readonly Entry enteredText;
+
+        /// <summary>
+        /// List view to display suggestions
+        /// </summary>
+        private readonly ListView suggestionsListView;
+
+        /// <summary>
+        /// Layout for edit text field and search button
+        /// </summary>
+        private readonly StackLayout layout;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AutoCompleteView"/> class.
         /// </summary>
         public AutoCompleteView()
         {
-            _availableSuggestions = new ObservableCollection<object>();
-            _stkBase = new StackLayout();
+            this.availableSuggestions = new ObservableCollection<object>();
+            this.layout = new StackLayout();
             var innerLayout = new StackLayout();
-            _entText = new Entry
+
+            this.enteredText = new Entry
             {
-                HorizontalOptions = TextHorizontalOptions,
-                VerticalOptions = TextVerticalOptions,
-                TextColor = TextColor,
-                BackgroundColor = TextBackgroundColor
-            };
-            _btnSearch = new Button
-            {
-                VerticalOptions = SearchVerticalOptions,
-                HorizontalOptions = SearchHorizontalOptions,
-                Text = SearchText
+                HorizontalOptions = this.TextHorizontalOptions,
+                VerticalOptions = this.TextVerticalOptions,
+                TextColor = this.TextColor,
+                BackgroundColor = this.TextBackgroundColor
             };
 
-            _lstSuggestions = new ListView
+            this.searchButton = new Button
             {
-                HeightRequest = SuggestionsHeightRequest,
+                VerticalOptions = this.SearchVerticalOptions,
+                HorizontalOptions = this.SearchHorizontalOptions,
+                Text = this.SearchText
+            };
+
+            this.suggestionsListView = new ListView
+            {
+                HeightRequest = this.SuggestionsHeightRequest,
                 HasUnevenRows = true
             };
 
-            innerLayout.Children.Add(_entText);
-            innerLayout.Children.Add(_btnSearch);
-            _stkBase.Children.Add(innerLayout);
-            _stkBase.Children.Add(_lstSuggestions);
+            innerLayout.Children.Add(this.enteredText);
+            innerLayout.Children.Add(this.searchButton);
 
-            Content = _stkBase;
+            this.layout.Children.Add(innerLayout);
+            this.layout.Children.Add(this.suggestionsListView);
 
+            this.Content = this.layout;
 
-            _entText.TextChanged += (s, e) =>
+            this.enteredText.TextChanged += (s, e) =>
             {
-                Text = e.NewTextValue;
-                OnTextChanged(e);
+                this.Text = e.NewTextValue;
+                this.OnTextChanged(e);
             };
-            _btnSearch.Clicked += (s, e) =>
+
+            this.searchButton.Clicked += (s, e) =>
             {
-                if (SearchCommand != null && SearchCommand.CanExecute(Text))
+                if (this.SearchCommand != null &&
+                    this.SearchCommand.CanExecute(this.Text))
                 {
-                    SearchCommand.Execute(Text);
+                    this.SearchCommand.Execute(this.Text);
                 }
             };
-            _lstSuggestions.ItemSelected += (s, e) =>
+
+            this.suggestionsListView.ItemSelected += (s, e) =>
             {
-                _entText.Text = e.SelectedItem.ToString();
+                this.enteredText.Text = e.SelectedItem.ToString();
 
-                _availableSuggestions.Clear();
-                ShowHideListbox(false);
-                OnSelectedItemChanged(e.SelectedItem);
+                this.availableSuggestions.Clear();
+                this.ShowHideListbox(false);
+                this.OnSelectedItemChanged(e.SelectedItem);
 
-                if (ExecuteOnSuggestionClick
-                   && SearchCommand != null
-                   && SearchCommand.CanExecute(Text))
+                if (this.ExecuteOnSuggestionClick &&
+                    this.SearchCommand != null &&
+                    this.SearchCommand.CanExecute(this.Text))
                 {
-                    SearchCommand.Execute(e);
+                    this.SearchCommand.Execute(e);
                 }
             };
-            ShowHideListbox(false);
-            _lstSuggestions.ItemsSource = _availableSuggestions;
+
+            this.ShowHideListbox(false);
+            this.suggestionsListView.ItemsSource = this.availableSuggestions;
         }
 
         /// <summary>
@@ -237,7 +285,7 @@ namespace XLabs.Forms.Controls
         /// <value>The available Suggestions.</value>
         public IEnumerable AvailableSuggestions
         {
-            get { return _availableSuggestions; }
+            get { return this.availableSuggestions; }
         }
 
         /// <summary>
@@ -246,8 +294,8 @@ namespace XLabs.Forms.Controls
         /// <value><c>true</c> if [execute on sugestion click]; otherwise, <c>false</c>.</value>
         public bool ExecuteOnSuggestionClick
         {
-            get { return (bool)GetValue(ExecuteOnSuggestionClickProperty); }
-            set { SetValue(ExecuteOnSuggestionClickProperty, value); }
+            get { return (bool)this.GetValue(ExecuteOnSuggestionClickProperty); }
+            set { this.SetValue(ExecuteOnSuggestionClickProperty, value); }
         }
 
         /// <summary>
@@ -256,8 +304,8 @@ namespace XLabs.Forms.Controls
         /// <value>The placeholder.</value>
         public string Placeholder
         {
-            get { return (string)GetValue(PlaceholderProperty); }
-            set { SetValue(PlaceholderProperty, value); }
+            get { return (string)this.GetValue(PlaceholderProperty); }
+            set { this.SetValue(PlaceholderProperty, value); }
         }
 
         /// <summary>
@@ -266,8 +314,8 @@ namespace XLabs.Forms.Controls
         /// <value>The color of the search background.</value>
         public Color SearchBackgroundColor
         {
-            get { return (Color)GetValue(SearchBackgroundColorProperty); }
-            set { SetValue(SearchBackgroundColorProperty, value); }
+            get { return (Color)this.GetValue(SearchBackgroundColorProperty); }
+            set { this.SetValue(SearchBackgroundColorProperty, value); }
         }
 
         /// <summary>
@@ -276,8 +324,8 @@ namespace XLabs.Forms.Controls
         /// <value>The search border brush.</value>
         public Color SearchBorderColor
         {
-            get { return (Color)GetValue(SearchBorderColorProperty); }
-            set { SetValue(SearchBorderColorProperty, value); }
+            get { return (Color)this.GetValue(SearchBorderColorProperty); }
+            set { this.SetValue(SearchBorderColorProperty, value); }
         }
 
         /// <summary>
@@ -286,8 +334,8 @@ namespace XLabs.Forms.Controls
         /// <value>The search border radius.</value>
         public int SearchBorderRadius
         {
-            get { return (int)GetValue(SearchBorderRadiusProperty); }
-            set { SetValue(SearchBorderRadiusProperty, value); }
+            get { return (int)this.GetValue(SearchBorderRadiusProperty); }
+            set { this.SetValue(SearchBorderRadiusProperty, value); }
         }
 
         /// <summary>
@@ -296,8 +344,8 @@ namespace XLabs.Forms.Controls
         /// <value>The width of the search border.</value>
         public int SearchBorderWidth
         {
-            get { return (int)GetValue(SearchBorderWidthProperty); }
-            set { SetValue(SearchBorderWidthProperty, value); }
+            get { return (int)this.GetValue(SearchBorderWidthProperty); }
+            set { this.SetValue(SearchBorderWidthProperty, value); }
         }
 
         /// <summary>
@@ -306,8 +354,8 @@ namespace XLabs.Forms.Controls
         /// <value>The search command.</value>
         public ICommand SearchCommand
         {
-            get { return (ICommand)GetValue(SearchCommandProperty); }
-            set { SetValue(SearchCommandProperty, value); }
+            get { return (ICommand)this.GetValue(SearchCommandProperty); }
+            set { this.SetValue(SearchCommandProperty, value); }
         }
 
         /// <summary>
@@ -316,8 +364,8 @@ namespace XLabs.Forms.Controls
         /// <value>The search horizontal options.</value>
         public LayoutOptions SearchHorizontalOptions
         {
-            get { return (LayoutOptions)GetValue(SearchHorizontalOptionsProperty); }
-            set { SetValue(SearchHorizontalOptionsProperty, value); }
+            get { return (LayoutOptions)this.GetValue(SearchHorizontalOptionsProperty); }
+            set { this.SetValue(SearchHorizontalOptionsProperty, value); }
         }
 
         /// <summary>
@@ -326,8 +374,8 @@ namespace XLabs.Forms.Controls
         /// <value>The search text.</value>
         public string SearchText
         {
-            get { return (string)GetValue(SearchTextProperty); }
-            set { SetValue(SearchTextProperty, value); }
+            get { return (string)this.GetValue(SearchTextProperty); }
+            set { this.SetValue(SearchTextProperty, value); }
         }
 
         /// <summary>
@@ -336,8 +384,8 @@ namespace XLabs.Forms.Controls
         /// <value>The color of the search text.</value>
         public Color SearchTextColor
         {
-            get { return (Color)GetValue(SearchTextColorProperty); }
-            set { SetValue(SearchTextColorProperty, value); }
+            get { return (Color)this.GetValue(SearchTextColorProperty); }
+            set { this.SetValue(SearchTextColorProperty, value); }
         }
 
         /// <summary>
@@ -346,10 +394,9 @@ namespace XLabs.Forms.Controls
         /// <value>The search vertical options.</value>
         public LayoutOptions SearchVerticalOptions
         {
-            get { return (LayoutOptions)GetValue(SearchVerticalOptionsProperty); }
-            set { SetValue(SearchVerticalOptionsProperty, value); }
+            get { return (LayoutOptions)this.GetValue(SearchVerticalOptionsProperty); }
+            set { this.SetValue(SearchVerticalOptionsProperty, value); }
         }
-
 
         /// <summary>
         /// Gets or sets the selected command.
@@ -357,8 +404,8 @@ namespace XLabs.Forms.Controls
         /// <value>The selected command.</value>
         public ICommand SelectedCommand
         {
-            get { return (ICommand)GetValue(SelectedCommandProperty); }
-            set { SetValue(SelectedCommandProperty, value); }
+            get { return (ICommand)this.GetValue(SelectedCommandProperty); }
+            set { this.SetValue(SelectedCommandProperty, value); }
         }
 
         /// <summary>
@@ -367,8 +414,8 @@ namespace XLabs.Forms.Controls
         /// <value>The selected item.</value>
         public object SelectedItem
         {
-            get { return (object)GetValue(SelectedItemProperty); }
-            set { SetValue(SelectedItemProperty, value); }
+            get { return (object)this.GetValue(SelectedItemProperty); }
+            set { this.SetValue(SelectedItemProperty, value); }
         }
 
         /// <summary>
@@ -377,8 +424,8 @@ namespace XLabs.Forms.Controls
         /// <value><c>true</c> if [show search button]; otherwise, <c>false</c>.</value>
         public bool ShowSearchButton
         {
-            get { return (bool)GetValue(ShowSearchProperty); }
-            set { SetValue(ShowSearchProperty, value); }
+            get { return (bool)this.GetValue(ShowSearchProperty); }
+            set { this.SetValue(ShowSearchProperty, value); }
         }
 
         /// <summary>
@@ -387,8 +434,8 @@ namespace XLabs.Forms.Controls
         /// <value>The color of the sugestion background.</value>
         public Color SuggestionBackgroundColor
         {
-            get { return (Color)GetValue(SuggestionBackgroundColorProperty); }
-            set { SetValue(SuggestionBackgroundColorProperty, value); }
+            get { return (Color)this.GetValue(SuggestionBackgroundColorProperty); }
+            set { this.SetValue(SuggestionBackgroundColorProperty, value); }
         }
 
         /// <summary>
@@ -397,8 +444,8 @@ namespace XLabs.Forms.Controls
         /// <value>The sugestion item data template.</value>
         public DataTemplate SuggestionItemDataTemplate
         {
-            get { return (DataTemplate)GetValue(SuggestionItemDataTemplateProperty); }
-            set { SetValue(SuggestionItemDataTemplateProperty, value); }
+            get { return (DataTemplate)this.GetValue(SuggestionItemDataTemplateProperty); }
+            set { this.SetValue(SuggestionItemDataTemplateProperty, value); }
         }
 
         /// <summary>
@@ -407,8 +454,8 @@ namespace XLabs.Forms.Controls
         /// <value>The Suggestions.</value>
         public IEnumerable Suggestions
         {
-            get { return (IEnumerable)GetValue(SuggestionsProperty); }
-            set { SetValue(SuggestionsProperty, value); }
+            get { return (IEnumerable)this.GetValue(SuggestionsProperty); }
+            set { this.SetValue(SuggestionsProperty, value); }
         }
 
         /// <summary>
@@ -417,17 +464,18 @@ namespace XLabs.Forms.Controls
         /// <value>The height of the suggestion.</value>
         public double SuggestionsHeightRequest
         {
-            get { return (double)GetValue(SuggestionsHeightRequestProperty); }
-            set { SetValue(SuggestionsHeightRequestProperty, value); }
+            get { return (double)this.GetValue(SuggestionsHeightRequestProperty); }
+            set { this.SetValue(SuggestionsHeightRequestProperty, value); }
         }
+
         /// <summary>
         /// Gets or sets the text.
         /// </summary>
         /// <value>The text.</value>
         public string Text
         {
-            get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
+            get { return (string)this.GetValue(TextProperty); }
+            set { this.SetValue(TextProperty, value); }
         }
 
         /// <summary>
@@ -436,8 +484,8 @@ namespace XLabs.Forms.Controls
         /// <value>The color of the text background.</value>
         public Color TextBackgroundColor
         {
-            get { return (Color)GetValue(TextBackgroundColorProperty); }
-            set { SetValue(TextBackgroundColorProperty, value); }
+            get { return (Color)this.GetValue(TextBackgroundColorProperty); }
+            set { this.SetValue(TextBackgroundColorProperty, value); }
         }
 
         /// <summary>
@@ -446,8 +494,8 @@ namespace XLabs.Forms.Controls
         /// <value>The color of the text.</value>
         public Color TextColor
         {
-            get { return (Color)GetValue(TextColorProperty); }
-            set { SetValue(TextColorProperty, value); }
+            get { return (Color)this.GetValue(TextColorProperty); }
+            set { this.SetValue(TextColorProperty, value); }
         }
 
         /// <summary>
@@ -456,8 +504,8 @@ namespace XLabs.Forms.Controls
         /// <value>The text horizontal options.</value>
         public LayoutOptions TextHorizontalOptions
         {
-            get { return (LayoutOptions)GetValue(TextHorizontalOptionsProperty); }
-            set { SetValue(TextHorizontalOptionsProperty, value); }
+            get { return (LayoutOptions)this.GetValue(TextHorizontalOptionsProperty); }
+            set { this.SetValue(TextHorizontalOptionsProperty, value); }
         }
 
         /// <summary>
@@ -466,306 +514,312 @@ namespace XLabs.Forms.Controls
         /// <value>The text vertical options.</value>
         public LayoutOptions TextVerticalOptions
         {
-            get { return (LayoutOptions)GetValue(TextVerticalOptionsProperty); }
-            set { SetValue(TextVerticalOptionsProperty, value); }
+            get { return (LayoutOptions)this.GetValue(TextVerticalOptionsProperty); }
+            set { this.SetValue(TextVerticalOptionsProperty, value); }
         }
+
         /// <summary>
-        /// Places the holder changed.
+        /// Called when the Placeholder property has changed.
         /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="oldPlaceHolderValue">The old place holder value.</param>
-        /// <param name="newPlaceHolderValue">The new place holder value.</param>
-        private static void PlaceHolderChanged(BindableObject obj, string oldPlaceHolderValue, string newPlaceHolderValue)
+        /// <param name="obj">bindable object</param>
+        /// <param name="oldValue">old value</param>
+        /// <param name="newValue">new value</param>
+        private static void OnPlaceholderChanged(BindableObject obj, string oldValue, string newValue)
         {
             var autoCompleteView = obj as AutoCompleteView;
             if (autoCompleteView != null)
             {
-                autoCompleteView._entText.Placeholder = newPlaceHolderValue;
+                autoCompleteView.enteredText.Placeholder = newValue;
             }
         }
 
         /// <summary>
-        /// Searches the background color changed.
+        /// Called when the SearchBackgroundColor property has changed.
         /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void SearchBackgroundColorChanged(BindableObject obj, Color oldValue, Color newValue)
+        /// <param name="obj">bindable object</param>
+        /// <param name="oldValue">old value</param>
+        /// <param name="newValue">new value</param>
+        private static void OnSearchBackgroundColorChanged(BindableObject obj, Color oldValue, Color newValue)
         {
             var autoCompleteView = obj as AutoCompleteView;
             if (autoCompleteView != null)
             {
-                autoCompleteView._stkBase.BackgroundColor = newValue;
+                autoCompleteView.layout.BackgroundColor = newValue;
             }
         }
 
         /// <summary>
-        /// Searches the border color changed.
+        /// Called when the SearchBorderColor property has changed.
         /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void SearchBorderColorChanged(BindableObject obj, Color oldValue, Color newValue)
+        /// <param name="obj">bindable object</param>
+        /// <param name="oldValue">old value</param>
+        /// <param name="newValue">new value</param>
+        private static void OnSearchBorderColorChanged(BindableObject obj, Color oldValue, Color newValue)
         {
             var autoCompleteView = obj as AutoCompleteView;
             if (autoCompleteView != null)
             {
-                autoCompleteView._btnSearch.BorderColor = newValue;
+                autoCompleteView.searchButton.BorderColor = newValue;
             }
         }
 
         /// <summary>
-        /// Searches the border radius changed.
+        /// Called when the SearchBorderRadius property has changed.
         /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void SearchBorderRadiusChanged(BindableObject obj, int oldValue, int newValue)
+        /// <param name="obj">bindable object</param>
+        /// <param name="oldValue">old value</param>
+        /// <param name="newValue">new value</param>
+        private static void OnSearchBorderRadiusChanged(BindableObject obj, int oldValue, int newValue)
         {
             var autoCompleteView = obj as AutoCompleteView;
             if (autoCompleteView != null)
             {
-                autoCompleteView._btnSearch.BorderRadius = newValue;
+                autoCompleteView.searchButton.BorderRadius = newValue;
             }
         }
 
         /// <summary>
-        /// Searches the border width changed.
+        /// Called when the SearchBorderWidth property has changed.
         /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void SearchBorderWidthChanged(BindableObject obj, int oldValue, int newValue)
+        /// <param name="obj">bindable object</param>
+        /// <param name="oldValue">old value</param>
+        /// <param name="newValue">new value</param>
+        private static void OnSearchBorderWidthChanged(BindableObject obj, int oldValue, int newValue)
         {
             var autoCompleteView = obj as AutoCompleteView;
             if (autoCompleteView != null)
             {
-                autoCompleteView._btnSearch.BorderWidth = newValue;
+                autoCompleteView.searchButton.BorderWidth = newValue;
             }
         }
 
         /// <summary>
-        /// Searches the horizontal options changed.
+        /// Called when the SearchHorizontalOptions property has changed.
         /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void SearchHorizontalOptionsChanged(BindableObject obj, LayoutOptions oldValue, LayoutOptions newValue)
+        /// <param name="obj">bindable object</param>
+        /// <param name="oldValue">old value</param>
+        /// <param name="newValue">new value</param>
+        private static void OnSearchHorizontalOptionsChanged(BindableObject obj, LayoutOptions oldValue, LayoutOptions newValue)
         {
             var autoCompleteView = obj as AutoCompleteView;
             if (autoCompleteView != null)
             {
-                autoCompleteView._btnSearch.HorizontalOptions = newValue;
+                autoCompleteView.searchButton.HorizontalOptions = newValue;
             }
         }
 
         /// <summary>
-        /// Searches the text changed.
+        /// Called when the SearchText property has changed.
         /// </summary>
-        /// <param name="obj">The bindable.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void SearchTextChanged(BindableObject obj, string oldValue, string newValue)
+        /// <param name="obj">bindable object</param>
+        /// <param name="oldValue">old value</param>
+        /// <param name="newValue">new value</param>
+        private static void OnSearchTextChanged(BindableObject obj, string oldValue, string newValue)
         {
             var autoCompleteView = obj as AutoCompleteView;
             if (autoCompleteView != null)
             {
-                autoCompleteView._btnSearch.Text = newValue;
+                autoCompleteView.searchButton.Text = newValue;
             }
         }
 
         /// <summary>
-        /// Searches the text color color changed.
+        /// Called when the SearchTextColor property has changed.
         /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void SearchTextColorChanged(BindableObject obj, Color oldValue, Color newValue)
+        /// <param name="obj">bindable object</param>
+        /// <param name="oldValue">old value</param>
+        /// <param name="newValue">new value</param>
+        private static void OnSearchTextColorChanged(BindableObject obj, Color oldValue, Color newValue)
         {
             var autoCompleteView = obj as AutoCompleteView;
             if (autoCompleteView != null)
             {
-                autoCompleteView._btnSearch.TextColor = newValue;
+                autoCompleteView.searchButton.TextColor = newValue;
             }
         }
 
         /// <summary>
-        /// Searches the vertical options changed.
+        /// Called when the SearchVerticalOptions property has changed.
         /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void SearchVerticalOptionsChanged(BindableObject obj, LayoutOptions oldValue, LayoutOptions newValue)
+        /// <param name="obj">bindable object</param>
+        /// <param name="oldValue">old value</param>
+        /// <param name="newValue">new value</param>
+        private static void OnSearchVerticalOptionsChanged(BindableObject obj, LayoutOptions oldValue, LayoutOptions newValue)
         {
             var autoCompleteView = obj as AutoCompleteView;
             if (autoCompleteView != null)
             {
-                autoCompleteView._btnSearch.VerticalOptions = newValue;
+                autoCompleteView.searchButton.VerticalOptions = newValue;
             }
         }
 
         /// <summary>
-        /// Shows the search changed.
+        /// Called when the ShowSearch property has changed.
         /// </summary>
-        /// <param name="obj">The object.</param>
+        /// <param name="obj">bindable object</param>
         /// <param name="oldShowSearchValue">if set to <c>true</c> [old show search value].</param>
         /// <param name="newShowSearchValue">if set to <c>true</c> [new show search value].</param>
-        private static void ShowSearchChanged(BindableObject obj, bool oldShowSearchValue, bool newShowSearchValue)
+        private static void OnShowSearchChanged(BindableObject obj, bool oldShowSearchValue, bool newShowSearchValue)
         {
             var autoCompleteView = obj as AutoCompleteView;
             if (autoCompleteView != null)
             {
-                autoCompleteView._btnSearch.IsVisible = newShowSearchValue;
+                autoCompleteView.searchButton.IsVisible = newShowSearchValue;
             }
         }
 
         /// <summary>
-        /// Suggestions the background color changed.
+        /// Called when the SuggestionBackgroundColor property has changed.
         /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void SuggestionBackgroundColorChanged(BindableObject obj, Color oldValue, Color newValue)
+        /// <param name="obj">bindable object</param>
+        /// <param name="oldValue">old value</param>
+        /// <param name="newValue">new value</param>
+        private static void OnSuggestionBackgroundColorChanged(BindableObject obj, Color oldValue, Color newValue)
         {
             var autoCompleteView = obj as AutoCompleteView;
             if (autoCompleteView != null)
             {
-                autoCompleteView._lstSuggestions.BackgroundColor = newValue;
+                autoCompleteView.suggestionsListView.BackgroundColor = newValue;
             }
         }
 
         /// <summary>
-        /// Suggestions the height changed.
+        /// Called when the SuggestionHeightRequest property has changed.
         /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void SuggestionHeightRequestChanged(BindableObject obj, double oldValue, double newValue)
+        /// <param name="obj">bindable object</param>
+        /// <param name="oldValue">old value</param>
+        /// <param name="newValue">new value</param>
+        private static void OnSuggestionHeightRequestChanged(BindableObject obj, double oldValue, double newValue)
         {
             var autoCompleteView = obj as AutoCompleteView;
             if (autoCompleteView != null)
             {
-                autoCompleteView._lstSuggestions.HeightRequest = newValue;
+                autoCompleteView.suggestionsListView.HeightRequest = newValue;
             }
         }
+
         /// <summary>
-        /// Suggestions the item data template changed.
+        /// Called when the SuggestionItemDataTemplate property has changed.
         /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="oldShowSearchValue">The old show search value.</param>
-        /// <param name="newShowSearchValue">The new show search value.</param>
-        private static void SuggestionItemDataTemplateChanged(BindableObject obj, DataTemplate oldShowSearchValue, DataTemplate newShowSearchValue)
+        /// <param name="obj">bindable object</param>
+        /// <param name="oldValue">old value</param>
+        /// <param name="newValue">new value</param>
+        private static void OnSuggestionItemDataTemplateChanged(BindableObject obj, DataTemplate oldValue, DataTemplate newValue)
         {
             var autoCompleteView = obj as AutoCompleteView;
             if (autoCompleteView != null)
             {
-                autoCompleteView._lstSuggestions.ItemTemplate = newShowSearchValue;
+                autoCompleteView.suggestionsListView.ItemTemplate = newValue;
             }
         }
 
         /// <summary>
-        /// Tests the vertical options changed.
+        /// Texts the vertical options changed.
         /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void TestVerticalOptionsChanged(BindableObject obj, LayoutOptions oldValue, LayoutOptions newValue)
+        /// <param name="obj">bindable object</param>
+        /// <param name="oldValue">old value</param>
+        /// <param name="newValue">new value</param>
+        private static void OnTextVerticalOptionsChanged(BindableObject obj, LayoutOptions oldValue, LayoutOptions newValue)
         {
             var autoCompleteView = obj as AutoCompleteView;
             if (autoCompleteView != null)
             {
-                autoCompleteView._entText.VerticalOptions = newValue;
+                autoCompleteView.enteredText.VerticalOptions = newValue;
             }
         }
 
         /// <summary>
-        /// Texts the background color changed.
+        /// Called when the TextBackgroundColor property has changed.
         /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void TextBackgroundColorChanged(BindableObject obj, Color oldValue, Color newValue)
+        /// <param name="obj">bindable object</param>
+        /// <param name="oldValue">old value</param>
+        /// <param name="newValue">new value</param>
+        private static void OnTextBackgroundColorChanged(BindableObject obj, Color oldValue, Color newValue)
         {
             var autoCompleteView = obj as AutoCompleteView;
             if (autoCompleteView != null)
             {
-                autoCompleteView._entText.BackgroundColor = newValue;
+                autoCompleteView.enteredText.BackgroundColor = newValue;
             }
         }
 
         /// <summary>
-        /// Texts the color changed.
+        /// Called when the TextColor property has changed.
         /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void TextColorChanged(BindableObject obj, Color oldValue, Color newValue)
+        /// <param name="obj">bindable object</param>
+        /// <param name="oldValue">old value</param>
+        /// <param name="newValue">new value</param>
+        private static void OnTextColorChanged(BindableObject obj, Color oldValue, Color newValue)
         {
             var autoCompleteView = obj as AutoCompleteView;
             if (autoCompleteView != null)
             {
-                autoCompleteView._entText.TextColor = newValue;
+                autoCompleteView.enteredText.TextColor = newValue;
             }
         }
 
         /// <summary>
-        /// Texts the horizontal options changed.
+        /// Called when the TextHorizontalOptions property has changed.
         /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void TextHorizontalOptionsChanged(BindableObject obj, LayoutOptions oldValue, LayoutOptions newValue)
+        /// <param name="obj">bindable object</param>
+        /// <param name="oldValue">old value</param>
+        /// <param name="newValue">new value</param>
+        private static void OnTextHorizontalOptionsChanged(BindableObject obj, LayoutOptions oldValue, LayoutOptions newValue)
         {
             var autoCompleteView = obj as AutoCompleteView;
             if (autoCompleteView != null)
             {
-                autoCompleteView._entText.VerticalOptions = newValue;
+                autoCompleteView.enteredText.VerticalOptions = newValue;
             }
         }
+
         /// <summary>
-        /// Texts the changed.
+        /// Called when the Text property has changed.
         /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="oldPlaceHolderValue">The old place holder value.</param>
-        /// <param name="newPlaceHolderValue">The new place holder value.</param>
-        private static void TextValueChanged(BindableObject obj, string oldPlaceHolderValue, string newPlaceHolderValue)
+        /// <param name="obj">bindable object</param>
+        /// <param name="oldValue">old value</param>
+        /// <param name="newValue">new value</param>
+        private static void OnTextValueChanged(BindableObject obj, string oldValue, string newValue)
         {
-            var control = obj as AutoCompleteView;
+            var autoCompleteView = obj as AutoCompleteView;
 
-            if (control != null)
+            if (autoCompleteView != null)
             {
-                control._btnSearch.IsEnabled = !string.IsNullOrEmpty(newPlaceHolderValue);
+                autoCompleteView.searchButton.IsEnabled = !string.IsNullOrEmpty(newValue);
 
-                var cleanedNewPlaceHolderValue = Regex.Replace((newPlaceHolderValue ?? string.Empty).ToLowerInvariant(), @"\s+", string.Empty);
+                var cleanedNewPlaceHolderValue = Regex.Replace((newValue ?? string.Empty).ToLowerInvariant(), @"\s+", string.Empty);
 
-                if (!string.IsNullOrEmpty(cleanedNewPlaceHolderValue) && control.Suggestions != null)
+                if (!string.IsNullOrEmpty(cleanedNewPlaceHolderValue) &&
+                    autoCompleteView.Suggestions != null)
                 {
-                    var filteredSuggestions = control.Suggestions.Cast<object>()
-                        .Where(x => Regex.Replace(x.ToString().ToLowerInvariant(), @"\s+", string.Empty).Contains(cleanedNewPlaceHolderValue))
-                        .OrderByDescending(x => Regex.Replace(x.ToString()
-                        .ToLowerInvariant(), @"\s+", string.Empty)
+                    var filteredSuggestions = autoCompleteView.Suggestions.Cast<object>()
+                        .Where(x => Regex.Replace(
+                            x.ToString().ToLowerInvariant(), @"\s+", string.Empty).Contains(cleanedNewPlaceHolderValue))
+                        .OrderByDescending(x => Regex.Replace(
+                            x.ToString().ToLowerInvariant(), @"\s+", string.Empty)
                         .StartsWith(cleanedNewPlaceHolderValue)).ToList();
 
-                    control._availableSuggestions.Clear();
+                    autoCompleteView.availableSuggestions.Clear();
                     if (filteredSuggestions.Count > 0)
                     {
                         foreach (var suggestion in filteredSuggestions)
                         {
-                            control._availableSuggestions.Add(suggestion);
+                            autoCompleteView.availableSuggestions.Add(suggestion);
                         }
-                        control.ShowHideListbox(true);
+
+                        autoCompleteView.ShowHideListbox(true);
                     }
                     else
                     {
-                        control.ShowHideListbox(false);
+                        autoCompleteView.ShowHideListbox(false);
                     }
                 }
                 else
                 {
-                    if (control._availableSuggestions.Count > 0)
+                    if (autoCompleteView.availableSuggestions.Count > 0)
                     {
-                        control._availableSuggestions.Clear();
-                        control.ShowHideListbox(false);
+                        autoCompleteView.availableSuggestions.Clear();
+                        autoCompleteView.ShowHideListbox(false);
                     }
                 }
             }
@@ -777,12 +831,14 @@ namespace XLabs.Forms.Controls
         /// <param name="selectedItem">The selected item.</param>
         private void OnSelectedItemChanged(object selectedItem)
         {
-            SelectedItem = selectedItem;
+            this.SelectedItem = selectedItem;
 
-            if(SelectedCommand != null)
-                SelectedCommand.Execute(selectedItem);
+            if (this.SelectedCommand != null)
+            {
+                this.SelectedCommand.Execute(selectedItem);
+            }
 
-            var handler = SelectedItemChanged;
+            var handler = this.SelectedItemChanged;
             if (handler != null)
             {
                 handler(this, new SelectedItemChangedEventArgs(selectedItem));
@@ -795,7 +851,7 @@ namespace XLabs.Forms.Controls
         /// <param name="e">The <see cref="TextChangedEventArgs"/> instance containing the event data.</param>
         private void OnTextChanged(TextChangedEventArgs e)
         {
-            var handler = TextChanged;
+            var handler = this.TextChanged;
             if (handler != null)
             {
                 handler(this, e);
@@ -808,7 +864,7 @@ namespace XLabs.Forms.Controls
         /// <param name="show">if set to <c>true</c> [show].</param>
         private void ShowHideListbox(bool show)
         {
-            _lstSuggestions.IsVisible = show;
+            this.suggestionsListView.IsVisible = show;
         }
     }
 }

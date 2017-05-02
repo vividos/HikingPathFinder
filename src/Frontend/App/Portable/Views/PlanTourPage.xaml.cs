@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using HikingPathFinder.App.ViewModels;
 using Xamarin.Forms;
 
 namespace HikingPathFinder.App.Views
@@ -19,6 +14,8 @@ namespace HikingPathFinder.App.Views
         /// </summary>
         public PlanTourPage()
         {
+            this.BindingContext = new PlanTourViewModel();
+
             this.InitializeComponent();
         }
     }

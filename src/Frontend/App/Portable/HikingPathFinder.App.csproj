@@ -48,9 +48,11 @@
     <Compile Include="Converter\ResourcePathToImageSourceConverter.cs" />
     <Compile Include="ImageResourceExtension.cs" />
     <Compile Include="Models\MenuEntry.cs" />
+    <Compile Include="ViewModels\LocationAutoCompleteViewModel.cs" />
     <Compile Include="ViewModels\MenuListData.cs" />
     <Compile Include="NavigationService.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
+    <Compile Include="ViewModels\PlanTourViewModel.cs" />
     <Compile Include="ViewModels\ShowTourViewModel.cs" />
     <Compile Include="ViewModels\StartViewModel.cs" />
     <Compile Include="Views\AboutPage.xaml.cs">

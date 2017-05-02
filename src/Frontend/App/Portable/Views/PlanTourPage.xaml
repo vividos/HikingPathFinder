@@ -1,6 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="HikingPathFinder.App.Views.PlanTourPage">
-  <Label Text="{Binding MainText}" VerticalOptions="Center" HorizontalOptions="Center" />
+             x:Class="HikingPathFinder.App.Views.PlanTourPage"
+             xmlns:controls="clr-namespace:HikingPathFinder.App.Controls">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <!-- Data template for the start or stop autocomplete view -->
+            <DataTemplate x:Key="StartStopSuggestionItemTemplate">
+                <ViewCell Height="30">
+                    <ViewCell.View>
+                        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                            <Label HorizontalOptions="Start"
+                                   Text="{Binding Name, Mode=OneWay}"
+                                   VerticalOptions="Center" />
+                        </StackLayout>
+                    </ViewCell.View>
+                </ViewCell>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout Orientation="Vertical">
+
+        <!-- Start location controls -->
+        <Label Text="Start Location" />
+        <controls:AutoCompleteView
+            Placeholder="Start location"
+            SelectedItem="{Binding StartLocation}"
+            ShowSearchButton="False"
+            SuggestionItemDataTemplate="{StaticResource StartStopSuggestionItemTemplate}"
+            Suggestions="{Binding StartStopLocationList, Mode=TwoWay}" />
+
+        <!-- End location controls -->
+        <Label Text="End Location" />
+        <controls:AutoCompleteView
+            Placeholder="End location"
+            SelectedItem="{Binding EndLocation}"
+            ShowSearchButton="False"
+            SuggestionItemDataTemplate="{StaticResource StartStopSuggestionItemTemplate}"
+            Suggestions="{Binding StartStopLocationList, Mode=TwoWay}" />
+    </StackLayout>
+
 </ContentPage>

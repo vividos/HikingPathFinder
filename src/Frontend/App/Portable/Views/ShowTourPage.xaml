@@ -1,13 +1,54 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="HikingPathFinder.App.Views.ShowTourPage">
-  <ScrollView x:Name="tourContainer"
+             x:Class="HikingPathFinder.App.Views.ShowTourPage"
+             xmlns:local="clr-namespace:HikingPathFinder.App"
+             xmlns:converter="clr-namespace:HikingPathFinder.App.Converter">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:ResourcePathToImageSourceConverter x:Key="ResourcePathToImageSourceConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView x:Name="tourContainer"
       Orientation="Vertical" VerticalOptions="StartAndExpand" HorizontalOptions="Fill">
 
-    <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" Margin="0,20,0,0">
+        <StackLayout Orientation="Vertical" VerticalOptions="Start" Margin="0,20,0,0">
 
+            <!-- Tour sumamry -->
+            <StackLayout x:Name="tourSummary" Orientation="Vertical" Margin="16" BackgroundColor="#cfcfcf">
+                <Label FontSize="Large" Text="{Binding Name}"/>
+                <StackLayout Orientation="Horizontal">
+                    <Image WidthRequest="32" HeightRequest="32" Source="{local:ImageResource Source=Assets/Icons/distance.png}" />
+                    <Label FontSize="Medium" Text="{Binding Distance, Mode=OneWay}" />
 
-    </StackLayout>
-  </ScrollView>
+                    <Image WidthRequest="32" HeightRequest="32" Source="{local:ImageResource Source=Assets/Icons/duration.png}" />
+                    <Label FontSize="Medium" Text="{Binding Duration, Mode=OneWay}" />
+
+                    <Image WidthRequest="32" HeightRequest="32" Source="{local:ImageResource Source=Assets/Icons/altitude_up.png}" />
+                    <Label FontSize="Medium" Text="{Binding AltitudeUp, Mode=OneWay}" />
+
+                    <Image WidthRequest="32" HeightRequest="32" Source="{local:ImageResource Source=Assets/Icons/altitude_down.png}" />
+                    <Label FontSize="Medium" Text="{Binding AltitudeDown, Mode=OneWay}" />
+                </StackLayout>
+            </StackLayout>
+
+            <!-- Tour summary location list -->
+            <StackLayout Orientation="Vertical" VerticalOptions="Start" Margin="16" BackgroundColor="#cfcfcf">
+                <Label FontSize="Large" Text="Tour locations" />
+                <ListView ItemsSource="{Binding TourSummaryLocationList}" VerticalOptions="FillAndExpand">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ImageCell ImageSource="{Binding ImagePath, Mode=OneWay, Converter={StaticResource ResourcePathToImageSourceConverter}}"
+                                       Text="{Binding Name, Mode=OneWay}" TextColor="Black"
+                                       Command="{Binding ItemClicked}" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+
+            <!-- tour list -->
+
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

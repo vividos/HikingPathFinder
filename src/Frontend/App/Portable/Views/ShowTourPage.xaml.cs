@@ -16,6 +16,7 @@ namespace HikingPathFinder.App.Views
         public ShowTourPage(Tour tour)
         {
             this.BindingContext = new ShowTourViewModel(tour);
+            this.tourSummary.BindingContext = new TourSummaryViewModel(tour);
 
             this.InitializeComponent();
         }

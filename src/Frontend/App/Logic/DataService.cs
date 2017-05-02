@@ -4,8 +4,6 @@ using Microsoft.Practices.ServiceLocation;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using SQLite.Net;
-using System;
 
 namespace HikingPathFinder.App.Logic
 {
@@ -96,7 +94,7 @@ namespace HikingPathFinder.App.Logic
         public async Task<List<PrePlannedTour>> GetPrePlannedToursListAsync(CancellationToken token)
         {
             // ensure that app config has been loaded
-            await GetAppInfoAsync(token);
+            await this.GetAppInfoAsync(token);
 
             var connection = this.database.GetConnection();
 
@@ -114,7 +112,7 @@ namespace HikingPathFinder.App.Logic
         public async Task<List<Location>> GetLocationListAsync(CancellationToken token)
         {
             // ensure that app config has been loaded
-            await GetAppInfoAsync(token);
+            await this.GetAppInfoAsync(token);
 
             var connection = this.database.GetConnection();
 

@@ -167,7 +167,7 @@ namespace HikingPathFinder.App.Views
                 {
                     if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Location))
                     {
-                        await DisplayAlert(
+                        await this.DisplayAlert(
                             "Hiking Path Finder",
                             "The location permission is needed in order to locate your position on the map",
                             "OK");

@@ -31,7 +31,7 @@ namespace HikingPathFinder.App.Database
         /// <returns>true when deserialisation can be done, false when not</returns>
         public bool CanDeserialize(Type type)
         {
-            return supportedTypes.Contains(type);
+            return this.supportedTypes.Contains(type);
         }
 
         /// <summary>

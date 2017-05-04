@@ -31,7 +31,7 @@ namespace HikingPathFinder.App
         /// <returns>logging instance</returns>
         public static ILog GetLogger<T>()
         {
-            var logProvider = DependencyService.Get<ILogProvider>();
+            var logProvider = ServiceLocator.Current.GetInstance<ILogProvider>();
             return logProvider.GetLogger<T>();
         }
 

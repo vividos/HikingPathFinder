@@ -141,6 +141,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UwpPlatform.cs" />
+    <Compile Include="UwpSerilogProvider.cs" />
     <Compile Include="UwpSQLiteDatabaseProvider.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -38,6 +38,7 @@ namespace HikingPathFinder.App.UWP
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
+            SimpleIoc.Default.Register<ILogProvider, UwpSerilogProvider>();
             SimpleIoc.Default.Register<ISQLiteDatabaseProvider, UwpSQLiteDatabaseProvider>();
             SimpleIoc.Default.Register<IPlatform, UwpPlatform>();
 

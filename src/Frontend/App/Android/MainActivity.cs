@@ -112,6 +112,7 @@ namespace HikingPathFinder.App.Android
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
+            SimpleIoc.Default.Register<ILogProvider, AndroidSerilogProvider>();
             SimpleIoc.Default.Register<ISQLiteDatabaseProvider, AndroidSQLiteDatabaseProvider>();
             SimpleIoc.Default.Register<IPlatform, AndroidPlatform>();
 

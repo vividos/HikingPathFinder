@@ -13,6 +13,11 @@ namespace HikingPathFinder.App.ViewModels
     public class AboutViewModel
     {
         /// <summary>
+        /// Logging instance
+        /// </summary>
+        private static Common.Logging.ILog log = App.GetLogger<AboutViewModel>();
+
+        /// <summary>
         /// Heading text
         /// </summary>
         public string Heading { get; private set; }
@@ -75,6 +80,7 @@ Hiking Path Finder uses the following libraries:
 
             this.VisitWebsiteCommand = new Command(() =>
             {
+                log.Debug(x => x("Opening website link"));
                 Device.OpenUri(new Uri("https://github.com/vividos/HikingPathFinder"));
             });
         }

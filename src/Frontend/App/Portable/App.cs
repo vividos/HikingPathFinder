@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight.Ioc;
+﻿using Common.Logging;
+using GalaSoft.MvvmLight.Ioc;
 using HikingPathFinder.App.Logic;
 using HikingPathFinder.App.Views;
 using Microsoft.Practices.ServiceLocation;
@@ -22,6 +23,17 @@ namespace HikingPathFinder.App
         /// Data service instance; retrieves and stores data for use in the app
         /// </summary>
         private readonly DataService dataService;
+
+        /// <summary>
+        /// Returns logging instace for given type
+        /// </summary>
+        /// <typeparam name="T">type of class that wants to log</typeparam>
+        /// <returns>logging instance</returns>
+        public static ILog GetLogger<T>()
+        {
+            var logProvider = DependencyService.Get<ILogProvider>();
+            return logProvider.GetLogger<T>();
+        }
 
         /// <summary>
         /// Creates a new application class

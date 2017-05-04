@@ -88,6 +88,7 @@ namespace HikingPathFinder.App.iOS
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
+            SimpleIoc.Default.Register<ILogProvider, IosSerilogProvider>();
             SimpleIoc.Default.Register<ISQLiteDatabaseProvider, IosSQLiteDatabaseProvider>();
             SimpleIoc.Default.Register<IPlatform, IosPlatform>();
 

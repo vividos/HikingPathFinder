@@ -47,6 +47,7 @@
     </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="ILogProvider.cs" />
+    <Compile Include="INetworkService.cs" />
     <Compile Include="IPlatform.cs" />
     <Compile Include="PreserveAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -264,6 +264,12 @@
     <AndroidAsset Include="Assets\map\leaflet-src.map" />
     <None Include="packages.config" />
     <None Include="Properties\AndroidManifest.xml" />
+    <AndroidResource Include="Resources\drawable\splash_screen.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\values\colors.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Tabbar.axml" />
@@ -312,9 +318,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values-v21\values.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\splash_screen.9.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\plan_tour.xml" />

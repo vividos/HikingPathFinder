@@ -87,6 +87,7 @@ namespace HikingPathFinder.App
         /// <param name="simpleIoc">IoC container to use</param>
         public static void InitServiceLocator(ISimpleIoc simpleIoc)
         {
+            simpleIoc.Register<INetworkService, DemoDataNetworkService>();
             simpleIoc.Register<DataService>();
         }
 

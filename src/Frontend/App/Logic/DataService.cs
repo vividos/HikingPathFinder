@@ -25,13 +25,14 @@ namespace HikingPathFinder.App.Logic
         /// <summary>
         /// Network service to retrieve data from remote server using available network
         /// </summary>
-        private readonly INetworkService networkService = new DemoDataNetworkService();
+        private readonly INetworkService networkService;
 
         /// <summary>
         /// Creates a new data service object
         /// </summary>
         public DataService()
         {
+            this.networkService = ServiceLocator.Current.GetInstance<INetworkService>();
             this.database = this.OpenDatabase();
         }
 

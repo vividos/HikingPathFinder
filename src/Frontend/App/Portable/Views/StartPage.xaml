@@ -11,10 +11,10 @@
 
   <ScrollView Orientation="Vertical" VerticalOptions="StartAndExpand" HorizontalOptions="Fill">
 
-    <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" Margin="0,20,0,0">
+    <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand">
 
       <!-- quick start buttons-->
-      <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+      <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,20,0,0">
         <Button Image="plan_tour.png" Text="Plan Tour" Command="{Binding PlanTourCommand}" AutomationId="PlanTourButton" />
         <Button Image="explore_map.png" Text="Explore Map" Command="{Binding ExploreMapCommand}" AutomationId="ExploreMapButton" />
       </StackLayout>

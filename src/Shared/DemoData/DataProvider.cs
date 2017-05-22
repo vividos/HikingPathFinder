@@ -90,17 +90,24 @@ namespace HikingPathFinder.DemoData
 
             foreach (var prePlannedTour in prePlannedTourList)
             {
-                if (planTourParams.StartLocation.Id == prePlannedTour.Tour.StartLocation.Id &&
-                    planTourParams.EndLocation.Id == prePlannedTour.Tour.EndLocation.Id &&
-                    planTourParams.TourLocationList.Count == prePlannedTour.Tour.LocationList.Count)
+                bool startLocationMatches =
+                    planTourParams.StartLocation.Id == prePlannedTour.Tour.StartLocation.Id;
+
+                bool endLocationAvailable =
+                    planTourParams.EndLocation != null && prePlannedTour.Tour.EndLocation != null;
+
+                bool endLocationMatches =
+                    endLocationAvailable &&
+                    planTourParams.EndLocation.Id == prePlannedTour.Tour.EndLocation.Id;
+
+                if (startLocationMatches &&
+                    (!endLocationAvailable || endLocationMatches))
                 {
                     bool hasSameLocations = true;
 
-                    int maxLocationIndex = prePlannedTour.Tour.LocationList.Count;
-                    for (int locationIndex = 0; locationIndex < maxLocationIndex; locationIndex++)
+                    foreach (var locationRef in planTourParams.TourLocationList)
                     {
-                        if (planTourParams.TourLocationList[locationIndex].Id !=
-                            prePlannedTour.Tour.LocationList[locationIndex].Id)
+                        if (prePlannedTour.Tour.LocationList.Find(x => x.Id == locationRef.Id) == null)
                         {
                             hasSameLocations = false;
                             break;
@@ -151,6 +158,7 @@ namespace HikingPathFinder.DemoData
         private static Location summit1 =
             new Location
             {
+                Id = Guid.NewGuid().ToString("B"),
                 Name = "Brecherspitz",
                 Elevation = 1685,
                 MapLocation = new MapPoint(47.6764385, 11.8710533),
@@ -166,6 +174,7 @@ namespace HikingPathFinder.DemoData
         private static Location summit2 =
             new Location
             {
+                Id = Guid.NewGuid().ToString("B"),
                 Name = "Jägerkamp",
                 Elevation = 1746,
                 MapLocation = new MapPoint(47.673511, 11.9060494),
@@ -181,6 +190,7 @@ namespace HikingPathFinder.DemoData
         private static Location alpineHut1 =
             new Location
             {
+                Id = Guid.NewGuid().ToString("B"),
                 Name = "Ankel-Alm",
                 Elevation = 1311,
                 MapLocation = new MapPoint(47.6838571, 11.8687695),
@@ -196,6 +206,7 @@ namespace HikingPathFinder.DemoData
         private static Location alpineHut2 =
             new Location
             {
+                Id = Guid.NewGuid().ToString("B"),
                 Name = "Schönfeldhütte",
                 Elevation = 1410,
                 MapLocation = new MapPoint(47.66508, 11.90612),
@@ -211,6 +222,7 @@ namespace HikingPathFinder.DemoData
         private static Location pass1 =
             new Location
             {
+                Id = Guid.NewGuid().ToString("B"),
                 Name = "Spitzingsattel",
                 Elevation = 1129,
                 MapLocation = new MapPoint(47.672138, 11.8862728),

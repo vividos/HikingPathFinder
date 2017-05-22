@@ -1,6 +1,7 @@
 ﻿using Common.Logging;
 using GalaSoft.MvvmLight.Ioc;
 using HikingPathFinder.App.Logic;
+using HikingPathFinder.App.Network;
 using HikingPathFinder.App.Views;
 using Microsoft.Practices.ServiceLocation;
 using System;
@@ -87,7 +88,10 @@ namespace HikingPathFinder.App
         /// <param name="simpleIoc">IoC container to use</param>
         public static void InitServiceLocator(ISimpleIoc simpleIoc)
         {
-            simpleIoc.Register<INetworkService, DemoDataNetworkService>();
+            simpleIoc.Register<INetworkService>(
+                () => new RESTfulNetworkService("http://hikingpathfinderbeta.azurewebsites.net/")
+            );
+            ////simpleIoc.Register<INetworkService, DemoDataNetworkService>();
             simpleIoc.Register<DataService>();
         }
 

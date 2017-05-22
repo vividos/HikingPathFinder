@@ -85,6 +85,10 @@
       <Project>{2D98F59A-E337-4DE7-805E-12C44A335065}</Project>
       <Name>HikingPathFinder.App.Logic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Network\HikingPathFinder.App.Network.csproj">
+      <Project>{7C27DC6C-60AD-447F-8964-76305A3954BE}</Project>
+      <Name>HikingPathFinder.App.Network</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Shared\HikingPathFinder.App.Shared.csproj">
       <Project>{E444360C-69C0-4AF0-BD11-04CEA0F87CC9}</Project>
       <Name>HikingPathFinder.App.Shared</Name>

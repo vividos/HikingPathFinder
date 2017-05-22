@@ -16,6 +16,14 @@ namespace HikingPathFinder.App.Views
         {
             this.BindingContext = new PlanTourViewModel();
 
+            MessagingCenter.Subscribe<PlanTourViewModel, string>(
+                this,
+                "DisplayAlert",
+                async (sender, args) =>
+                {
+                    await this.DisplayAlert("Error", args, "OK");
+                });
+
             this.InitializeComponent();
         }
     }

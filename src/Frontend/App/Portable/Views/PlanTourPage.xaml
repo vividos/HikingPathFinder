@@ -21,25 +21,76 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <StackLayout Orientation="Vertical">
+    <Grid>
+        <StackLayout Orientation="Vertical" WidthRequest="500" HorizontalOptions="Center">
 
-        <!-- Start location controls -->
-        <Label Text="Start Location" />
-        <controls:AutoCompleteView
-            Placeholder="Start location"
-            SelectedItem="{Binding StartLocation}"
-            ShowSearchButton="False"
-            SuggestionItemDataTemplate="{StaticResource StartStopSuggestionItemTemplate}"
-            Suggestions="{Binding StartStopLocationList, Mode=TwoWay}" />
+            <!-- Start location controls -->
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Start Location" HorizontalOptions="StartAndExpand" />
+                <Label Text="Reqiured Field" TextColor="Red" HorizontalOptions="End"
+                       IsVisible="{Binding IsStartLocationRequiredVisible, Mode=OneWay}" />
+            </StackLayout>
 
-        <!-- End location controls -->
-        <Label Text="End Location" />
-        <controls:AutoCompleteView
-            Placeholder="End location"
-            SelectedItem="{Binding EndLocation}"
-            ShowSearchButton="False"
-            SuggestionItemDataTemplate="{StaticResource StartStopSuggestionItemTemplate}"
-            Suggestions="{Binding StartStopLocationList, Mode=TwoWay}" />
-    </StackLayout>
+            <controls:AutoCompleteView
+                Placeholder="Start location"
+                SelectedItem="{Binding StartLocation}"
+                ShowSearchButton="False"
+                SuggestionItemDataTemplate="{StaticResource StartStopSuggestionItemTemplate}"
+                Suggestions="{Binding StartStopLocationList, Mode=TwoWay}" />
+
+            <!-- Tour location controls -->
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Tour Location" HorizontalOptions="StartAndExpand" />
+                <Label Text="Reqiured Field" TextColor="Red" HorizontalOptions="End"
+                       IsVisible="{Binding IsTourLocationRequiredVisible, Mode=OneWay}" />
+            </StackLayout>
+
+            <controls:AutoCompleteView
+                Placeholder="Tour location"
+                SelectedItem="{Binding TourLocation}"
+                ShowSearchButton="False"
+                SuggestionItemDataTemplate="{StaticResource StartStopSuggestionItemTemplate}"
+                Suggestions="{Binding StartStopLocationList, Mode=TwoWay}" />
+
+            <!-- End location controls -->
+            <Label Text="End Location" />
+
+            <controls:AutoCompleteView
+                Placeholder="End location"
+                SelectedItem="{Binding EndLocation}"
+                ShowSearchButton="False"
+                SuggestionItemDataTemplate="{StaticResource StartStopSuggestionItemTemplate}"
+                Suggestions="{Binding StartStopLocationList, Mode=TwoWay}" />
+
+            <!-- Tour parameter controls -->
+
+            <!-- Button controls -->
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Button Image="plan_tour.png" Text="Plan Tour" Command="{Binding PlanTourCommand}" AutomationId="PlanTourButton" />
+                <Button Text="Reset" Command="{Binding ResetTourParameterCommand}" AutomationId="ResetTourParemeterButton" />
+            </StackLayout>
+
+        </StackLayout>
+
+        <!-- loading indicator overlay -->
+        <StackLayout BackgroundColor="#404040" Opacity="0.75"
+                     IsVisible="{Binding IsPlanningActive, Mode=OneWay}"
+                     HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+            <StackLayout Orientation="Vertical" HeightRequest="100" VerticalOptions="CenterAndExpand"
+                         BackgroundColor="White" Opacity="1.0">
+
+                <Label Text="Planning tour..." TextColor="Blue"
+                       HorizontalOptions="Center" Margin="0,20,0,0" />
+
+                <ActivityIndicator IsRunning="false"
+                                   Color="Blue"
+                                   Margin="0,20,0,0"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+
+        </StackLayout>
+    </Grid>
 
 </ContentPage>

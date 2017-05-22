@@ -21,6 +21,14 @@ namespace HikingPathFinder.App.ViewModels
         }
 
         /// <summary>
+        /// Returns the location object
+        /// </summary>
+        public Location Location
+        {
+            get { return this.location; }
+        }
+
+        /// <summary>
         /// Creates a new view model from given location
         /// </summary>
         /// <param name="location">location to use</param>

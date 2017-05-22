@@ -58,13 +58,13 @@ namespace HikingPathFinder.App.Logic
         /// <param name="planTourParams">parameters to plan tour</param>
         /// <param name="token">token to cancel operation</param>
         /// <returns>planned tour</returns>
-        public Task<Tour> PlanTourAsync(PlanTourParameters planTourParams, CancellationToken token)
+        public async Task<Tour> PlanTourAsync(PlanTourParameters planTourParams, CancellationToken token)
         {
             var prePlannedTourList = DemoData.DataProvider.FindPrePlannedTourList(planTourParams);
 
             if (prePlannedTourList != null)
             {
-                return Task.FromResult(prePlannedTourList.Tour);
+                return await Task.FromResult(prePlannedTourList.Tour);
             }
 
             throw new System.Exception("Tour couldn't be calculated");

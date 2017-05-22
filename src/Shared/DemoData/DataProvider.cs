@@ -17,6 +17,7 @@ namespace HikingPathFinder.DemoData
         {
             return new AppConfig
             {
+                LastUpdated = DateTime.Today + TimeSpan.FromHours(8.5),
                 Info = GetAppInfo(),
                 StartEndLocationList = GetStartEndLocationList(),
                 TourLocationList = GetTourLocationList(),
@@ -36,13 +37,15 @@ namespace HikingPathFinder.DemoData
             {
                 SiteName = "Hiking Path Finder beta site",
                 AreaName = "Spitzingsee hiking area",
+                WebsiteAddress = "https://github.com/vividos/HikingPathFinder",
                 AreaRectangle = new MapRectangle
                 {
                     NorthWest = new MapPoint(47.77, 11.73),
                     SouthEast = new MapPoint(47.57, 12.04)
                 },
                 StaticPagesTitle = "Hiking tips",
-                License = "Creative Commons Attribution-ShareAlike 4.0 International License (CC-BY-SA)"
+                License = "Creative Commons Attribution-ShareAlike 4.0 International License (CC-BY-SA)",
+                LicenseLink = "https://creativecommons.org/licenses/by-sa/4.0/",
             };
         }
 

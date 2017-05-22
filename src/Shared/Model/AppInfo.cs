@@ -16,6 +16,11 @@
         public string AreaName { get; set; }
 
         /// <summary>
+        /// Website address to navigate to
+        /// </summary>
+        public string WebsiteAddress { get; set; }
+
+        /// <summary>
         /// The map rectangle of the area the app is used
         /// </summary>
         public MapRectangle AreaRectangle { get; set; }
@@ -29,5 +34,10 @@
         /// The license of the content distributed with the app
         /// </summary>
         public string License { get; set; }
+
+        /// <summary>
+        /// Link to a website describing the license
+        /// </summary>
+        public string LicenseLink { get; set; }
     }
 }

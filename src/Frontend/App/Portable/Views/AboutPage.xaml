@@ -2,18 +2,24 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HikingPathFinder.App.Views.AboutPage">
-  <StackLayout Orientation="Vertical" HorizontalOptions="Center" Margin="0,20,0,0">
-    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-      <Image Source="icon.png" />
-      <Label Text="{Binding Heading}" FontSize="32" />
+    <StackLayout Orientation="Vertical" HorizontalOptions="Center" Margin="0,20,0,0">
+
+        <!-- Icon and title -->
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+            <Image Source="icon.png" />
+            <Label Text="{Binding Heading, Mode=OneWay}" FontSize="32" />
+        </StackLayout>
+        <Label Text="{Binding SiteName, Mode=OneWay}" FontSize="20" HorizontalOptions="Center" />
+        <Label Text="{Binding VersionNumber, Mode=OneWay}" FontSize="20" HorizontalOptions="Center" AutomationId="AboutVersionNumber" />
+
+        <!-- Button to visit website -->
+        <Button Text="{Binding WebsiteLinkText, Mode=OneWay}"
+                FontSize="20"
+                HorizontalOptions="Center"
+                Command="{Binding VisitWebsiteCommand}"
+                AutomationId="AboutVisitHomepageButton" />
+
+        <!-- Main text for about page -->
+        <Label Text="{Binding MainText, Mode=OneWay}" FontSize="14" HorizontalOptions="Center" />
     </StackLayout>
-    <Label Text="{Binding SiteName}" FontSize="20" HorizontalOptions="Center" />
-    <Label Text="{Binding VersionNumber}" FontSize="20" HorizontalOptions="Center" AutomationId="AboutVersionNumber" />
-    <Button Text="Visit Hiking Path Finder Homepage"
-            FontSize="20"
-            HorizontalOptions="Center"
-            Command="{Binding VisitWebsiteCommand}"
-            AutomationId="AboutVisitHomepageButton" />
-    <Label Text="{Binding MainText}" FontSize="14" HorizontalOptions="Center" />
-  </StackLayout>
 </ContentPage>

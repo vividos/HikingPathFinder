@@ -18,6 +18,11 @@ namespace HikingPathFinder.App.ViewModels
         private static Common.Logging.ILog log = App.GetLogger<AboutViewModel>();
 
         /// <summary>
+        /// Website address to navigate to
+        /// </summary>
+        private string websiteAddress;
+
+        /// <summary>
         /// Heading text
         /// </summary>
         public string Heading { get; private set; }
@@ -36,6 +41,11 @@ namespace HikingPathFinder.App.ViewModels
         /// Main text of about page
         /// </summary>
         public string MainText { get; private set; }
+
+        /// <summary>
+        /// Home page link text
+        /// </summary>
+        public string WebsiteLinkText { get; private set; }
 
         /// <summary>
         /// Command to execute when the visit website button has been clicked
@@ -66,6 +76,11 @@ namespace HikingPathFinder.App.ViewModels
             {
                 var appInfo = await dataService.GetAppInfoAsync(CancellationToken.None);
                 this.SiteName = appInfo.SiteName;
+
+                this.WebsiteLinkText =
+                    string.Format("Visit {0} Homepage", this.Heading);
+
+                this.websiteAddress = appInfo.WebsiteAddress;
             });
 
             this.VersionNumber = "Version " + platform.AppVersionNumber;
@@ -81,7 +96,7 @@ Hiking Path Finder uses the following libraries:
             this.VisitWebsiteCommand = new Command(() =>
             {
                 log.Debug(x => x("Opening website link"));
-                Device.OpenUri(new Uri("https://github.com/vividos/HikingPathFinder"));
+                Device.OpenUri(new Uri(this.websiteAddress));
             });
         }
     }

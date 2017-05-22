@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace HikingPathFinder.Model
 {
@@ -8,6 +9,11 @@ namespace HikingPathFinder.Model
     /// </summary>
     public class AppConfig
     {
+        /// <summary>
+        /// Date/time when app config was last updated
+        /// </summary>
+        public DateTime LastUpdated { get; set; }
+
         /// <summary>
         /// General infos about the app
         /// </summary>

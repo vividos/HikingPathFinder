@@ -20,4 +20,14 @@ Web Essentials 2017
 
 Productivity Power Tools 2017
 
+Microsoft extensions:
+- Time Stamp Margin
+- Editor Guidelines
+- Shrink Empty Lines
+- Copy As Html
+- Fix Mixed Tabs
+- Solution Error Visualizer
+- Match Margin
+- Trailing Whitespace Visualizer
+
 ## NuGet

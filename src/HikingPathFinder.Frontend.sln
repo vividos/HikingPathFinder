@@ -26,7 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{A67E3938
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{37652B9A-5036-47B2-9853-5919C998E380}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikingPathFinder.App", "Frontend\App\Portable\HikingPathFinder.App.csproj", "{D28C59C2-AED1-49F7-A304-D4596F559115}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikingPathFinder.App.Core", "Frontend\App\Core\HikingPathFinder.App.Core.csproj", "{D28C59C2-AED1-49F7-A304-D4596F559115}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikingPathFinder.App.Android", "Frontend\App\Android\HikingPathFinder.App.Android.csproj", "{1051A7CF-EFF1-46A1-9768-158366565DDA}"
 EndProject

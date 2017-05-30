@@ -286,9 +286,9 @@
       <Project>{4BB458FB-55D5-42DB-B3A9-C5D8665CEF05}</Project>
       <Name>HikingPathFinder.App.Database</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Portable\HikingPathFinder.App.csproj">
+    <ProjectReference Include="..\Core\HikingPathFinder.App.Core.csproj">
       <Project>{d28c59c2-aed1-49f7-a304-d4596f559115}</Project>
-      <Name>HikingPathFinder.App</Name>
+      <Name>HikingPathFinder.App.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared\HikingPathFinder.App.Shared.csproj">
       <Project>{E444360C-69C0-4AF0-BD11-04CEA0F87CC9}</Project>

@@ -264,7 +264,6 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\map\leaflet-src.map" />
     <None Include="packages.config" />
     <None Include="Properties\AndroidManifest.xml" />
     <AndroidResource Include="Resources\drawable\splash_screen.xml">
@@ -377,31 +376,28 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\start.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\map\leaflet-src.js" />
+    <AndroidAsset Include="Assets\map\leaflet\leaflet.css" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\map\leaflet.css" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\leaflet.js" />
+    <AndroidAsset Include="Assets\map\leaflet\leaflet.js" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\map\map.html" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\map\images\layers-2x.png" />
+    <AndroidAsset Include="Assets\map\leaflet\images\layers-2x.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\map\images\layers.png" />
+    <AndroidAsset Include="Assets\map\leaflet\images\layers.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\map\images\marker-icon-2x.png" />
+    <AndroidAsset Include="Assets\map\leaflet\images\marker-icon-2x.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\map\images\marker-icon.png" />
+    <AndroidAsset Include="Assets\map\leaflet\images\marker-icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\map\images\marker-shadow.png" />
+    <AndroidAsset Include="Assets\map\leaflet\images\marker-shadow.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\map\map.js" />

@@ -107,16 +107,17 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <Content Include="about.png" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
-    <Content Include="Assets\map\images\layers-2x.png" />
-    <Content Include="Assets\map\images\layers.png" />
-    <Content Include="Assets\map\images\marker-icon-2x.png" />
-    <Content Include="Assets\map\images\marker-icon.png" />
-    <Content Include="Assets\map\images\marker-shadow.png" />
-    <Content Include="Assets\map\leaflet-src.js" />
-    <Content Include="Assets\map\leaflet.css" />
-    <Content Include="Assets\map\leaflet.js" />
+    <Content Include="Assets\map\images\add_to_tour.svg" />
+    <Content Include="Assets\map\images\route_to_location.svg" />
+    <Content Include="Assets\map\leaflet\images\layers-2x.png" />
+    <Content Include="Assets\map\leaflet\images\layers.png" />
+    <Content Include="Assets\map\leaflet\images\marker-icon-2x.png" />
+    <Content Include="Assets\map\leaflet\images\marker-icon.png" />
+    <Content Include="Assets\map\leaflet\images\marker-shadow.png" />
+    <Content Include="Assets\map\leaflet\leaflet.css" />
+    <Content Include="Assets\map\leaflet\leaflet.js" />
     <Content Include="Assets\map\map.html" />
-    <Content Include="Assets\map\map.js" />
+    <Content Include="Assets\map\mapView.js" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
@@ -125,7 +126,6 @@
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="settings.png" />
     <Content Include="start.png" />
-    <None Include="Assets\map\leaflet-src.map" />
     <None Include="HikingPathFinder.App.UWP_TemporaryKey.pfx" />
     <None Include="project.json" />
   </ItemGroup>

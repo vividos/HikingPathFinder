@@ -4,24 +4,11 @@
     <title>Explore Map</title>
 </head>
 <body style="margin: 0px">
-    <link rel="stylesheet" href="leaflet.css" />
-    <script src="leaflet-src.js"></script>
-    <!-- or use leaflet.js -->
-    <script src="map.js"></script>
+    <link rel="stylesheet" href="leaflet/leaflet.css" />
+    <script src="leaflet/leaflet.js"></script>
+    <script src="mapView.js"></script>
 
     <div id="map" class="map map-home" style="height: 100%; width: 100%"></div>
-
-    <script type="text/javascript">
-
-        map = L.map('map').setView([47.67, 11.88], 14);
-
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-        L.marker([47.67648, 11.87104]).addTo(map).bindPopup('Brecherspitz 1685m');
-
-    </script>
 
 </body>
 </html>

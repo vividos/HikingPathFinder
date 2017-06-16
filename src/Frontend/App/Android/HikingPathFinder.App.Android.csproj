@@ -400,7 +400,7 @@
     <AndroidAsset Include="Assets\map\leaflet\images\marker-shadow.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\map\map.js" />
+    <AndroidAsset Include="Assets\map\mapView.js" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\my_location.png" />
@@ -413,6 +413,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxxhdpi\my_location.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\route_to_location.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\add_to_tour.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

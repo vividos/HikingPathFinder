@@ -35,9 +35,16 @@ namespace HikingPathFinder.App.Android
             this.Control.Settings.JavaScriptEnabled = true;
             this.Control.Settings.DomStorageEnabled = true;
 
+            // enable this to ensure CesiumJS web worker are able to function
+            // https://stackoverflow.com/questions/32020039/using-a-web-worker-in-a-local-file-webview
+            this.Control.Settings.AllowFileAccessFromFileURLs = true;
+
+            // this is needed to mix local content with https
+            this.Control.Settings.MixedContentMode = global::Android.Webkit.MixedContentHandling.CompatibilityMode;
+
             var platform = ServiceLocator.Current.GetInstance<IPlatform>();
 
-            this.Control.Settings.SetAppCacheMaxSize(32 * 1024 * 1024); // 128 MB
+            this.Control.Settings.SetAppCacheMaxSize(32 * 1024 * 1024); // 32 MB
             this.Control.Settings.SetAppCachePath(platform.CacheDataFolder);
             this.Control.Settings.SetAppCacheEnabled(true);
             this.Control.Settings.CacheMode = global::Android.Webkit.CacheModes.CacheElseNetwork;

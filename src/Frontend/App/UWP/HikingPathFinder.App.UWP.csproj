@@ -107,6 +107,25 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <Content Include="about.png" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
+    <Content Include="Assets\map\cesium\Assets\Textures\maki\marker.png" />
+    <Content Include="Assets\map\cesium\Cesium.js" />
+    <Content Include="Assets\map\cesium\Widgets\Images\info-loading.gif" />
+    <Content Include="Assets\map\cesium\Widgets\Images\NavigationHelp\Mouse.svg" />
+    <Content Include="Assets\map\cesium\Widgets\Images\NavigationHelp\MouseLeft.svg" />
+    <Content Include="Assets\map\cesium\Widgets\Images\NavigationHelp\MouseMiddle.svg" />
+    <Content Include="Assets\map\cesium\Widgets\Images\NavigationHelp\MouseRight.svg" />
+    <Content Include="Assets\map\cesium\Widgets\Images\NavigationHelp\Touch.svg" />
+    <Content Include="Assets\map\cesium\Widgets\Images\NavigationHelp\TouchDrag.svg" />
+    <Content Include="Assets\map\cesium\Widgets\Images\NavigationHelp\TouchRotate.svg" />
+    <Content Include="Assets\map\cesium\Widgets\Images\NavigationHelp\TouchTilt.svg" />
+    <Content Include="Assets\map\cesium\Widgets\Images\NavigationHelp\TouchZoom.svg" />
+    <Content Include="Assets\map\cesium\Widgets\InfoBox\InfoBox.css" />
+    <Content Include="Assets\map\cesium\Widgets\InfoBox\InfoBoxDescription.css" />
+    <Content Include="Assets\map\cesium\Widgets\widgets.css" />
+    <Content Include="Assets\map\cesium\Workers\cesiumWorkerBootstrapper.js" />
+    <Content Include="Assets\map\cesium\Workers\createVerticesFromQuantizedTerrainMesh.js" />
+    <Content Include="Assets\map\cesium\Workers\transferTypedArrayTest.js" />
+    <Content Include="Assets\map\cesium\Workers\upsampleQuantizedTerrainMesh.js" />
     <Content Include="Assets\map\images\add_to_tour.svg" />
     <Content Include="Assets\map\images\route_to_location.svg" />
     <Content Include="Assets\map\leaflet\images\layers-2x.png" />
@@ -126,6 +145,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="settings.png" />
     <Content Include="start.png" />
+    <Content Include="Assets\map\cesium\Assets\approximateTerrainHeights.json" />
     <None Include="HikingPathFinder.App.UWP_TemporaryKey.pfx" />
     <None Include="project.json" />
   </ItemGroup>

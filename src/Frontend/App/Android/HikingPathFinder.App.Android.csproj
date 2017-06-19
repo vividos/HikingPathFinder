@@ -264,6 +264,7 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\icon.png" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidAsset Include="Assets\map\cesium\Assets\approximateTerrainHeights.json" />
     <None Include="packages.config" />
     <None Include="Properties\AndroidManifest.xml" />
     <AndroidResource Include="Resources\drawable\splash_screen.xml">
@@ -419,6 +420,66 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\map\images\add_to_tour.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\cesium\Cesium.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\cesium\Widgets\widgets.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\cesium\Widgets\Images\info-loading.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\cesium\Widgets\Images\TimelineIcons.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\cesium\Widgets\Images\NavigationHelp\Mouse.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\cesium\Widgets\Images\NavigationHelp\MouseLeft.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\cesium\Widgets\Images\NavigationHelp\MouseMiddle.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\cesium\Widgets\Images\NavigationHelp\MouseRight.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\cesium\Widgets\Images\NavigationHelp\Touch.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\cesium\Widgets\Images\NavigationHelp\TouchDrag.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\cesium\Widgets\Images\NavigationHelp\TouchRotate.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\cesium\Widgets\Images\NavigationHelp\TouchTilt.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\cesium\Widgets\Images\NavigationHelp\TouchZoom.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\cesium\Widgets\InfoBox\InfoBox.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\cesium\Widgets\InfoBox\InfoBoxDescription.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\cesium\Workers\cesiumWorkerBootstrapper.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\cesium\Workers\createVerticesFromQuantizedTerrainMesh.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\cesium\Workers\transferTypedArrayTest.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\cesium\Workers\upsampleQuantizedTerrainMesh.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\cesium\Assets\Textures\maki\marker.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -431,9 +431,6 @@
     <AndroidAsset Include="Assets\map\cesium\Widgets\Images\info-loading.gif" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\map\cesium\Widgets\Images\TimelineIcons.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidAsset Include="Assets\map\cesium\Widgets\Images\NavigationHelp\Mouse.svg" />
   </ItemGroup>
   <ItemGroup>

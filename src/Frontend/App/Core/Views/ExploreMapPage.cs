@@ -1,10 +1,12 @@
-﻿using Microsoft.Practices.ServiceLocation;
+﻿using HikingPathFinder.App.Logic;
+using HikingPathFinder.Model;
+using Microsoft.Practices.ServiceLocation;
 using Plugin.Geolocator.Abstractions;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using System;
 using System.Diagnostics;
-using System.Globalization;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -31,6 +33,16 @@ namespace HikingPathFinder.App.Views
         private bool zoomToMyPosition;
 
         /// <summary>
+        /// Map view control on C# side
+        /// </summary>
+        private MapView mapView;
+
+        /// <summary>
+        /// Event that gets signaled when the web page has been loaded
+        /// </summary>
+        private ManualResetEvent eventLoaded = new ManualResetEvent(false);
+
+        /// <summary>
         /// Creates a new maps page to explore
         /// </summary>
         public ExploreMapPage()
@@ -39,6 +51,7 @@ namespace HikingPathFinder.App.Views
             this.geolocator = Plugin.Geolocator.CrossGeolocator.Current;
 
             this.InitLayout();
+            Task.Factory.StartNew(this.LoadDataAsync);
         }
 
         /// <summary>
@@ -80,6 +93,9 @@ namespace HikingPathFinder.App.Views
             this.webView.AutomationId = "ExploreMapWebView";
 
             this.webView.Navigating += this.OnNavigating_WebView;
+            this.webView.Navigated += this.OnNavigated_WebView;
+
+            this.mapView = new MapView(this.webView);
         }
 
         /// <summary>
@@ -97,6 +113,16 @@ namespace HikingPathFinder.App.Views
         }
 
         /// <summary>
+        /// Called when navigation to current page has ended
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void OnNavigated_WebView(object sender, WebNavigatedEventArgs args)
+        {
+            this.eventLoaded.Set();
+        }
+
+        /// <summary>
         /// Sets up toolbar for this page
         /// </summary>
         private void SetupToolbar()
@@ -104,7 +130,7 @@ namespace HikingPathFinder.App.Views
             ToolbarItem locateMeButton = new ToolbarItem(
                 "Locate me",
                 "my_location.png",
-                async () => { await this.OnClicked_ToolbarButtonLocateMe(); },
+                async () => await this.OnClicked_ToolbarButtonLocateMe(),
                 ToolbarItemOrder.Primary);
 
             locateMeButton.AutomationId = "LocateMe";
@@ -141,9 +167,11 @@ namespace HikingPathFinder.App.Views
 
             if (position != null &&
                 Math.Abs(position.Latitude) < 1e5 &&
-                Math.Abs(position.Longitude) < 1e5)
+                Math.Abs(position.Longitude) < 1e5 &&
+                this.mapView != null)
             {
-                this.ZoomToLocation(position);
+                this.mapView.ZoomToLocation(
+                    new MapPoint(position.Latitude, position.Longitude));
             }
             else
             {
@@ -185,20 +213,6 @@ namespace HikingPathFinder.App.Views
                 Debug.WriteLine(ex.ToString());
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Zooms to given location
-        /// </summary>
-        /// <param name="position">position to zoom to</param>
-        private void ZoomToLocation(Position position)
-        {
-            string js = string.Format(
-                "zoomToLocation({{latitude: {0}, longitude: {1}}});",
-                position.Latitude.ToString(CultureInfo.InvariantCulture),
-                position.Longitude.ToString(CultureInfo.InvariantCulture));
-
-            this.webView.Eval(js);
         }
 
         /// <summary>
@@ -246,25 +260,33 @@ namespace HikingPathFinder.App.Views
         {
             var position = args.Position;
 
-            this.UpdateMyPosition(position);
+            bool zoomToPosition = this.zoomToMyPosition;
+
+            this.zoomToMyPosition = false;
+
+            if (this.mapView != null)
+            {
+                this.mapView.UpdateMyLocation(
+                    new MapPoint(position.Latitude, position.Longitude), zoomToPosition);
+            }
         }
 
         /// <summary>
-        /// Updates the "my position" pin in the map
+        /// Loads data; async method
         /// </summary>
-        /// <param name="position">new position to use</param>
-        private void UpdateMyPosition(Plugin.Geolocator.Abstractions.Position position)
+        /// <returns>task to wait on</returns>
+        private async Task LoadDataAsync()
         {
-            bool zoomToPosition = this.zoomToMyPosition;
-            this.zoomToMyPosition = false;
+            var dataService = ServiceLocator.Current.GetInstance<DataService>();
 
-            string js = string.Format(
-                "updateMyPosition({{latitude: {0}, longitude: {1}, zoomTo: {2}}});",
-                position.Latitude.ToString(CultureInfo.InvariantCulture),
-                position.Longitude.ToString(CultureInfo.InvariantCulture),
-                zoomToPosition ? "true" : "false");
+            var appInfo = await dataService.GetAppInfoAsync(CancellationToken.None);
+            var locationList = await dataService.GetLocationListAsync(CancellationToken.None);
 
-            this.webView.Eval(js);
+            // wait for map to be loaded, before sending JavaScript code
+            this.eventLoaded.WaitOne();
+
+            this.mapView.Create(appInfo.AreaRectangle, 14);
+            this.mapView.AddLocationList(locationList);
         }
     }
 }

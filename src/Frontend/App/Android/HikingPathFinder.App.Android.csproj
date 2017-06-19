@@ -479,6 +479,12 @@
     <AndroidAsset Include="Assets\map\cesium\Workers\upsampleQuantizedTerrainMesh.js" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidAsset Include="Assets\map\map3D.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\mapView3D.js" />
+  </ItemGroup>
+  <ItemGroup>
     <AndroidAsset Include="Assets\map\cesium\Assets\Textures\maki\marker.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

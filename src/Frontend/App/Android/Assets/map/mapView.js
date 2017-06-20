@@ -9,11 +9,16 @@ function MapView(options) {
 
     this.options = options || {
         id: 'map',
-        initialPosition: [47.67, 11.88],
-        initialZoomLevel: 14,
+        initialRectangle: [{ latitude: 47.77, longitude: 11.73 }, { latitude: 47.57, longitude: 12.04 }],
+        initialZoomLevel: 14
     };
 
-    this.map = L.map(this.options.id).setView(this.options.initialPosition, this.options.initialZoomLevel);
+    var northWest = L.latLng(this.options.initialRectangle[0].latitude, this.options.initialRectangle[0].longitude);
+    var southEast = L.latLng(this.options.initialRectangle[1].latitude, this.options.initialRectangle[1].longitude);
+    var bounds = L.latLngBounds(northWest, southEast);
+    var initialPosition = bounds.getCenter();
+
+    this.map = L.map(this.options.id).setView(initialPosition, this.options.initialZoomLevel);
 
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'

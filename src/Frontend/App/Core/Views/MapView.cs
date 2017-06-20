@@ -36,14 +36,16 @@ namespace HikingPathFinder.App.Views
         /// <param name="initialZoomLevel">initial zoom level, in 2D zoom level steps</param>
         public void Create(MapRectangle areaRectangle, int initialZoomLevel)
         {
-            var initialPosition = new MapPoint(
-                areaRectangle.NorthWest.Latitude + ((areaRectangle.SouthEast.Latitude - areaRectangle.NorthWest.Latitude) / 2),
-                areaRectangle.NorthWest.Longitude + ((areaRectangle.SouthEast.Longitude - areaRectangle.NorthWest.Longitude) / 2));
+            string initialRectangle = string.Format(
+                "{{latitude:{0}, longitude:{1}}}, {{latitude:{2}, longitude:{3}}}",
+                areaRectangle.NorthWest.Latitude.ToString(CultureInfo.InvariantCulture),
+                areaRectangle.NorthWest.Longitude.ToString(CultureInfo.InvariantCulture),
+                areaRectangle.SouthEast.Latitude.ToString(CultureInfo.InvariantCulture),
+                areaRectangle.SouthEast.Longitude.ToString(CultureInfo.InvariantCulture));
 
             string js = string.Format(
-                "map = new MapView({{id: 'map', initialPosition: [{0}, {1}], initialZoomLevel: {2}}});",
-                initialPosition.Latitude.ToString(CultureInfo.InvariantCulture),
-                initialPosition.Longitude.ToString(CultureInfo.InvariantCulture),
+                "map = new MapView({{id: 'map', initialRectangle: [{0}], initialZoomLevel: {1}}});",
+                initialRectangle,
                 initialZoomLevel);
 
             this.RunJavaScript(js);

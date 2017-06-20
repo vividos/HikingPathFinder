@@ -9,7 +9,7 @@ function MapView(options) {
 
     this.options = options || {
         id: 'map',
-        initialPosition: [47.67, 11.88],
+        initialRectangle: [{ latitude: 47.77, longitude: 11.73 }, { latitude: 47.57, longitude: 12.04 }],
         initialZoomLevel: 14
     };
 
@@ -58,10 +58,16 @@ function MapView(options) {
     this.viewer.scene.globe.depthTestAgainstTerrain = true;
 
     console.log("#5 setView");
-    var initialCamera = Cesium.Cartesian3.fromDegrees(this.options.initialPosition[1], this.options.initialPosition[0], this.options.initialZoomLevel * 500);
+    var west = this.options.initialRectangle[0]['longitude'];
+    var north = this.options.initialRectangle[0]['latitude'];
+
+    var east = this.options.initialRectangle[1]['longitude'];
+    var south = this.options.initialRectangle[1]['latitude'];
+
+    var initialRectangle = Cesium.Rectangle.fromDegrees(west, south, east, north);
 
     this.viewer.camera.setView({
-        destination: initialCamera,
+        destination: initialRectangle,
         orientation: {
             heading: Cesium.Math.toRadians(0), // north
             pitch: Cesium.Math.toRadians(-35),

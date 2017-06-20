@@ -241,7 +241,7 @@ namespace HikingPathFinder.App.ViewModels
             this.StartStopLocationList = new ObservableCollection<LocationAutoCompleteViewModel>();
 
             this.PlanTourCommand = new Command(
-                async () => { await this.PlanTourAndNavigateAsync(); },
+                async () => await this.PlanTourAndNavigateAsync(),
                 this.CanExecutePlanTourCommand);
 
             this.ResetTourParameterCommand = new Command(() =>
@@ -254,7 +254,7 @@ namespace HikingPathFinder.App.ViewModels
                 this.IsTourLocationRequiredVisible = false;
             });
 
-            Task.Factory.StartNew(async () => { await this.LoadDataAsync(); });
+            Task.Factory.StartNew(async () => await this.LoadDataAsync());
         }
 
         /// <summary>

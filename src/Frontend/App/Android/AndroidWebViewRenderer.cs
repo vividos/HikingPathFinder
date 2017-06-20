@@ -32,8 +32,10 @@ namespace HikingPathFinder.App.Android
         /// </summary>
         private void SetupWebViewSettings()
         {
-            this.Control.Settings.JavaScriptEnabled = true;
-            this.Control.Settings.DomStorageEnabled = true;
+            // use this to debug WebView from Chrome running on PC
+#if DEBUG
+            global::Android.Webkit.WebView.SetWebContentsDebuggingEnabled(true);
+#endif
 
             // enable this to ensure CesiumJS web worker are able to function
             // https://stackoverflow.com/questions/32020039/using-a-web-worker-in-a-local-file-webview
@@ -42,6 +44,7 @@ namespace HikingPathFinder.App.Android
             // this is needed to mix local content with https
             this.Control.Settings.MixedContentMode = global::Android.Webkit.MixedContentHandling.CompatibilityMode;
 
+            // set up cache
             var platform = ServiceLocator.Current.GetInstance<IPlatform>();
 
             this.Control.Settings.SetAppCacheMaxSize(32 * 1024 * 1024); // 32 MB

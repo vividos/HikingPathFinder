@@ -10,8 +10,12 @@ function MapView(options) {
     this.options = options || {
         id: 'map',
         initialRectangle: [{ latitude: 47.77, longitude: 11.73 }, { latitude: 47.57, longitude: 12.04 }],
-        initialZoomLevel: 14
+        initialZoomLevel: 14,
+        callback: {}
     };
+
+    if (this.options.callback === undefined)
+        this.options.callback = callAction;
 
     console.log("#1 osm");
     var imageryProvider = Cesium.createOpenStreetMapImageryProvider({
@@ -80,7 +84,6 @@ function MapView(options) {
 
     this.myLocationMarker = null;
 
-    //Create a red pin representing a hospital from the maki icon set.
     var pinPromise = this.pinBuilder.fromMakiIconId('marker', Cesium.Color.RED, 48);
 
     Cesium.when(pinPromise, function (canvas) {
@@ -142,7 +145,7 @@ MapView.prototype.zoomToLocation = function (options) {
             roll: 0.0
         }
     });
-}
+};
 
 /**
  * Adds list of locations to the map, as marker pins
@@ -178,7 +181,7 @@ MapView.prototype.addLocationList = function (locationList) {
             });
         });
     }
-}
+};
 
 MapView.prototype.locationTypeToMakiIconId = function (locationType) {
     switch (locationType) {
@@ -187,7 +190,7 @@ MapView.prototype.locationTypeToMakiIconId = function (locationType) {
             return 'marker';
 
     }
-}
+};
 
 /**
  * Adds list of tracks to the map
@@ -199,7 +202,7 @@ MapView.prototype.addTracksList = function (listOfTracks) {
     console.log("adding list of tracks, with " + listOfTracks.length + " entries");
 
     // TODO implement
-}
+};
 
 /**
  * Called by the marker pin link, in order to add a location to the tour list.
@@ -209,10 +212,9 @@ MapView.prototype.onAddLocationToTour = function (locationId) {
 
     console.log("location is added to tour: id=" + locationId);
 
-    // android way
-    if (callback !== undefined && callback !== null)
-        callback.onAddLocationToTour(locationId);
-}
+    if (this.options.callback !== undefined)
+        this.options.callback('onAddLocationToTour', locationId);
+};
 
 /**
  * Called by the marker pin link, in order to start navigating to the location.
@@ -222,7 +224,6 @@ MapView.prototype.onNavigateToLocation = function (locationId) {
 
     console.log("navigation to location started: id=" + locationId);
 
-    // android way
-    if (callback !== undefined && callback !== null)
-        callback.onNavigateToLocation(locationId);
-}
+    if (this.options.callback !== undefined)
+        this.options.callback('onNavigateToLocation', locationId);
+};

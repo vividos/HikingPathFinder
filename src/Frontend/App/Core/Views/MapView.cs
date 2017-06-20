@@ -21,12 +21,36 @@ namespace HikingPathFinder.App.Views
         private readonly WebView webView;
 
         /// <summary>
+        /// Delegate of function to call when location should be added to tour
+        /// </summary>
+        /// <param name="locationId">location id of location to be added</param>
+        public delegate void OnAddLocationToTourCallback(string locationId);
+
+        /// <summary>
+        /// Delegate of function to call when navigation to location should be started
+        /// </summary>
+        /// <param name="locationId">location id of location to navigate to</param>
+        public delegate void OnNavigateToLocationCallback(string locationId);
+
+        /// <summary>
+        /// Event that is signaled when location should be added to tour
+        /// </summary>
+        public event OnAddLocationToTourCallback AddLocationToTour;
+
+        /// <summary>
+        /// Event that is signaled when navigation to location should be started
+        /// </summary>
+        public event OnNavigateToLocationCallback NavigateToLocation;
+
+        /// <summary>
         /// Creates a new MapView C# object
         /// </summary>
         /// <param name="webView">web view to use</param>
         public MapView(WebView webView)
         {
             this.webView = webView;
+
+            this.webView.Navigating += this.OnNavigating_WebView;
         }
 
         /// <summary>
@@ -115,6 +139,60 @@ namespace HikingPathFinder.App.Views
             Debug.WriteLine("run js: " + js);
 
             Device.BeginInvokeOnMainThread(() => this.webView.Eval(js));
+        }
+
+        /// <summary>
+        /// Called when web view navigates to a new URL; used to bypass callback:// URLs.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void OnNavigating_WebView(object sender, WebNavigatingEventArgs args)
+        {
+            if (args.Url.ToString().StartsWith("callback://"))
+            {
+                args.Cancel = true;
+
+                string callbackParams = args.Url.ToString().Substring(11);
+
+                int pos = callbackParams.IndexOf('/');
+                Debug.Assert(pos > 0, "callback Uri must contain a slash after the function name");
+
+                string functionName = callbackParams.Substring(0, pos);
+                string jsonParameters = callbackParams.Substring(pos + 1);
+
+                this.ExecuteCallback(functionName, jsonParameters);
+            }
+        }
+
+        /// <summary>
+        /// Executes callback function
+        /// </summary>
+        /// <param name="functionName">function name of function to execute</param>
+        /// <param name="jsonParameters">JSON formatted parameters for function</param>
+        private void ExecuteCallback(string functionName, string jsonParameters)
+        {
+            switch (functionName)
+            {
+                case "onAddLocationToTour":
+                    if (this.AddLocationToTour != null)
+                    {
+                        this.AddLocationToTour(jsonParameters.Trim('\"'));
+                    }
+
+                    break;
+
+                case "onNavigateToLocation":
+                    if (this.NavigateToLocation != null)
+                    {
+                        this.NavigateToLocation(jsonParameters.Trim('\"'));
+                    }
+
+                    break;
+
+                default:
+                    Debug.Assert(false, "invalid callback function name");
+                    break;
+            }
         }
     }
 }

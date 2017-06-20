@@ -10,5 +10,14 @@
 
     <div id="map" class="map map-home" style="height: 100%; width: 100%"></div>
 
+    <script type="text/javascript">
+
+        // function used to call to C#
+        function callAction(funcName, params) {
+            window.location.href = "callback://" + funcName + "/" + JSON.stringify(params);
+        }
+
+    </script>
+
 </body>
 </html>

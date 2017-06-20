@@ -61,7 +61,7 @@ namespace HikingPathFinder.App.Views
         {
             this.Title = "Explore Map";
 
-            this.SetupWebView();
+            this.SetupWebView(showMapIn3D: false);
             this.SetupToolbar();
 
             this.Content = this.webView;
@@ -70,11 +70,12 @@ namespace HikingPathFinder.App.Views
         /// <summary>
         /// Sets up WebView control
         /// </summary>
-        private void SetupWebView()
+        /// <param name="showMapIn3D">indicates if map is shown in 3D (true) or 2D (false)</param>
+        private void SetupWebView(bool showMapIn3D)
         {
             var platform = ServiceLocator.Current.GetInstance<IPlatform>();
 
-            string htmlText = platform.LoadTextAsset("map/map.html");
+            string htmlText = platform.LoadTextAsset(showMapIn3D ? "map/map3D.html" : "map/map.html");
 
             var htmlSource = new HtmlWebViewSource
             {

@@ -5,6 +5,7 @@ using Plugin.Geolocator.Abstractions;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,6 +18,11 @@ namespace HikingPathFinder.App.Views
     /// </summary>
     public class ExploreMapPage : ContentPage
     {
+        /// <summary>
+        /// Logging instance
+        /// </summary>
+        private static Common.Logging.ILog log = App.GetLogger<ExploreMapPage>();
+
         /// <summary>
         /// Geo locator to use for position updates
         /// </summary>
@@ -41,6 +47,11 @@ namespace HikingPathFinder.App.Views
         /// Event that gets signaled when the web page has been loaded
         /// </summary>
         private ManualResetEvent eventLoaded = new ManualResetEvent(false);
+
+        /// <summary>
+        /// List of locations on the map
+        /// </summary>
+        private List<Location> locationList;
 
         /// <summary>
         /// Creates a new maps page to explore
@@ -97,6 +108,63 @@ namespace HikingPathFinder.App.Views
             this.webView.Navigated += this.OnNavigated_WebView;
 
             this.mapView = new MapView(this.webView);
+
+            this.mapView.AddLocationToTour += this.OnMapView_AddLocationToTour;
+            this.mapView.NavigateToLocation += this.OnMapView_NavigateToLocation;
+        }
+
+        /// <summary>
+        /// Called when location is added to tour
+        /// </summary>
+        /// <param name="locationId">location id of location to add to tour</param>
+        private void OnMapView_AddLocationToTour(string locationId)
+        {
+            Location location = this.FindLocationById(locationId);
+
+            if (location == null)
+            {
+                log.Error("couldn't find location with id=" + locationId);
+                return;
+            }
+
+            // TODO implement
+        }
+
+        /// <summary>
+        /// Called when user clicked on the "Navigate here" link in the pin description on the
+        /// map.
+        /// </summary>
+        /// <param name="locationId">location id of location to navigate to</param>
+        private void OnMapView_NavigateToLocation(string locationId)
+        {
+            Location location = this.FindLocationById(locationId);
+
+            if (location == null)
+            {
+                log.Error("couldn't find location with id=" + locationId);
+                return;
+            }
+
+            Plugin.ExternalMaps.CrossExternalMaps.Current.NavigateTo(
+                location.Name,
+                location.MapLocation.Latitude,
+                location.MapLocation.Longitude,
+                Plugin.ExternalMaps.Abstractions.NavigationType.Driving);
+        }
+
+        /// <summary>
+        /// Finds a location by given location id.
+        /// </summary>
+        /// <param name="locationId">location id to use</param>
+        /// <returns>found location, or null when no location could be found</returns>
+        private Location FindLocationById(string locationId)
+        {
+            if (this.locationList == null)
+            {
+                return null;
+            }
+
+            return this.locationList.Find(location => location.Id == locationId);
         }
 
         /// <summary>
@@ -106,7 +174,8 @@ namespace HikingPathFinder.App.Views
         /// <param name="args">event args</param>
         private void OnNavigating_WebView(object sender, WebNavigatingEventArgs args)
         {
-            if (args.NavigationEvent == WebNavigationEvent.NewPage)
+            if (args.NavigationEvent == WebNavigationEvent.NewPage &&
+                args.Url.StartsWith("http"))
             {
                 Device.OpenUri(new Uri(args.Url));
                 args.Cancel = true;
@@ -281,13 +350,13 @@ namespace HikingPathFinder.App.Views
             var dataService = ServiceLocator.Current.GetInstance<DataService>();
 
             var appInfo = await dataService.GetAppInfoAsync(CancellationToken.None);
-            var locationList = await dataService.GetLocationListAsync(CancellationToken.None);
+            this.locationList = await dataService.GetLocationListAsync(CancellationToken.None);
 
             // wait for map to be loaded, before sending JavaScript code
             this.eventLoaded.WaitOne();
 
             this.mapView.Create(appInfo.AreaRectangle, 14);
-            this.mapView.AddLocationList(locationList);
+            this.mapView.AddLocationList(this.locationList);
         }
     }
 }

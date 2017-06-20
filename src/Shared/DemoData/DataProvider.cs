@@ -73,6 +73,7 @@ namespace HikingPathFinder.DemoData
         private static Location railwayStation =
             new Location
             {
+                Id = Guid.NewGuid().ToString("B"),
                 Name = "Bahnhof Neuhaus (Schliersee)",
                 Elevation = 809,
                 MapLocation = new MapPoint(47.70599, 11.87451),
@@ -133,6 +134,7 @@ namespace HikingPathFinder.DemoData
         private static Location busStation =
             new Location
             {
+                Id = Guid.NewGuid().ToString("B"),
                 Name = "RBO Bus 9562 Bushaltestelle Spitzingsattel",
                 Elevation = 1129,
                 MapLocation = new MapPoint(47.672138, 11.8862728),

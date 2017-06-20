@@ -9,11 +9,20 @@ function MapView(options) {
 
     this.options = options || {
         id: 'map',
-        initialPosition: [47.67, 11.88],
+        initialRectangle: [{ latitude: 47.77, longitude: 11.73 }, { latitude: 47.57, longitude: 12.04 }],
         initialZoomLevel: 14,
+        callback: {}
     };
 
-    this.map = L.map(this.options.id).setView(this.options.initialPosition, this.options.initialZoomLevel);
+    if (this.options.callback === undefined)
+        this.options.callback = callAction;
+
+    var northWest = L.latLng(this.options.initialRectangle[0].latitude, this.options.initialRectangle[0].longitude);
+    var southEast = L.latLng(this.options.initialRectangle[1].latitude, this.options.initialRectangle[1].longitude);
+    var bounds = L.latLngBounds(northWest, southEast);
+    var initialPosition = bounds.getCenter();
+
+    this.map = L.map(this.options.id).setView(initialPosition, this.options.initialZoomLevel);
 
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -52,7 +61,7 @@ MapView.prototype.zoomToLocation = function (options) {
 
     console.log("zooming to: lat=" + options.latitude + ", long=" + options.longitude);
     this.map.panTo([options.latitude, options.longitude]);
-}
+};
 
 /**
  * Adds list of locations to the map, as marker pins
@@ -76,7 +85,7 @@ MapView.prototype.addLocationList = function (locationList) {
 
         L.marker([location.latitude, location.longitude]).addTo(this.map).bindPopup(text);
     }
-}
+};
 
 /**
  * Adds list of tracks to the map
@@ -88,7 +97,7 @@ MapView.prototype.addTracksList = function (listOfTracks) {
     console.log("adding list of tracks, with " + listOfTracks.length + " entries");
 
     // TODO implement
-}
+};
 
 /**
  * Called by the marker pin link, in order to add a location to the tour list.
@@ -98,10 +107,9 @@ MapView.prototype.onAddLocationToTour = function (locationId) {
 
     console.log("location is added to tour: id=" + locationId);
 
-    // android way
-    if (callback !== undefined && callback !== null)
-        callback.onAddLocationToTour(locationId);
-}
+    if (this.options.callback !== undefined)
+        this.options.callback('onAddLocationToTour', locationId);
+};
 
 /**
  * Called by the marker pin link, in order to start navigating to the location.
@@ -111,7 +119,6 @@ MapView.prototype.onNavigateToLocation = function (locationId) {
 
     console.log("navigation to location started: id=" + locationId);
 
-    // android way
-    if (callback !== undefined && callback !== null)
-        callback.onNavigateToLocation(locationId);
-}
+    if (this.options.callback !== undefined)
+        this.options.callback('onNavigateToLocation', locationId);
+};

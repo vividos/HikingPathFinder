@@ -136,7 +136,9 @@
     <Content Include="Assets\map\leaflet\leaflet.css" />
     <Content Include="Assets\map\leaflet\leaflet.js" />
     <Content Include="Assets\map\map.html" />
+    <Content Include="Assets\map\map3D.html" />
     <Content Include="Assets\map\mapView.js" />
+    <Content Include="Assets\map\mapView3D.js" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.scale-200.png" />

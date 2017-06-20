@@ -12,14 +12,10 @@
 
     <script type="text/javascript">
 
-        callback = {
-            onAddLocationToTour = function (locationId) {
-                window.external.notify('onAddLocationToTour', locationId);
-            },
-            onNavigateToLocation = function (locationId) {
-                window.external.notify('onNavigateToLocation', locationId);
-            }
-        };
+        // function used to call to C#
+        function callAction(funcName, params) {
+            window.external.notify(funcName, JSON.stringify(params));
+        }
 
     </script>
 

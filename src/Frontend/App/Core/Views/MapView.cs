@@ -68,7 +68,7 @@ namespace HikingPathFinder.App.Views
                 areaRectangle.SouthEast.Longitude.ToString(CultureInfo.InvariantCulture));
 
             string js = string.Format(
-                "map = new MapView({{id: 'map', initialRectangle: [{0}], initialZoomLevel: {1}}});",
+                "map = new MapView({{id: 'mapElement', initialRectangle: [{0}], initialZoomLevel: {1}}});",
                 initialRectangle,
                 initialZoomLevel);
 

@@ -14,7 +14,7 @@
 
         // function used to call to C#
         function callAction(funcName, params) {
-            window.external.notify(funcName, JSON.stringify(params));
+            window.external.notify(funcName + ':' + JSON.stringify(params));
         }
 
     </script>

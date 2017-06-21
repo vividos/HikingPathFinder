@@ -27,7 +27,7 @@
 
         // function used to call to C#
         function callAction(funcName, params) {
-            window.location.href = "callback://" + funcName + "/" + JSON.stringify(params);
+            window.external.notify(funcName + ':' + JSON.stringify(params));
         }
 
     </script>

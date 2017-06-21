@@ -158,7 +158,6 @@
     <ITunesArtwork Include="iTunesArtwork" />
     <ITunesArtwork Include="iTunesArtwork@2x" />
     <None Include="packages.config" />
-    <BundleResource Include="Resources\map\leaflet-src.map" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
@@ -298,31 +297,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\map\leaflet-src.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\map\leaflet.css" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\map\leaflet.js" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\map\map.html" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\map\images\layers-2x.png" />
+    <BundleResource Include="Resources\map\leaflet\images\layers-2x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\map\images\layers.png" />
+    <BundleResource Include="Resources\map\leaflet\images\layers.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\map\images\marker-icon-2x.png" />
+    <BundleResource Include="Resources\map\leaflet\images\marker-icon-2x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\map\images\marker-icon.png" />
+    <BundleResource Include="Resources\map\leaflet\images\marker-icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\map\images\marker-shadow.png" />
+    <BundleResource Include="Resources\map\leaflet\images\marker-shadow.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\about.png" />
@@ -343,7 +333,13 @@
     <BundleResource Include="Resources\my_location.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\map\map.js" />
+    <BundleResource Include="Resources\map\leaflet\leaflet.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\map\leaflet\leaflet.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\map\mapView.js" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\..\..\Packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\..\Packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />

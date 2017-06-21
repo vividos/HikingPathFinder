@@ -165,6 +165,7 @@
     <Compile Include="UwpPlatform.cs" />
     <Compile Include="UwpSerilogProvider.cs" />
     <Compile Include="UwpSQLiteDatabaseProvider.cs" />
+    <Compile Include="UwpWebViewRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

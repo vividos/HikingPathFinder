@@ -76,14 +76,42 @@ MapView.prototype.addLocationList = function (locationList) {
 
         var location = locationList[index];
 
-        var text = '<h2>' + location.name + ' ' + location.elevation + 'm</h2>' +
+        var text = '<h2><img height="48em" width="48em" src="' + this.imageUrlFromLocationType(location.type) + '" style="vertical-align:center" />' +
+            location.name + ' ' + location.elevation + 'm</h2>' +
             '<p>Location type: ' + location.type + '<br/>' +
-            '<img height="32em" width="32em" src="images/add_to_tour.svg" style="vertical-align:middle" />' +
+            '<img height="32em" width="32em" src="images/playlist-plus.svg" style="vertical-align:middle" />' +
             '<a href="javascript:map.onAddLocationToTour(\'' + location.id + '\');">Add to tour</a> - ' +
-            '<img height="32em" width="32em" src="images/route_to_location.svg" style="vertical-align:middle" />' +
+            '<img height="32em" width="32em" src="images/navigation.svg" style="vertical-align:middle" />' +
             '<a href="javascript:map.onNavigateToLocation(\'' + location.id + '\');">Navigate here</a></p>';
 
         L.marker([location.latitude, location.longitude]).addTo(this.map).bindPopup(text);
+    }
+};
+
+/**
+ * Returns a relative image Url for given location type
+ * @param {string} locationType location type
+ * @return relative image Url
+ */
+
+MapView.prototype.imageUrlFromLocationType = function (locationType) {
+
+    switch (locationType) {
+        case 'Summit': return 'images/mountain-15.svg';
+        //case 'Pass': return '';
+        case 'Lake': return 'images/water-15.svg';
+        case 'Bridge': return 'images/bridge.svg';
+        case 'Viewpoint': return 'images/attraction-15.svg';
+        case 'AlpineHut': return 'images/home-15.svg';
+        case 'Restaurant': return 'images/restaurant-15.svg';
+        case 'Church': return 'images/church.svg';
+        case 'Castle': return 'images/castle.svg';
+        //case 'Cave': return '';
+        case 'Information': return 'images/information-outline.svg';
+        case 'PublicTransport': return 'images/train.svg';
+        //case 'ViaFerrata': return '';
+        //case 'Paragliding': return '';
+        default: return 'images/map-marker.svg';
     }
 };
 

@@ -416,10 +416,6 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\my_location.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\map\images\route_to_location.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\images\add_to_tour.svg" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\map\cesium\Cesium.js" />
@@ -483,6 +479,63 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\map\cesium\Assets\Textures\maki\marker.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\aerialway-15.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\attraction-15.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\home-15.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\information-outline.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\map-marker-plus.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\map-marker.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\mountain-15.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\navigation.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\parking-15.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\parking.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\directions.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\playlist-plus.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\restaurant-15.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\train.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\water-15.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\bridge.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\bus.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\castle.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\church.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

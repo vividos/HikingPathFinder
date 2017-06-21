@@ -27,6 +27,11 @@
         string WebViewBasePath { get; }
 
         /// <summary>
+        /// Property containing bool value if WebGL is supported by WebView on this platform.
+        /// </summary>
+        bool IsSupportedWebViewWebGL { get; }
+
+        /// <summary>
         /// Returns if a file with given filename exists in the file system.
         /// </summary>
         /// <param name="filename">filename to check</param>

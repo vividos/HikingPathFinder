@@ -58,6 +58,18 @@ namespace HikingPathFinder.App.UWP
         }
 
         /// <summary>
+        /// Property containing bool value if WebGL is supported by WebView on this platform.
+        /// </summary>
+        public bool IsSupportedWebViewWebGL
+        {
+            get
+            {
+                // not supported
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Returns if a file with given filename exists in the file system.
         /// </summary>
         /// <param name="filename">filename to check</param>

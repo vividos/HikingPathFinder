@@ -66,6 +66,24 @@ namespace HikingPathFinder.App.Android
         }
 
         /// <summary>
+        /// Property containing bool value if WebGL is supported by WebView on this platform.
+        /// </summary>
+        public bool IsSupportedWebViewWebGL
+        {
+            get
+            {
+                // check if OpenGL ES supports extension
+                string openGlEsExtensions =
+                    global::Android.Opengl.GLES20.GlGetString(
+                        global::Android.Opengl.GLES10.GlExtensions);
+
+                // according to https://plus.google.com/117876205278601579117/posts/M3JQsTShckQ
+                // Chromium WebView supports WebGL when GL_EXT_robustness is present
+                return openGlEsExtensions.Contains("GL_EXT_robustness");
+            }
+        }
+
+        /// <summary>
         /// Returns if a file with given filename exists in the file system.
         /// </summary>
         /// <param name="filename">filename to check</param>

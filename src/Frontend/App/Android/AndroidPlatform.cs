@@ -79,7 +79,9 @@ namespace HikingPathFinder.App.Android
 
                 // according to https://plus.google.com/117876205278601579117/posts/M3JQsTShckQ
                 // Chromium WebView supports WebGL when GL_EXT_robustness is present
-                return openGlEsExtensions.Contains("GL_EXT_robustness");
+                return
+                    openGlEsExtensions != null &&
+                    openGlEsExtensions.Contains("GL_EXT_robustness");
             }
         }
 

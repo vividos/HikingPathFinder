@@ -292,6 +292,10 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Model\HikingPathFinder.Model.csproj">
+      <Project>{8c97fd6e-8a02-4b46-9dff-24fbc05a9024}</Project>
+      <Name>HikingPathFinder.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Database\HikingPathFinder.App.Database.csproj">
       <Project>{4BB458FB-55D5-42DB-B3A9-C5D8665CEF05}</Project>
       <Name>HikingPathFinder.App.Database</Name>

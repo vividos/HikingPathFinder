@@ -15,6 +15,10 @@ licensed under the "Apache 2 license".
 https://github.com/XLabs/Xamarin-Forms-Labs/
 https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
 
+The app uses the RotorGames Popup Page Plugin for Xamarin Forms, which is
+licensed under the "MIT License (MIT)":
+https://github.com/rotorgames/Rg.Plugins.Popup
+
 ### Icons
 
 All icons in the App are from the Google Material Icons

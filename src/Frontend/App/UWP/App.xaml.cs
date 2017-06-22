@@ -70,7 +70,9 @@ namespace HikingPathFinder.App.UWP
 
                 rootFrame.NavigationFailed += this.OnNavigationFailed;
 
-                Xamarin.Forms.Forms.Init(args);
+                // Initialization is required due to an error when compiling in release mode.
+                // Details: https://developer.xamarin.com/guides/xamarin-forms/platform-features/windows/installation/universal/#Troubleshooting
+                Xamarin.Forms.Forms.Init(args, Rg.Plugins.Popup.Windows.Popup.GetExtraAssemblies());
 
                 if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {

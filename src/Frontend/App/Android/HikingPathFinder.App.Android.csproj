@@ -544,6 +544,9 @@
     <AndroidAsset Include="Assets\map\images\church.svg" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidResource Include="Resources\drawable\my_location.xml" />
+  </ItemGroup>
+  <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\tour_locations.png" />
   </ItemGroup>
   <ItemGroup>

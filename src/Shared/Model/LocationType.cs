@@ -61,9 +61,24 @@
         Information = 10,
 
         /// <summary>
-        /// Public transport station
+        /// A spot for swimming, e.g. a beach or a river spot
         /// </summary>
-        PublicTransport = 11,
+        SwimmingSpot = 11,
+
+        /// <summary>
+        /// Public transport station for bus
+        /// </summary>
+        PublicTransportBus = 12,
+
+        /// <summary>
+        /// Public transport station for train
+        /// </summary>
+        PublicTransportTrain = 13,
+
+        /// <summary>
+        /// Parking area, usually for cars
+        /// </summary>
+        Parking = 14,
 
         /// <summary>
         /// Start or end point of a via ferrata, a climbing trail
@@ -74,6 +89,11 @@
         /// Hanggliding or Paragliding location
         /// </summary>
         Paragliding = 101,
+
+        /// <summary>
+        /// Cable car station, either on top of the mountain, or in the valley
+        /// </summary>
+        CableCar = 102,
 
         /// <summary>
         /// An undefined location; should not be used

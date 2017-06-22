@@ -108,9 +108,12 @@ MapView.prototype.imageUrlFromLocationType = function (locationType) {
         case 'Castle': return 'images/castle.svg';
         //case 'Cave': return '';
         case 'Information': return 'images/information-outline.svg';
-        case 'PublicTransport': return 'images/train.svg';
+        case 'PublicTransportBus': return 'images/bus.svg';
+        case 'PublicTransportTrain': return 'images/train.svg';
+        case 'Parking': return 'images/parking.svg';
         //case 'ViaFerrata': return '';
         //case 'Paragliding': return '';
+        case 'CableCar': return 'images/aerialway-15.svg';
         default: return 'images/map-marker.svg';
     }
 };

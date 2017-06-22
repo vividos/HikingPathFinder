@@ -78,7 +78,7 @@ namespace HikingPathFinder.DemoData
                 Elevation = 809,
                 MapLocation = new MapPoint(47.70599, 11.87451),
                 Description = "Anschlussmöglichkeiten zum RBO Bus 9562 zum Spitzingsattel",
-                Type = LocationType.PublicTransport,
+                Type = LocationType.PublicTransportTrain,
                 PhotoList = new List<PhotoRef>(),
                 InternetLink = "http://www.bayerischeoberlandbahn.de/strecken-fahrplaene/linie/3-munchen-hbf-holzkirchen-bayrischzell"
             };
@@ -139,7 +139,7 @@ namespace HikingPathFinder.DemoData
                 Elevation = 1129,
                 MapLocation = new MapPoint(47.672138, 11.8862728),
                 Description = "Haltestelle am Spitzingsattel. Abfahrtszeiten Richtung Schliersee: 8:42, 11:15, 15:31, 18:02.",
-                Type = LocationType.PublicTransport,
+                Type = LocationType.PublicTransportBus,
                 PhotoList = new List<PhotoRef>(),
                 InternetLink = "http://www.bayerischeoberlandbahn.de/strecken-fahrplaene/linie/3-munchen-hbf-holzkirchen-bayrischzell"
             };

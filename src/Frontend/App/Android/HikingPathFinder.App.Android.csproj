@@ -505,9 +505,6 @@
     <AndroidAsset Include="Assets\map\images\navigation.svg" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\map\images\parking-15.svg" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidAsset Include="Assets\map\images\parking.svg" />
   </ItemGroup>
   <ItemGroup>

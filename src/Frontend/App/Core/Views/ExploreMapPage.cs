@@ -197,6 +197,15 @@ namespace HikingPathFinder.App.Views
         /// </summary>
         private void SetupToolbar()
         {
+            ToolbarItem showTourLocationsButton = new ToolbarItem(
+                "Show tour locations",
+                "tour_locations.png",
+                async () => await this.OnClicked_ToolbarButtonShowTourLocations(),
+                ToolbarItemOrder.Primary);
+
+            showTourLocationsButton.AutomationId = "ShowTourLocations";
+            ToolbarItems.Add(showTourLocationsButton);
+
             ToolbarItem locateMeButton = new ToolbarItem(
                 "Locate me",
                 "my_location.png",
@@ -204,8 +213,18 @@ namespace HikingPathFinder.App.Views
                 ToolbarItemOrder.Primary);
 
             locateMeButton.AutomationId = "LocateMe";
-
             ToolbarItems.Add(locateMeButton);
+        }
+
+        /// <summary>
+        /// Called when toolbar button "show tour locations" was clicked
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task OnClicked_ToolbarButtonShowTourLocations()
+        {
+            var page = new TourLocationListPopupPage();
+
+            await Rg.Plugins.Popup.Services.PopupNavigation.PushAsync(page);
         }
 
         /// <summary>

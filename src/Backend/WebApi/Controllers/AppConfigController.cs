@@ -13,9 +13,10 @@ namespace HikingPathFinder.Backend.WebApi.Controllers
         /// GET: api/appConfig
         /// Returns app config object
         /// </summary>
+        /// <param name="appVersion">app version of app that wants to get config object</param>
         /// <returns>app config object</returns>
         [HttpGet]
-        public AppConfig Get()
+        public AppConfig Get(string appVersion)
         {
             return HikingPathFinder.DemoData.DataProvider.GetAppConfig();
         }

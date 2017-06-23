@@ -1,8 +1,13 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Microsoft.Extensions.PlatformAbstractions;
+using System.IO;
 
 namespace HikingPathFinder.Backend.WebApi
 {
@@ -38,6 +43,39 @@ namespace HikingPathFinder.Backend.WebApi
         {
             // Add framework services.
             services.AddMvc();
+
+            services.AddSwaggerGen(this.ConfigureSwaggerGen);
+        }
+
+        /// <summary>
+        /// Configures swagger generation; see
+        /// https://docs.microsoft.com/en-us/aspnet/core/tutorials/web-api-help-pages-using-swagger
+        /// </summary>
+        /// <param name="options">swagger generation options</param>
+        private void ConfigureSwaggerGen(SwaggerGenOptions options)
+        {
+            options.SwaggerDoc(
+                "v1",
+                new Info
+                {
+                    Version = "v1",
+                    Title = "HikingPathFinder API",
+                    Contact = new Contact
+                    {
+                        Name = "Michael Fink",
+                        Email = string.Empty,
+                        Url = "https://github.com/vividos/HikingPathFinder"
+                    },
+                    License = new License
+                    {
+                        Name = "Creative Commons Attribution-ShareAlike 4.0 International License (CC-BY-SA)",
+                        Url = "https://creativecommons.org/licenses/by-sa/4.0/"
+                    }
+                });
+
+            var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+            var xmlPath = Path.Combine(basePath, "HikingPathFinder.Backend.WebApi.xml");
+            options.IncludeXmlComments(xmlPath);
         }
 
         /// <summary>
@@ -52,6 +90,12 @@ namespace HikingPathFinder.Backend.WebApi
             loggerFactory.AddDebug();
 
             app.UseMvc();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "HikingPathFinder API v1");
+            });
         }
     }
 }

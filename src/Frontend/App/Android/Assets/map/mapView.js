@@ -82,6 +82,13 @@ MapView.prototype.addLocationList = function (locationList) {
             '<img height="32em" width="32em" src="images/playlist-plus.svg" style="vertical-align:middle" />' +
             '<a href="javascript:map.onAddLocationToTour(\'' + location.id + '\');">Add to tour</a> - ' +
             '<img height="32em" width="32em" src="images/navigation.svg" style="vertical-align:middle" />' +
+
+        if (location.isTourLocation)
+            text += '<img height="32em" width="32em" src="images/playlist-plus.svg" style="vertical-align:middle" />' +
+            '<a href="javascript:map.onAddLocationToTour(\'' + location.id + '\');">Add as tour location</a> - ';
+
+        if (!location.isTourLocation)
+            text += '<img height="32em" width="32em" src="images/navigation.svg" style="vertical-align:middle" />' +
             '<a href="javascript:map.onNavigateToLocation(\'' + location.id + '\');">Navigate here</a></p>';
 
         L.marker([location.latitude, location.longitude]).addTo(this.map).bindPopup(text);

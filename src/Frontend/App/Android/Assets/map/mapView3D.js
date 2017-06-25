@@ -95,7 +95,8 @@ function MapView(options) {
             billboard: {
                 image: canvas.toDataURL(),
                 //image: this.pinBuilder.fromText('?', Cesium.Color.BLUE, 48).toDataURL(),
-                verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+                verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+                heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
             }
         });
     });
@@ -176,7 +177,8 @@ MapView.prototype.addLocationList = function (locationList) {
                 position: Cesium.Cartesian3.fromDegrees(location.longitude, location.latitude),
                 billboard: {
                     image: this.pinBuilder.fromText('?', Cesium.Color.BLUE, 48).toDataURL(),
-                    verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+                    verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+                    heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
                 }
             });
         });

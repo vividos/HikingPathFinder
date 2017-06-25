@@ -1,6 +1,6 @@
 using Android.App;
 using Android.Content.Res;
-using System.Diagnostics;
+using Android.OS;
 using System.IO;
 
 namespace HikingPathFinder.App.Android
@@ -72,16 +72,10 @@ namespace HikingPathFinder.App.Android
         {
             get
             {
-                // check if OpenGL ES supports extension
-                string openGlEsExtensions =
-                    global::Android.Opengl.GLES20.GlGetString(
-                        global::Android.Opengl.GLES10.GlExtensions);
-
-                // according to https://plus.google.com/117876205278601579117/posts/M3JQsTShckQ
-                // Chromium WebView supports WebGL when GL_EXT_robustness is present
+                // starting with Android 6 Kitkat most devices should have a graphics card that
+                // supports WebGL
                 return
-                    openGlEsExtensions != null &&
-                    openGlEsExtensions.Contains("GL_EXT_robustness");
+                    Build.VERSION.SdkInt >= BuildVersionCodes.Kitkat;
             }
         }
 

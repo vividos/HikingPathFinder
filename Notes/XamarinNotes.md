@@ -11,6 +11,7 @@ https://github.com/mono/mono/tree/master/mcs/class
 
 Android API levels to adjust in the IDE:
 http://redth.codes/such-android-api-levels-much-confuse-wow/
+https://developer.xamarin.com/guides/android/application_fundamentals/understanding_android_api_levels/
 
 ### Debug keystore
 

@@ -50,7 +50,7 @@
 	<string>Apple</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Grant access to the photo library in order to choose from stored images</string>
-	<key>NSLocationWhenInUsageDescription</key>
+	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Grant access to your location in order to see your current position on the map</string>
 </dict>
 </plist>

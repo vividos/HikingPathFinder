@@ -98,6 +98,8 @@ namespace HikingPathFinder.App.Views
         /// <param name="showMapIn3D">indicates if map is shown in 3D (true) or 2D (false)</param>
         private void SetupWebView(bool showMapIn3D)
         {
+            this.eventLoaded.Reset();
+
             var platform = ServiceLocator.Current.GetInstance<IPlatform>();
 
             string htmlText = platform.LoadTextAsset(showMapIn3D ? "map/map3D.html" : "map/map.html");
@@ -232,7 +234,7 @@ namespace HikingPathFinder.App.Views
         private void AddSwitch3DToolbarButton()
         {
             ToolbarItem showTourLocationsButton = new ToolbarItem(
-                "Switch 2D / 3D map",
+                "Switch between 2D and 3D map",
                 "switch_2d_3d_map.png",
                 async () => await this.OnClicked_ToolbarButtonSwitch3DToolbarButton(),
                 ToolbarItemOrder.Primary);
@@ -253,6 +255,8 @@ namespace HikingPathFinder.App.Views
             await dataService.StoreUserSettingsAsync(this.userSettings, CancellationToken.None);
 
             this.SetupWebView(this.userSettings.ShowMapIn3D);
+
+            await Task.Factory.StartNew(this.LoadDataAsync);
         }
 
         /// <summary>

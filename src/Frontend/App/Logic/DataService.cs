@@ -88,6 +88,41 @@ namespace HikingPathFinder.App.Logic
         }
 
         /// <summary>
+        /// Returns current user settings object
+        /// </summary>
+        /// <param name="token">token to cancel operation</param>
+        /// <returns>app info object</returns>
+        public async Task<UserSettings> GetUserSettingsAsync(CancellationToken token)
+        {
+            var connection = this.database.GetConnection();
+
+            var userSettings = connection.Table<UserSettings>().FirstOrDefault();
+
+            if (userSettings == null)
+            {
+                userSettings = new UserSettings();
+                connection.Insert(userSettings);
+            }
+
+            return await Task.FromResult(userSettings);
+        }
+
+        /// <summary>
+        /// Stores user settings object
+        /// </summary>
+        /// <param name="userSettings">user settings to store</param>
+        /// <param name="token">token to cancel operation</param>
+        /// <returns>app info object</returns>
+        public Task StoreUserSettingsAsync(UserSettings userSettings, CancellationToken token)
+        {
+            var connection = this.database.GetConnection();
+
+            connection.InsertOrReplace(userSettings);
+
+            return Task.FromResult<object>(null);
+        }
+
+        /// <summary>
         /// Returns list of pre-planned tours
         /// </summary>
         /// <param name="token">token to cancel operation</param>

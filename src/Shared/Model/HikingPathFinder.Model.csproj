@@ -56,6 +56,7 @@
     <Compile Include="StaticPageInfo.cs" />
     <Compile Include="Tour.cs" />
     <Compile Include="TrackPoint.cs" />
+    <Compile Include="UserSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="project.json" />

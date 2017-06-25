@@ -103,6 +103,7 @@ namespace HikingPathFinder.App.Database
 
             // initial: tables
             connection.CreateTable<AppInfo>();
+            connection.CreateTable<UserSettings>();
             connection.CreateTable<PhotoRef>();
             connection.CreateTable<Location>();
             connection.CreateTable<PrePlannedTour>();

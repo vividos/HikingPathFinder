@@ -72,10 +72,10 @@ namespace HikingPathFinder.App.Android
         {
             get
             {
-                // starting with Android 6 Kitkat most devices should have a graphics card that
-                // supports WebGL
+                // starting with Android 6 Marshmallow, most devices should have a graphics card
+                // that supports WebGL
                 return
-                    Build.VERSION.SdkInt >= BuildVersionCodes.Kitkat;
+                    Build.VERSION.SdkInt >= BuildVersionCodes.M;
             }
         }
 

@@ -314,7 +314,7 @@ namespace HikingPathFinder.App.Views
             Position position = null;
             try
             {
-                position = await this.geolocator.GetPositionAsync(timeoutMilliseconds: 10, includeHeading: false);
+                position = await this.geolocator.GetPositionAsync(timeoutMilliseconds: 100, includeHeading: false);
             }
             catch (Exception ex)
             {

@@ -16,6 +16,31 @@ namespace HikingPathFinder.App.Views
     public class MapView
     {
         /// <summary>
+        /// JSON parameters for the SetStartStopLocation event fired by JavaScript
+        /// </summary>
+        private class SetStartStopLocationJsonParameters
+        {
+            /// <summary>
+            /// Indicates if start or stop location should be set
+            /// </summary>
+            public bool setStartLocation;
+
+            /// <summary>
+            /// Location ID of location to use
+            /// </summary>
+            public string locationId;
+
+            /// <summary>
+            /// Creates a new JSON parameters object
+            /// </summary>
+            public SetStartStopLocationJsonParameters()
+            {
+                this.setStartLocation = true;
+                this.locationId = string.Empty;
+            }
+        }
+
+        /// <summary>
         /// Web view where MapView control is used
         /// </summary>
         private readonly WebView webView;
@@ -27,6 +52,14 @@ namespace HikingPathFinder.App.Views
         public delegate void OnAddLocationToTourCallback(string locationId);
 
         /// <summary>
+        /// Delegate of function to call when location should be set as start or stop location
+        /// </summary>
+        /// <param name="setStartLocation">true when the start location should be set, false for
+        /// the stop location</param>
+        /// <param name="locationId">location id of location to be added</param>
+        public delegate void OnSetStartStopLocationCallback(bool setStartLocation, string locationId);
+
+        /// <summary>
         /// Delegate of function to call when navigation to location should be started
         /// </summary>
         /// <param name="locationId">location id of location to navigate to</param>
@@ -36,6 +69,11 @@ namespace HikingPathFinder.App.Views
         /// Event that is signaled when location should be added to tour
         /// </summary>
         public event OnAddLocationToTourCallback AddLocationToTour;
+
+        /// <summary>
+        /// Event that is signaled when navigation to location should be started
+        /// </summary>
+        public event OnSetStartStopLocationCallback SetStartStopLocation;
 
         /// <summary>
         /// Event that is signaled when navigation to location should be started
@@ -178,6 +216,16 @@ namespace HikingPathFinder.App.Views
                     if (this.AddLocationToTour != null)
                     {
                         this.AddLocationToTour(jsonParameters.Trim('\"'));
+                    }
+
+                    break;
+
+                case "onSetStartStopLocation":
+                    if (this.SetStartStopLocation != null)
+                    {
+                        var parameters = JsonConvert.DeserializeObject<SetStartStopLocationJsonParameters>(jsonParameters);
+
+                        this.SetStartStopLocation(parameters.setStartLocation, parameters.locationId);
                     }
 
                     break;

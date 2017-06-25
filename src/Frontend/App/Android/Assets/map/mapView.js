@@ -78,10 +78,10 @@ MapView.prototype.addLocationList = function (locationList) {
 
         var text = '<h2><img height="48em" width="48em" src="' + this.imageUrlFromLocationType(location.type) + '" style="vertical-align:center" />' +
             location.name + ' ' + location.elevation + 'm</h2>' +
-            '<p>Location type: ' + location.type + '<br/>' +
-            '<img height="32em" width="32em" src="images/playlist-plus.svg" style="vertical-align:middle" />' +
-            '<a href="javascript:map.onAddLocationToTour(\'' + location.id + '\');">Add to tour</a> - ' +
-            '<img height="32em" width="32em" src="images/navigation.svg" style="vertical-align:middle" />' +
+            '<img height="32em" width="32em" src="images/map-marker-plus.svg" style="vertical-align:middle" />' +
+            '<a href="javascript:map.onSetStartStopLocation(true, \'' + location.id + '\');">Add as start point</a> - ' +
+            '<img height="32em" width="32em" src="images/map-marker-plus.svg" style="vertical-align:middle" />' +
+            '<a href="javascript:map.onSetStartStopLocation(false, \'' + location.id + '\');">Add as end point</a><br/>';
 
         if (location.isTourLocation)
             text += '<img height="32em" width="32em" src="images/playlist-plus.svg" style="vertical-align:middle" />' +
@@ -147,6 +147,23 @@ MapView.prototype.onAddLocationToTour = function (locationId) {
 
     if (this.options.callback !== undefined)
         this.options.callback('onAddLocationToTour', locationId);
+};
+
+/**
+ * Called by the marker pin link, in order to set start or stop location.
+ * @param {bool} setStartLocation true when start location should be set, false when end location
+ *                                should be set.
+ * @param {string} locationId Location ID of location to set
+ */
+MapView.prototype.onSetStartStopLocation = function (setStartLocation, locationId) {
+
+    console.log("set start or stop location: id=" + locationId);
+
+    if (this.options.callback !== undefined)
+        this.options.callback('onSetStartStopLocation', {
+            setStartLocation: setStartLocation,
+            locationId: locationId
+        });
 };
 
 /**

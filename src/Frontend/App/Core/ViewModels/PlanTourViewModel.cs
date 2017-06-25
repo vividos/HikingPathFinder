@@ -56,9 +56,14 @@ namespace HikingPathFinder.App.ViewModels
 
         #region Binding properties
         /// <summary>
-        /// List of start/stop locations
+        /// List of start/stop locations, also cotanining tour locations
         /// </summary>
         public ObservableCollection<LocationAutoCompleteViewModel> StartStopLocationList { get; set; }
+
+        /// <summary>
+        /// List of tour locations, not including start/stop locations
+        /// </summary>
+        public ObservableCollection<LocationAutoCompleteViewModel> TourLocationList { get; set; }
 
         /// <summary>
         /// Start location
@@ -339,6 +344,12 @@ namespace HikingPathFinder.App.ViewModels
             this.StartStopLocationList =
                 new ObservableCollection<LocationAutoCompleteViewModel>(
                     from location in locationList
+                    select new LocationAutoCompleteViewModel(location));
+
+            this.TourLocationList =
+                new ObservableCollection<LocationAutoCompleteViewModel>(
+                    from location in locationList
+                    where location.IsTourLocation
                     select new LocationAutoCompleteViewModel(location));
         }
 

@@ -117,6 +117,7 @@ namespace HikingPathFinder.App.Views
                 {
                     id = location.Id,
                     name = location.Name,
+                    isTourLocation = location.IsTourLocation,
                     type = location.Type.ToString(),
                     latitude = location.MapLocation.Latitude,
                     longitude = location.MapLocation.Longitude,

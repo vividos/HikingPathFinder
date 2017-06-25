@@ -19,8 +19,7 @@ namespace HikingPathFinder.DemoData
             {
                 LastUpdated = DateTime.Today + TimeSpan.FromHours(8.5),
                 Info = GetAppInfo(),
-                StartEndLocationList = GetStartEndLocationList(),
-                TourLocationList = GetTourLocationList(),
+                LocationList = GetLocationList(),
                 StaticPageInfoList = GetStaticPageInfoList(),
                 PrePlannedToursList = GetPrePlannedTourList()
             };
@@ -78,6 +77,7 @@ namespace HikingPathFinder.DemoData
                 Elevation = 809,
                 MapLocation = new MapPoint(47.70599, 11.87451),
                 Description = "Anschlussmöglichkeiten zum RBO Bus 9562 zum Spitzingsattel",
+                IsTourLocation = false,
                 Type = LocationType.PublicTransportTrain,
                 PhotoList = new List<PhotoRef>(),
                 InternetLink = "http://www.bayerischeoberlandbahn.de/strecken-fahrplaene/linie/3-munchen-hbf-holzkirchen-bayrischzell"
@@ -139,19 +139,25 @@ namespace HikingPathFinder.DemoData
                 Elevation = 1129,
                 MapLocation = new MapPoint(47.672138, 11.8862728),
                 Description = "Haltestelle am Spitzingsattel. Abfahrtszeiten Richtung Schliersee: 8:42, 11:15, 15:31, 18:02.",
+                IsTourLocation = false,
                 Type = LocationType.PublicTransportBus,
                 PhotoList = new List<PhotoRef>(),
                 InternetLink = "http://www.bayerischeoberlandbahn.de/strecken-fahrplaene/linie/3-munchen-hbf-holzkirchen-bayrischzell"
             };
 
         /// <summary>
-        /// Returns start/end location list
+        /// Returns location list
         /// </summary>
-        /// <returns>start end location list</returns>
-        public static List<Location> GetStartEndLocationList()
+        /// <returns>location list</returns>
+        public static List<Location> GetLocationList()
         {
             return new List<Location>
             {
+                summit1,
+                summit2,
+                alpineHut1,
+                alpineHut2,
+                pass1,
                 railwayStation,
                 busStation,
             };
@@ -168,6 +174,7 @@ namespace HikingPathFinder.DemoData
                 Elevation = 1685,
                 MapLocation = new MapPoint(47.6764385, 11.8710533),
                 Description = "Herrliche Aussicht über die drei Seen Schliersee im Norden, Tegernsee im Westen und den Spitzingsee im Süden.",
+                IsTourLocation = true,
                 Type = LocationType.Summit,
                 PhotoList = new List<PhotoRef>(),
                 InternetLink = "https://de.wikipedia.org/wiki/Brecherspitz"
@@ -184,6 +191,7 @@ namespace HikingPathFinder.DemoData
                 Elevation = 1746,
                 MapLocation = new MapPoint(47.673511, 11.9060494),
                 Description = "Gipfel in den Schlierseer Bergen, mit Ausblick auf Schliersee und die umliegenden Berge.",
+                IsTourLocation = true,
                 Type = LocationType.Summit,
                 PhotoList = new List<PhotoRef>(),
                 InternetLink = "https://de.wikipedia.org/wiki/J%C3%A4gerkamp"
@@ -200,6 +208,7 @@ namespace HikingPathFinder.DemoData
                 Elevation = 1311,
                 MapLocation = new MapPoint(47.6838571, 11.8687695),
                 Description = "Privat bewirtschaftete Alm; Montag Ruhetag",
+                IsTourLocation = true,
                 Type = LocationType.AlpineHut,
                 PhotoList = new List<PhotoRef>(),
                 InternetLink = string.Empty
@@ -216,6 +225,7 @@ namespace HikingPathFinder.DemoData
                 Elevation = 1410,
                 MapLocation = new MapPoint(47.66508, 11.90612),
                 Description = "Alpenvereinshütte der Sektion München des DAV",
+                IsTourLocation = true,
                 Type = LocationType.AlpineHut,
                 PhotoList = new List<PhotoRef>(),
                 InternetLink = "https://www.davplus.de/huetten__wege/bewirtschaftete_huetten/uebersicht/schoenfeldhuette"
@@ -232,26 +242,11 @@ namespace HikingPathFinder.DemoData
                 Elevation = 1129,
                 MapLocation = new MapPoint(47.672138, 11.8862728),
                 Description = "Sattel auf halbem Wege zwischen Schliersee und Spitzingsee",
+                IsTourLocation = true,
                 Type = LocationType.Pass,
                 PhotoList = new List<PhotoRef>(),
                 InternetLink = string.Empty
             };
-
-        /// <summary>
-        /// Returns tour location list
-        /// </summary>
-        /// <returns>tour location list</returns>
-        public static List<Location> GetTourLocationList()
-        {
-            return new List<Location>
-            {
-                summit1,
-                summit2,
-                alpineHut1,
-                alpineHut2,
-                pass1,
-           };
-        }
 
         /// <summary>
         /// Segment from railway station to alpine hut

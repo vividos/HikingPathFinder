@@ -187,8 +187,7 @@ namespace HikingPathFinder.App.Logic
 
             connection.InsertAll(appConfig.PrePlannedToursList);
 
-            connection.InsertAll(appConfig.StartEndLocationList);
-            connection.InsertAll(appConfig.TourLocationList);
+            connection.InsertAll(appConfig.LocationList);
 
             connection.InsertAll(appConfig.StaticPageInfoList);
         }

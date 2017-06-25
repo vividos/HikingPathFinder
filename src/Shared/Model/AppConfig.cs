@@ -20,14 +20,9 @@ namespace HikingPathFinder.Model
         public AppInfo Info { get; set; }
 
         /// <summary>
-        /// List of start and end locations
+        /// List of locations that can be used to do tour planning
         /// </summary>
-        public List<Location> StartEndLocationList { get; set; }
-
-        /// <summary>
-        /// List of available tour locations
-        /// </summary>
-        public List<Location> TourLocationList { get; set; }
+        public List<Location> LocationList { get; set; }
 
         /// <summary>
         /// List of static page info entries

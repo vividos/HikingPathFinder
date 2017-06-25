@@ -33,6 +33,11 @@ namespace HikingPathFinder.Model
         public string Description { get; set; }
 
         /// <summary>
+        /// Indicates if this location is a start/stop location
+        /// </summary>
+        public bool IsTourLocation { get; set; }
+
+        /// <summary>
         /// Type of location
         /// </summary>
         public LocationType Type { get; set; }

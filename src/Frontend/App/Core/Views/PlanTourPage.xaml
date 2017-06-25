@@ -50,7 +50,7 @@
                 SelectedItem="{Binding TourLocation}"
                 ShowSearchButton="False"
                 SuggestionItemDataTemplate="{StaticResource StartStopSuggestionItemTemplate}"
-                Suggestions="{Binding StartStopLocationList, Mode=TwoWay}" />
+                Suggestions="{Binding TourLocationList, Mode=TwoWay}" />
 
             <!-- End location controls -->
             <Label Text="End Location" />

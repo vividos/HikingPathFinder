@@ -29,6 +29,11 @@ namespace HikingPathFinder.App.Views
         private readonly IGeolocator geolocator;
 
         /// <summary>
+        /// Current user settings object
+        /// </summary>
+        private UserSettings userSettings;
+
+        /// <summary>
         /// Web view that displays the map
         /// </summary>
         private WebView webView;
@@ -61,21 +66,30 @@ namespace HikingPathFinder.App.Views
             this.zoomToMyPosition = false;
             this.geolocator = Plugin.Geolocator.CrossGeolocator.Current;
 
-            this.InitLayout();
+            Task.Factory.StartNew(this.InitLayoutAsync);
             Task.Factory.StartNew(this.LoadDataAsync);
         }
 
         /// <summary>
         /// Initializes layout by loading map html into web view
         /// </summary>
-        private void InitLayout()
+        private async Task InitLayoutAsync()
         {
             this.Title = "Explore Map";
 
-            this.SetupWebView(showMapIn3D: false);
-            this.SetupToolbar();
+            var dataService = ServiceLocator.Current.GetInstance<DataService>();
+            this.userSettings = await dataService.GetUserSettingsAsync(CancellationToken.None);
 
-            this.Content = this.webView;
+            var platform = ServiceLocator.Current.GetInstance<IPlatform>();
+            if (!platform.IsSupportedWebViewWebGL &&
+                this.userSettings.ShowMapIn3D)
+            {
+                this.userSettings.ShowMapIn3D = false;
+                await dataService.StoreUserSettingsAsync(this.userSettings, CancellationToken.None);
+            }
+
+            this.SetupWebView(this.userSettings.ShowMapIn3D);
+            this.SetupToolbar();
         }
 
         /// <summary>
@@ -111,6 +125,8 @@ namespace HikingPathFinder.App.Views
 
             this.mapView.AddLocationToTour += this.OnMapView_AddLocationToTour;
             this.mapView.NavigateToLocation += this.OnMapView_NavigateToLocation;
+
+            this.Content = this.webView;
         }
 
         /// <summary>
@@ -197,6 +213,53 @@ namespace HikingPathFinder.App.Views
         /// </summary>
         private void SetupToolbar()
         {
+            var platform = ServiceLocator.Current.GetInstance<IPlatform>();
+
+            bool isSupported3DMap = platform.IsSupportedWebViewWebGL;
+
+            if (isSupported3DMap)
+            {
+                this.AddSwitch3DToolbarButton();
+            }
+
+            this.AddShowTourLocationsToolbarButton();
+            this.AddLocateMeToolbarButton();
+        }
+
+        /// <summary>
+        /// Adds a "switch 2D / 3D" button to the toolbar
+        /// </summary>
+        private void AddSwitch3DToolbarButton()
+        {
+            ToolbarItem showTourLocationsButton = new ToolbarItem(
+                "Switch 2D / 3D map",
+                "switch_2d_3d_map.png",
+                async () => await this.OnClicked_ToolbarButtonSwitch3DToolbarButton(),
+                ToolbarItemOrder.Primary);
+
+            showTourLocationsButton.AutomationId = "ShowTourLocations";
+            ToolbarItems.Add(showTourLocationsButton);
+        }
+
+        /// <summary>
+        /// Switches between 2D and 3D map view
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task OnClicked_ToolbarButtonSwitch3DToolbarButton()
+        {
+            this.userSettings.ShowMapIn3D = !this.userSettings.ShowMapIn3D;
+
+            var dataService = ServiceLocator.Current.GetInstance<DataService>();
+            await dataService.StoreUserSettingsAsync(this.userSettings, CancellationToken.None);
+
+            this.SetupWebView(this.userSettings.ShowMapIn3D);
+        }
+
+        /// <summary>
+        /// Adds a "show tour location" button to the toolbar
+        /// </summary>
+        private void AddShowTourLocationsToolbarButton()
+        {
             ToolbarItem showTourLocationsButton = new ToolbarItem(
                 "Show tour locations",
                 "tour_locations.png",
@@ -205,15 +268,6 @@ namespace HikingPathFinder.App.Views
 
             showTourLocationsButton.AutomationId = "ShowTourLocations";
             ToolbarItems.Add(showTourLocationsButton);
-
-            ToolbarItem locateMeButton = new ToolbarItem(
-                "Locate me",
-                "my_location.png",
-                async () => await this.OnClicked_ToolbarButtonLocateMe(),
-                ToolbarItemOrder.Primary);
-
-            locateMeButton.AutomationId = "LocateMe";
-            ToolbarItems.Add(locateMeButton);
         }
 
         /// <summary>
@@ -225,6 +279,21 @@ namespace HikingPathFinder.App.Views
             var page = new TourLocationListPopupPage();
 
             await Rg.Plugins.Popup.Services.PopupNavigation.PushAsync(page);
+        }
+
+        /// <summary>
+        /// Adds a "locate me" button to the toolbar
+        /// </summary>
+        private void AddLocateMeToolbarButton()
+        {
+            ToolbarItem locateMeButton = new ToolbarItem(
+                "Locate me",
+                "my_location.png",
+                async () => await this.OnClicked_ToolbarButtonLocateMe(),
+                ToolbarItemOrder.Primary);
+
+            locateMeButton.AutomationId = "LocateMe";
+            ToolbarItems.Add(locateMeButton);
         }
 
         /// <summary>

@@ -28,8 +28,20 @@ function MapView(options) {
         attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
 
-    this.myPositionMarker = L.marker([0, 0]);
-    this.myPositionMarker.bindPopup('My Position');
+    var svgIcon = this.createSvgIcon({
+        svgPath: 'images/map-marker.svg',
+        iconSize: [32, 32],
+        iconAnchor: [15, 32],
+        popupAnchor: [2, -32],
+        markerColor: 'green'
+    });
+
+    var text = '<h2><img height="48em" width="48em" src="images/map-marker.svg" style="vertical-align:middle" />My Position</h2>';
+
+    this.myPositionMarker = L.marker([0, 0], {
+        icon: svgIcon
+    });
+    this.myPositionMarker.bindPopup(text);
 }
 
 /**
@@ -43,6 +55,11 @@ MapView.prototype.updateMyLocation = function (options) {
 
     this.myPositionMarker.setLatLng([options.latitude, options.longitude]);
     this.myPositionMarker.addTo(this.map);
+
+    var text = '<h2><img height="48em" width="48em" src="images/map-marker.svg" style="vertical-align:middle" />My Position</h2>' +
+        '<div>Latitude: ' + options.latitude + ', Longitude: ' + options.longitude + '</div>';
+    this.myPositionMarker.bindPopup(text);
+
     this.myPositionMarker.update();
 
     if (options.zoomTo) {
@@ -76,7 +93,7 @@ MapView.prototype.addLocationList = function (locationList) {
 
         var location = locationList[index];
 
-        var text = '<h2><img height="48em" width="48em" src="' + this.imageUrlFromLocationType(location.type) + '" style="vertical-align:center" />' +
+        var text = '<h2><img height="48em" width="48em" src="' + this.imageUrlFromLocationType(location.type) + '" style="vertical-align:middle" />' +
             location.name + ' ' + location.elevation + 'm</h2>' +
             '<img height="32em" width="32em" src="images/map-marker-plus.svg" style="vertical-align:middle" />' +
             '<a href="javascript:map.onSetStartStopLocation(true, \'' + location.id + '\');">Add as start point</a> - ' +
@@ -90,16 +107,56 @@ MapView.prototype.addLocationList = function (locationList) {
             text += '<img height="32em" width="32em" src="images/navigation.svg" style="vertical-align:middle" />' +
                 '<a href="javascript:map.onNavigateToLocation(\'' + location.id + '\');">Navigate here</a></p>';
 
-        L.marker([location.latitude, location.longitude]).addTo(this.map).bindPopup(text);
+        var svgIcon = this.createSvgIcon({
+            svgPath: this.imageUrlFromLocationType(location.type),
+            iconSize: [32, 32],
+            iconAnchor: [15, 32],
+            popupAnchor: [2, -32],
+            markerColor: 'blue'
+        });
+
+        L.marker([location.latitude, location.longitude], { icon: svgIcon }).addTo(this.map).bindPopup(text);
     }
+};
+
+/**
+ * Creats a marker that contains an external SVG icon as marker icon using L.VectorMarkers.
+ * @param {string} options additional VectorMarkers options, apart from svgPath
+ * @returns icon div to display as marker
+ */
+MapView.prototype.createSvgIcon = function (options) {
+    var icon = L.VectorMarkers.icon(options);
+
+    // modify the _createInner method in order to return a different icon
+    icon.__proto__._createInner = function () {
+
+        var img = document.createElement('img');
+        var options = this.options;
+
+        img.src = options.svgPath;
+
+        img.style.color = options.iconColor;
+        // change icon to white from black
+        img.style['-webkit-filter'] = 'invert(100%)';
+        img.style.position = 'absolute';
+        img.style.top = '5px';
+        img.style.left = '9.4px';
+
+        if (options.iconSize) {
+            img.style.width = options.iconSize[0] / 2.5 + 'px';
+        }
+
+        return img;
+    };
+
+    return icon;
 };
 
 /**
  * Returns a relative image Url for given location type
  * @param {string} locationType location type
- * @return relative image Url
+ * @returns relative image Url
  */
-
 MapView.prototype.imageUrlFromLocationType = function (locationType) {
 
     switch (locationType) {

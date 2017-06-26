@@ -6,6 +6,8 @@ This file lists all the components and their respective licenses.
 
 ### Libraries
 
+#### C# Libraries
+
 The app uses the MVVM Light Toolkit, which is licensed under the "MIT License
 (MIT)". The license can be found here:
 https://opensource.org/licenses/MIT
@@ -18,6 +20,18 @@ https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
 The app uses the RotorGames Popup Page Plugin for Xamarin Forms, which is
 licensed under the "MIT License (MIT)":
 https://github.com/rotorgames/Rg.Plugins.Popup
+
+#### JavaScript libraries
+
+The app uses the Leaflet library to display 2D maps. Leaflet is licensed under
+the BSD 2-clause "Simplified" License.
+http://leafletjs.com/index.html
+https://github.com/Leaflet/Leaflet/blob/master/LICENSE
+
+The app uses the Leaflet.vector-markers library to display 2D marker pins. The
+library is licensed under the MIT license.
+https://github.com/hiasinho/Leaflet.vector-markers
+https://opensource.org/licenses/mit-license.html
 
 ### Icons
 

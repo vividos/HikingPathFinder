@@ -573,6 +573,12 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxxhdpi\switch_2d_3d_map.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\leaflet\leaflet-vector-markers.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\leaflet\leaflet-vector-markers.min.js" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

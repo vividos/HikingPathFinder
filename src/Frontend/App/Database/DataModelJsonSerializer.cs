@@ -22,6 +22,7 @@ namespace HikingPathFinder.App.Database
             typeof(MapPoint),
             typeof(Tour),
             typeof(List<PhotoRef>),
+            typeof(PlanTourParameters),
         };
 
         /// <summary>

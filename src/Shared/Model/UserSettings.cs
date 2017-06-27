@@ -11,11 +11,17 @@
         public bool ShowMapIn3D { get; set; }
 
         /// <summary>
+        /// Current plan tour parameters
+        /// </summary>
+        public PlanTourParameters CurrentPlanTourParameters { get; set; }
+
+        /// <summary>
         /// Creates a new user settings object with default values
         /// </summary>
         public UserSettings()
         {
             this.ShowMapIn3D = false;
+            this.CurrentPlanTourParameters = new PlanTourParameters();
         }
     }
 }

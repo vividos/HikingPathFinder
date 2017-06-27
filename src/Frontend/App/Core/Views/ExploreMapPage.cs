@@ -154,7 +154,12 @@ namespace HikingPathFinder.App.Views
 
             this.mapView = new MapView(this.webView);
 
-            this.mapView.AddLocationToTour += this.OnMapView_AddLocationToTour;
+            this.mapView.AddLocationToTour +=
+                async (locationId) => await this.OnMapView_AddLocationToTour(locationId);
+
+            this.mapView.SetStartStopLocation +=
+                async (setStartLocation, locationId)  => await this.OnMapView_SetStartStopLocation(setStartLocation, locationId);
+
             this.mapView.NavigateToLocation += this.OnMapView_NavigateToLocation;
 
             this.Content = this.webView;
@@ -176,7 +181,8 @@ namespace HikingPathFinder.App.Views
         /// Called when location is added to tour
         /// </summary>
         /// <param name="locationId">location id of location to add to tour</param>
-        private void OnMapView_AddLocationToTour(string locationId)
+        /// <returns>task to wait on</returns>
+        private async Task OnMapView_AddLocationToTour(string locationId)
         {
             Location location = this.FindLocationById(locationId);
 
@@ -186,7 +192,47 @@ namespace HikingPathFinder.App.Views
                 return;
             }
 
-            // TODO implement
+            if (this.userSettings.CurrentPlanTourParameters == null)
+            {
+                this.userSettings.CurrentPlanTourParameters = new PlanTourParameters();
+            }
+
+            await this.StoreUserSettingsAsync();
+        }
+
+        /// <summary>
+        /// Called when start or stop location has been set
+        /// </summary>
+        /// <param name="setStartLocation">true when start location, false when stop location</param>
+        /// <param name="locationId">location ID to use</param>
+        /// <returns>task to wait on</returns>
+        private async Task OnMapView_SetStartStopLocation(bool setStartLocation, string locationId)
+        {
+            Location location = this.FindLocationById(locationId);
+
+            if (location == null)
+            {
+                log.Error("couldn't find location with id=" + locationId);
+                return;
+            }
+
+            if (this.userSettings.CurrentPlanTourParameters == null)
+            {
+                this.userSettings.CurrentPlanTourParameters = new PlanTourParameters();
+            }
+
+            var locationRef = LocationRef.FromLocation(location);
+
+            if (setStartLocation)
+            {
+                this.userSettings.CurrentPlanTourParameters.StartLocation = locationRef;
+            }
+            else
+            {
+                this.userSettings.CurrentPlanTourParameters.EndLocation = locationRef;
+            }
+
+            await this.StoreUserSettingsAsync();
         }
 
         /// <summary>
@@ -292,15 +338,23 @@ namespace HikingPathFinder.App.Views
         {
             this.userSettings.ShowMapIn3D = !this.userSettings.ShowMapIn3D;
 
-            var dataService = ServiceLocator.Current.GetInstance<DataService>();
-            await dataService.StoreUserSettingsAsync(this.userSettings, CancellationToken.None);
+            await this.StoreUserSettingsAsync();
 
             await this.SetupWebViewAsync(this.userSettings.ShowMapIn3D);
 
             var appInfo = await this.LoadDataAsync();
 
             this.CreateMapView(appInfo);
+        }
 
+        /// <summary>
+        /// Stores current user settings using data service
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task StoreUserSettingsAsync()
+        {
+            var dataService = ServiceLocator.Current.GetInstance<DataService>();
+            await dataService.StoreUserSettingsAsync(this.userSettings, CancellationToken.None);
         }
 
         /// <summary>

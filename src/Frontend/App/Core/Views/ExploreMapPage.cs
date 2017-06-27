@@ -49,9 +49,9 @@ namespace HikingPathFinder.App.Views
         private MapView mapView;
 
         /// <summary>
-        /// Event that gets signaled when the web page has been loaded
+        /// Task completion source to signal that the web page has been loaded
         /// </summary>
-        private ManualResetEvent eventLoaded = new ManualResetEvent(false);
+        private TaskCompletionSource<bool> taskCompletionSourcePageLoaded;
 
         /// <summary>
         /// List of locations on the map
@@ -67,16 +67,33 @@ namespace HikingPathFinder.App.Views
             this.geolocator = Plugin.Geolocator.CrossGeolocator.Current;
 
             Task.Factory.StartNew(this.InitLayoutAsync);
-            Task.Factory.StartNew(this.LoadDataAsync);
         }
 
         /// <summary>
         /// Initializes layout by loading map html into web view
         /// </summary>
+        /// <returns>task to wait on</returns>
         private async Task InitLayoutAsync()
         {
             this.Title = "Explore Map";
 
+            App.RunOnUiThread(() => this.SetupToolbar());
+
+            await this.LoadUserSettingsAsync();
+
+            await this.SetupWebViewAsync(this.userSettings.ShowMapIn3D);
+
+            var appInfo = await this.LoadDataAsync();
+
+            this.CreateMapView(appInfo);
+        }
+
+        /// <summary>
+        /// Loads user settings
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task LoadUserSettingsAsync()
+        {
             var dataService = ServiceLocator.Current.GetInstance<DataService>();
             this.userSettings = await dataService.GetUserSettingsAsync(CancellationToken.None);
 
@@ -87,18 +104,30 @@ namespace HikingPathFinder.App.Views
                 this.userSettings.ShowMapIn3D = false;
                 await dataService.StoreUserSettingsAsync(this.userSettings, CancellationToken.None);
             }
+        }
 
-            this.SetupWebView(this.userSettings.ShowMapIn3D);
-            this.SetupToolbar();
+        /// <summary>
+        /// Loads data; async method
+        /// </summary>
+        /// <returns>app info object</returns>
+        private async Task<AppInfo> LoadDataAsync()
+        {
+            var dataService = ServiceLocator.Current.GetInstance<DataService>();
+
+            var appInfo = await dataService.GetAppInfoAsync(CancellationToken.None);
+            this.locationList = await dataService.GetLocationListAsync(CancellationToken.None);
+
+            return appInfo;
         }
 
         /// <summary>
         /// Sets up WebView control
         /// </summary>
         /// <param name="showMapIn3D">indicates if map is shown in 3D (true) or 2D (false)</param>
-        private void SetupWebView(bool showMapIn3D)
+        /// <returns>task to wait on</returns>
+        private async Task SetupWebViewAsync(bool showMapIn3D)
         {
-            this.eventLoaded.Reset();
+            this.taskCompletionSourcePageLoaded = new TaskCompletionSource<bool>();
 
             var platform = ServiceLocator.Current.GetInstance<IPlatform>();
 
@@ -129,6 +158,18 @@ namespace HikingPathFinder.App.Views
             this.mapView.NavigateToLocation += this.OnMapView_NavigateToLocation;
 
             this.Content = this.webView;
+
+            await this.taskCompletionSourcePageLoaded.Task;
+        }
+
+        /// <summary>
+        /// Creates the map view and adds locations
+        /// </summary>
+        /// <param name="appInfo">app info object to use for initialising</param>
+        private void CreateMapView(AppInfo appInfo)
+        {
+            this.mapView.Create(appInfo.AreaRectangle, 14);
+            this.mapView.AddLocationList(this.locationList);
         }
 
         /// <summary>
@@ -201,13 +242,13 @@ namespace HikingPathFinder.App.Views
         }
 
         /// <summary>
-        /// Called when navigation to current page has ended
+        /// Called when navigation to current page has finished
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
         private void OnNavigated_WebView(object sender, WebNavigatedEventArgs args)
         {
-            this.eventLoaded.Set();
+            this.taskCompletionSourcePageLoaded.SetResult(true);
         }
 
         /// <summary>
@@ -254,9 +295,12 @@ namespace HikingPathFinder.App.Views
             var dataService = ServiceLocator.Current.GetInstance<DataService>();
             await dataService.StoreUserSettingsAsync(this.userSettings, CancellationToken.None);
 
-            this.SetupWebView(this.userSettings.ShowMapIn3D);
+            await this.SetupWebViewAsync(this.userSettings.ShowMapIn3D);
 
-            await Task.Factory.StartNew(this.LoadDataAsync);
+            var appInfo = await this.LoadDataAsync();
+
+            this.CreateMapView(appInfo);
+
         }
 
         /// <summary>
@@ -431,24 +475,6 @@ namespace HikingPathFinder.App.Views
                 this.mapView.UpdateMyLocation(
                     new MapPoint(position.Latitude, position.Longitude), zoomToPosition);
             }
-        }
-
-        /// <summary>
-        /// Loads data; async method
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task LoadDataAsync()
-        {
-            var dataService = ServiceLocator.Current.GetInstance<DataService>();
-
-            var appInfo = await dataService.GetAppInfoAsync(CancellationToken.None);
-            this.locationList = await dataService.GetLocationListAsync(CancellationToken.None);
-
-            // wait for map to be loaded, before sending JavaScript code
-            this.eventLoaded.WaitOne();
-
-            this.mapView.Create(appInfo.AreaRectangle, 14);
-            this.mapView.AddLocationList(this.locationList);
         }
     }
 }

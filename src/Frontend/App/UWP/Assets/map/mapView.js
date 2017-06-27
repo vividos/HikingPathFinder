@@ -28,8 +28,20 @@ function MapView(options) {
         attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
 
-    this.myPositionMarker = L.marker([0, 0]);
-    this.myPositionMarker.bindPopup('My Position');
+    var svgIcon = this.createSvgIcon({
+        svgPath: 'images/map-marker.svg',
+        iconSize: [32, 32],
+        iconAnchor: [15, 32],
+        popupAnchor: [2, -32],
+        markerColor: 'green'
+    });
+
+    var text = '<h2><img height="48em" width="48em" src="images/map-marker.svg" style="vertical-align:middle" />My Position</h2>';
+
+    this.myPositionMarker = L.marker([0, 0], {
+        icon: svgIcon
+    });
+    this.myPositionMarker.bindPopup(text);
 }
 
 /**
@@ -43,6 +55,11 @@ MapView.prototype.updateMyLocation = function (options) {
 
     this.myPositionMarker.setLatLng([options.latitude, options.longitude]);
     this.myPositionMarker.addTo(this.map);
+
+    var text = '<h2><img height="48em" width="48em" src="images/map-marker.svg" style="vertical-align:middle" />My Position</h2>' +
+        '<div>Latitude: ' + options.latitude + ', Longitude: ' + options.longitude + '</div>';
+    this.myPositionMarker.bindPopup(text);
+
     this.myPositionMarker.update();
 
     if (options.zoomTo) {
@@ -76,14 +93,91 @@ MapView.prototype.addLocationList = function (locationList) {
 
         var location = locationList[index];
 
-        var text = '<h2>' + location.name + ' ' + location.elevation + 'm</h2>' +
-            '<p>Location type: ' + location.type + '<br/>' +
-            '<img height="32em" width="32em" src="images/add_to_tour.svg" style="vertical-align:middle" />' +
-            '<a href="javascript:map.onAddLocationToTour(\'' + location.id + '\');">Add to tour</a> - ' +
-            '<img height="32em" width="32em" src="images/route_to_location.svg" style="vertical-align:middle" />' +
-            '<a href="javascript:map.onNavigateToLocation(\'' + location.id + '\');">Navigate here</a></p>';
+        var text = '<h2><img height="48em" width="48em" src="' + this.imageUrlFromLocationType(location.type) + '" style="vertical-align:middle" />' +
+            location.name + ' ' + location.elevation + 'm</h2>' +
+            '<img height="32em" width="32em" src="images/map-marker-plus.svg" style="vertical-align:middle" />' +
+            '<a href="javascript:map.onSetStartStopLocation(true, \'' + location.id + '\');">Add as start point</a> - ' +
+            '<img height="32em" width="32em" src="images/map-marker-plus.svg" style="vertical-align:middle" />' +
+            '<a href="javascript:map.onSetStartStopLocation(false, \'' + location.id + '\');">Add as end point</a><br/>';
 
-        L.marker([location.latitude, location.longitude]).addTo(this.map).bindPopup(text);
+        text += '<img height="32em" width="32em" src="images/playlist-plus.svg" style="vertical-align:middle" />' +
+            '<a href="javascript:map.onAddLocationToTour(\'' + location.id + '\');">Add as tour location</a> - ';
+
+        if (!location.isTourLocation)
+            text += '<img height="32em" width="32em" src="images/navigation.svg" style="vertical-align:middle" />' +
+                '<a href="javascript:map.onNavigateToLocation(\'' + location.id + '\');">Navigate here</a></p>';
+
+        var svgIcon = this.createSvgIcon({
+            svgPath: this.imageUrlFromLocationType(location.type),
+            iconSize: [32, 32],
+            iconAnchor: [15, 32],
+            popupAnchor: [2, -32],
+            markerColor: 'blue'
+        });
+
+        L.marker([location.latitude, location.longitude], { icon: svgIcon }).addTo(this.map).bindPopup(text);
+    }
+};
+
+/**
+ * Creats a marker that contains an external SVG icon as marker icon using L.VectorMarkers.
+ * @param {string} options additional VectorMarkers options, apart from svgPath
+ * @returns icon div to display as marker
+ */
+MapView.prototype.createSvgIcon = function (options) {
+    var icon = L.VectorMarkers.icon(options);
+
+    // modify the _createInner method in order to return a different icon
+    icon.__proto__._createInner = function () {
+
+        var img = document.createElement('img');
+        var options = this.options;
+
+        img.src = options.svgPath;
+
+        img.style.color = options.iconColor;
+        // change icon to white from black
+        img.style['-webkit-filter'] = 'invert(100%)';
+        img.style.position = 'absolute';
+        img.style.top = '5px';
+        img.style.left = '9.4px';
+
+        if (options.iconSize) {
+            img.style.width = options.iconSize[0] / 2.5 + 'px';
+        }
+
+        return img;
+    };
+
+    return icon;
+};
+
+/**
+ * Returns a relative image Url for given location type
+ * @param {string} locationType location type
+ * @returns relative image Url
+ */
+MapView.prototype.imageUrlFromLocationType = function (locationType) {
+
+    switch (locationType) {
+        case 'Summit': return 'images/mountain-15.svg';
+        //case 'Pass': return '';
+        case 'Lake': return 'images/water-15.svg';
+        case 'Bridge': return 'images/bridge.svg';
+        case 'Viewpoint': return 'images/attraction-15.svg';
+        case 'AlpineHut': return 'images/home-15.svg';
+        case 'Restaurant': return 'images/restaurant-15.svg';
+        case 'Church': return 'images/church.svg';
+        case 'Castle': return 'images/castle.svg';
+        //case 'Cave': return '';
+        case 'Information': return 'images/information-outline.svg';
+        case 'PublicTransportBus': return 'images/bus.svg';
+        case 'PublicTransportTrain': return 'images/train.svg';
+        case 'Parking': return 'images/parking.svg';
+        //case 'ViaFerrata': return '';
+        //case 'Paragliding': return '';
+        case 'CableCar': return 'images/aerialway-15.svg';
+        default: return 'images/map-marker.svg';
     }
 };
 
@@ -109,6 +203,23 @@ MapView.prototype.onAddLocationToTour = function (locationId) {
 
     if (this.options.callback !== undefined)
         this.options.callback('onAddLocationToTour', locationId);
+};
+
+/**
+ * Called by the marker pin link, in order to set start or stop location.
+ * @param {bool} setStartLocation true when start location should be set, false when end location
+ *                                should be set.
+ * @param {string} locationId Location ID of location to set
+ */
+MapView.prototype.onSetStartStopLocation = function (setStartLocation, locationId) {
+
+    console.log("set start or stop location: id=" + locationId);
+
+    if (this.options.callback !== undefined)
+        this.options.callback('onSetStartStopLocation', {
+            setStartLocation: setStartLocation,
+            locationId: locationId
+        });
 };
 
 /**

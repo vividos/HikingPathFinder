@@ -1,9 +1,6 @@
 ﻿using Common.Logging;
-using GalaSoft.MvvmLight.Ioc;
 using HikingPathFinder.App.Logic;
-using HikingPathFinder.App.Network;
 using HikingPathFinder.App.Views;
-using Microsoft.Practices.ServiceLocation;
 using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -32,7 +29,7 @@ namespace HikingPathFinder.App
         /// <returns>logging instance</returns>
         public static ILog GetLogger<T>()
         {
-            var logProvider = ServiceLocator.Current.GetInstance<ILogProvider>();
+            var logProvider = DependencyService.Get<ILogProvider>();
             return logProvider.GetLogger<T>();
         }
 
@@ -41,7 +38,7 @@ namespace HikingPathFinder.App
         /// </summary>
         public App()
         {
-            this.dataService = ServiceLocator.Current.GetInstance<DataService>();
+            this.dataService = DependencyService.Get<DataService>();
 
             this.StartDataService();
 
@@ -85,14 +82,13 @@ namespace HikingPathFinder.App
         /// Initialize service locator by registering all classes that are needed throughout the
         /// project.
         /// </summary>
-        /// <param name="simpleIoc">IoC container to use</param>
-        public static void InitServiceLocator(ISimpleIoc simpleIoc)
+        public static void InitDependencyService()
         {
-            simpleIoc.Register<INetworkService>(
-                () => new RESTfulNetworkService("http://hikingpathfinderbeta.azurewebsites.net/")
-            );
-            ////simpleIoc.Register<INetworkService, DemoDataNetworkService>();
-            simpleIoc.Register<DataService>();
+            //DependencyService.Register<INetworkService>(
+            //    () => new RESTfulNetworkService("http://hikingpathfinderbeta.azurewebsites.net/")
+            //);
+            DependencyService.Register<INetworkService, DemoDataNetworkService>();
+            DependencyService.Register<DataService>();
         }
 
         /// <summary>

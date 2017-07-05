@@ -1,12 +1,11 @@
 ﻿using Android.App;
 using Android.OS;
-using GalaSoft.MvvmLight.Ioc;
 using HikingPathFinder.App;
 using HikingPathFinder.App.Android;
 using HikingPathFinder.App.Database;
-using Microsoft.Practices.ServiceLocation;
 using System.Reflection;
 using Xamarin.Android.NUnitLite;
+using Xamarin.Forms;
 
 namespace UnitTest
 {
@@ -22,7 +21,7 @@ namespace UnitTest
         /// <param name="bundle">bundle parameter; unused</param>
         protected override void OnCreate(Bundle bundle)
         {
-            this.InitServiceLocator();
+            this.InitDependencyService();
 
             // tests can be inside the main assembly
             this.AddTest(Assembly.GetExecutingAssembly());
@@ -34,15 +33,12 @@ namespace UnitTest
         }
 
         /// <summary>
-        /// Initializes service locator used throughout the unit tests; uses MvvmLight's
-        /// SimpleIoc.
+        /// Initializes dependency service used throughout the unit tests
         /// </summary>
-        private void InitServiceLocator()
+        private void InitDependencyService()
         {
-            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
-
-            SimpleIoc.Default.Register<ISQLiteDatabaseProvider, AndroidSQLiteDatabaseProvider>();
-            SimpleIoc.Default.Register<IPlatform, AndroidPlatform>();
+            DependencyService.Register<ISQLiteDatabaseProvider, AndroidSQLiteDatabaseProvider>();
+            DependencyService.Register<IPlatform, AndroidPlatform>();
         }
     }
 }

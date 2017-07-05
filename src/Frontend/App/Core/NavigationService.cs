@@ -1,5 +1,4 @@
-﻿using GalaSoft.MvvmLight.Views;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -9,7 +8,7 @@ namespace HikingPathFinder.App
     /// <summary>
     /// Navigation service for the app; manages navigating to pages from any place in the app.
     /// </summary>
-    public class NavigationService : INavigationService
+    public class NavigationService
     {
         /// <summary>
         /// Root page that stores the master and detail pages

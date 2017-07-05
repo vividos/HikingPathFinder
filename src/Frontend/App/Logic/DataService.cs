@@ -1,9 +1,9 @@
 ﻿using HikingPathFinder.App.Database;
 using HikingPathFinder.Model;
-using Microsoft.Practices.ServiceLocation;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace HikingPathFinder.App.Logic
 {
@@ -32,7 +32,7 @@ namespace HikingPathFinder.App.Logic
         /// </summary>
         public DataService()
         {
-            this.networkService = ServiceLocator.Current.GetInstance<INetworkService>();
+            this.networkService = DependencyService.Get<INetworkService>();
             this.database = this.OpenDatabase();
         }
 
@@ -42,7 +42,7 @@ namespace HikingPathFinder.App.Logic
         /// <returns>opened (or newly created) database</returns>
         private HikingPathFinder.App.Database.Database OpenDatabase()
         {
-            var platform = ServiceLocator.Current.GetInstance<IPlatform>();
+            var platform = DependencyService.Get<IPlatform>();
 
             string databaseFilename = platform.PathCombine(platform.AppDataFolder, DataService.DefaultDatabaseFilename);
 

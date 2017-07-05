@@ -1,6 +1,5 @@
 ﻿using HikingPathFinder.App.Logic;
 using HikingPathFinder.Model;
-using Microsoft.Practices.ServiceLocation;
 using Plugin.Geolocator.Abstractions;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
@@ -94,10 +93,10 @@ namespace HikingPathFinder.App.Views
         /// <returns>task to wait on</returns>
         private async Task LoadUserSettingsAsync()
         {
-            var dataService = ServiceLocator.Current.GetInstance<DataService>();
+            var dataService = DependencyService.Get<DataService>();
             this.userSettings = await dataService.GetUserSettingsAsync(CancellationToken.None);
 
-            var platform = ServiceLocator.Current.GetInstance<IPlatform>();
+            var platform = DependencyService.Get<IPlatform>();
             if (!platform.IsSupportedWebViewWebGL &&
                 this.userSettings.ShowMapIn3D)
             {
@@ -112,7 +111,7 @@ namespace HikingPathFinder.App.Views
         /// <returns>app info object</returns>
         private async Task<AppInfo> LoadDataAsync()
         {
-            var dataService = ServiceLocator.Current.GetInstance<DataService>();
+            var dataService = DependencyService.Get<DataService>();
 
             var appInfo = await dataService.GetAppInfoAsync(CancellationToken.None);
             this.locationList = await dataService.GetLocationListAsync(CancellationToken.None);
@@ -129,7 +128,7 @@ namespace HikingPathFinder.App.Views
         {
             this.taskCompletionSourcePageLoaded = new TaskCompletionSource<bool>();
 
-            var platform = ServiceLocator.Current.GetInstance<IPlatform>();
+            var platform = DependencyService.Get<IPlatform>();
 
             string htmlText = platform.LoadTextAsset(showMapIn3D ? "map/map3D.html" : "map/map.html");
 
@@ -302,7 +301,7 @@ namespace HikingPathFinder.App.Views
         /// </summary>
         private void SetupToolbar()
         {
-            var platform = ServiceLocator.Current.GetInstance<IPlatform>();
+            var platform = DependencyService.Get<IPlatform>();
 
             bool isSupported3DMap = platform.IsSupportedWebViewWebGL;
 
@@ -353,7 +352,7 @@ namespace HikingPathFinder.App.Views
         /// <returns>task to wait on</returns>
         private async Task StoreUserSettingsAsync()
         {
-            var dataService = ServiceLocator.Current.GetInstance<DataService>();
+            var dataService = DependencyService.Get<DataService>();
             await dataService.StoreUserSettingsAsync(this.userSettings, CancellationToken.None);
         }
 

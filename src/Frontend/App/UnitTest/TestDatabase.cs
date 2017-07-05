@@ -1,6 +1,6 @@
-﻿using Microsoft.Practices.ServiceLocation;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System.Diagnostics;
+using Xamarin.Forms;
 
 namespace HikingPathFinder.App.UnitTest
 {
@@ -16,7 +16,7 @@ namespace HikingPathFinder.App.UnitTest
         [Test]
         public void TestDefaultCtor()
         {
-            var platform = ServiceLocator.Current.GetInstance<IPlatform>();
+            var platform = DependencyService.Get<IPlatform>();
 
             string databaseFilename = platform.PathCombine(platform.AppDataFolder, "newdatabase.db");
 

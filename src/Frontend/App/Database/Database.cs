@@ -1,11 +1,11 @@
 ﻿using HikingPathFinder.App.Database.Model;
 using HikingPathFinder.Model;
-using Microsoft.Practices.ServiceLocation;
 using SQLite.Net;
 using SQLite.Net.Interop;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Xamarin.Forms;
 
 namespace HikingPathFinder.App.Database
 {
@@ -54,11 +54,11 @@ namespace HikingPathFinder.App.Database
 
             this.databaseFilename = databaseFilename;
 
-            var provider = ServiceLocator.Current.GetInstance<ISQLiteDatabaseProvider>();
+            var provider = DependencyService.Get<ISQLiteDatabaseProvider>();
 
             this.sqlitePlatform = provider.GetPlatform();
 
-            var platform = ServiceLocator.Current.GetInstance<IPlatform>();
+            var platform = DependencyService.Get<IPlatform>();
             if (!platform.FileExists(databaseFilename))
             {
                 this.CreateDatabase();

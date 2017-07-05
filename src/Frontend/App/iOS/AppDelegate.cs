@@ -1,12 +1,11 @@
 ﻿using Foundation;
-using GalaSoft.MvvmLight.Ioc;
 using HikingPathFinder.App.Database;
 using HockeyApp.iOS;
-using Microsoft.Practices.ServiceLocation;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using UIKit;
+using Xamarin.Forms;
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
     "Microsoft.StyleCop.CSharp.NamingRules",
@@ -18,8 +17,8 @@ using UIKit;
 namespace HikingPathFinder.App.iOS
 {
     /// <summary>
-    /// The UIApplicationDelegate for the application. This class is responsible for launching the 
-    /// User Interface of the application, as well as listening (and optionally responding) to 
+    /// The UIApplicationDelegate for the application. This class is responsible for launching the
+    /// User Interface of the application, as well as listening (and optionally responding) to
     /// application events from iOS.
     /// </summary>
     [Register("AppDelegate")]
@@ -37,7 +36,7 @@ namespace HikingPathFinder.App.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             this.InitErrorHandling();
-            this.InitServiceLocator();
+            this.InitDependencyService();
 
 #if ENABLE_TEST_CLOUD
             Xamarin.Calabash.Start();
@@ -82,17 +81,15 @@ namespace HikingPathFinder.App.iOS
         }
 
         /// <summary>
-        /// Initializes service locator used throughout the app; uses MvvmLight's SimpleIoc.
+        /// Initializes dependency service used throughout the app.
         /// </summary>
-        private void InitServiceLocator()
+        private void InitDependencyService()
         {
-            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+            DependencyService.Register<ILogProvider, IosSerilogProvider>();
+            DependencyService.Register<ISQLiteDatabaseProvider, IosSQLiteDatabaseProvider>();
+            DependencyService.Register<IPlatform, IosPlatform>();
 
-            SimpleIoc.Default.Register<ILogProvider, IosSerilogProvider>();
-            SimpleIoc.Default.Register<ISQLiteDatabaseProvider, IosSQLiteDatabaseProvider>();
-            SimpleIoc.Default.Register<IPlatform, IosPlatform>();
-
-            HikingPathFinder.App.App.InitServiceLocator(SimpleIoc.Default);
+            App.InitDependencyService();
         }
     }
 }

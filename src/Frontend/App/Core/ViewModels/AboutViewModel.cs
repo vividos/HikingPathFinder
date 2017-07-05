@@ -1,5 +1,4 @@
 ﻿using HikingPathFinder.App.Logic;
-using Microsoft.Practices.ServiceLocation;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -65,11 +64,11 @@ namespace HikingPathFinder.App.ViewModels
         /// </summary>
         private void SetupBindings()
         {
-            var platform = ServiceLocator.Current.GetInstance<IPlatform>();
+            var platform = DependencyService.Get<IPlatform>();
 
             this.Heading = "Hiking Path Finder";
 
-            var dataService = ServiceLocator.Current.GetInstance<DataService>();
+            var dataService = DependencyService.Get<DataService>();
 
             this.SiteName = string.Empty;
             Task.Run(async () =>
@@ -90,7 +89,6 @@ Hiking Path Finder is an app to plan hiking trips and plan new routes to
 locations in a hiking area.
 
 Hiking Path Finder uses the following libraries:
-- GalaSoft MvvmLight
 - SQLite.Net";
 
             this.VisitWebsiteCommand = new Command(() =>

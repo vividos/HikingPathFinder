@@ -1,7 +1,6 @@
 ﻿using HikingPathFinder.App.Logic;
 using HikingPathFinder.App.Views;
 using HikingPathFinder.Model;
-using Microsoft.Practices.ServiceLocation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -291,7 +290,7 @@ namespace HikingPathFinder.App.ViewModels
         /// <returns>planned tour, or null on planning errors</returns>
         private async Task<Tour> PlanTourAsync(PlanTourParameters planTourParameters)
         {
-            var networkService = ServiceLocator.Current.GetInstance<INetworkService>();
+            var networkService = DependencyService.Get<INetworkService>();
 
             try
             {
@@ -337,7 +336,7 @@ namespace HikingPathFinder.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task LoadDataAsync()
         {
-            var dataService = ServiceLocator.Current.GetInstance<DataService>();
+            var dataService = DependencyService.Get<DataService>();
 
             var locationList = await dataService.GetLocationListAsync(CancellationToken.None);
 

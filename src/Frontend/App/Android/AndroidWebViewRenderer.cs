@@ -1,4 +1,3 @@
-using Microsoft.Practices.ServiceLocation;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -45,7 +44,7 @@ namespace HikingPathFinder.App.Android
             this.Control.Settings.MixedContentMode = global::Android.Webkit.MixedContentHandling.CompatibilityMode;
 
             // set up cache
-            var platform = ServiceLocator.Current.GetInstance<IPlatform>();
+            var platform = DependencyService.Get<IPlatform>();
 
             this.Control.Settings.SetAppCacheMaxSize(32 * 1024 * 1024); // 32 MB
             this.Control.Settings.SetAppCachePath(platform.CacheDataFolder);

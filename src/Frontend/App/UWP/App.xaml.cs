@@ -1,7 +1,5 @@
-﻿using GalaSoft.MvvmLight.Ioc;
-using HikingPathFinder.App.Database;
+﻿using HikingPathFinder.App.Database;
 using Microsoft.HockeyApp;
-using Microsoft.Practices.ServiceLocation;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -25,24 +23,22 @@ namespace HikingPathFinder.App.UWP
         public App()
         {
             this.InitErrorHandling();
-            this.InitServiceLocator();
+            this.InitDependencyService();
 
             this.InitializeComponent();
             this.Suspending += this.OnSuspending;
         }
 
         /// <summary>
-        /// Initializes service locator used throughout the app; uses MvvmLight's SimpleIoc.
+        /// Initializes dependency service used throughout the app.
         /// </summary>
-        private void InitServiceLocator()
+        private void InitDependencyService()
         {
-            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+            Xamarin.Forms.DependencyService.Register<ILogProvider, UwpSerilogProvider>();
+            Xamarin.Forms.DependencyService.Register<ISQLiteDatabaseProvider, UwpSQLiteDatabaseProvider>();
+            Xamarin.Forms.DependencyService.Register<IPlatform, UwpPlatform>();
 
-            SimpleIoc.Default.Register<ILogProvider, UwpSerilogProvider>();
-            SimpleIoc.Default.Register<ISQLiteDatabaseProvider, UwpSQLiteDatabaseProvider>();
-            SimpleIoc.Default.Register<IPlatform, UwpPlatform>();
-
-            HikingPathFinder.App.App.InitServiceLocator(SimpleIoc.Default);
+            HikingPathFinder.App.App.InitDependencyService();
         }
 
         /// <summary>

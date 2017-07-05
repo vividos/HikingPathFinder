@@ -1,7 +1,6 @@
 ﻿using HikingPathFinder.App.Logic;
 using HikingPathFinder.App.Views;
 using HikingPathFinder.Model;
-using Microsoft.Practices.ServiceLocation;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading;
@@ -89,7 +88,7 @@ namespace HikingPathFinder.App.ViewModels
         /// <returns>task to wait on</returns>
         public async Task LoadData()
         {
-            var dataService = ServiceLocator.Current.GetInstance<DataService>();
+            var dataService = DependencyService.Get<DataService>();
 
             var prePlannedToursList = await dataService.GetPrePlannedToursListAsync(CancellationToken.None);
             this.PrePlannedToursList = new ObservableCollection<PrePlannedTour>(prePlannedToursList);

@@ -1,12 +1,11 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
-using GalaSoft.MvvmLight.Ioc;
 using HikingPathFinder.App.Database;
-using Microsoft.Practices.ServiceLocation;
 using Plugin.Permissions;
 using System;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
 namespace HikingPathFinder.App.Android
@@ -28,7 +27,7 @@ namespace HikingPathFinder.App.Android
         protected override void OnCreate(Bundle bundle)
         {
             this.InitErrorHandling();
-            this.InitServiceLocator();
+            this.InitDependencyService();
 
             FormsAppCompatActivity.TabLayoutResource = Resource.Layout.Tabbar;
             FormsAppCompatActivity.ToolbarResource = Resource.Layout.Toolbar;
@@ -106,17 +105,15 @@ namespace HikingPathFinder.App.Android
         }
 
         /// <summary>
-        /// Initializes service locator used throughout the app; uses MvvmLight's SimpleIoc.
+        /// Initializes dependency service used throughout the app.
         /// </summary>
-        private void InitServiceLocator()
+        private void InitDependencyService()
         {
-            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+            DependencyService.Register<ILogProvider, AndroidSerilogProvider>();
+            DependencyService.Register<ISQLiteDatabaseProvider, AndroidSQLiteDatabaseProvider>();
+            DependencyService.Register<IPlatform, AndroidPlatform>();
 
-            SimpleIoc.Default.Register<ILogProvider, AndroidSerilogProvider>();
-            SimpleIoc.Default.Register<ISQLiteDatabaseProvider, AndroidSQLiteDatabaseProvider>();
-            SimpleIoc.Default.Register<IPlatform, AndroidPlatform>();
-
-            App.InitServiceLocator(SimpleIoc.Default);
+            App.InitDependencyService();
         }
     }
 }

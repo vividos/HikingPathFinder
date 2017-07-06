@@ -1,0 +1,21 @@
+﻿{
+  "dependencies": {
+    "Common.Logging": "3.4.0-Beta2",
+    "Common.Logging.Core": "3.4.0-Beta2",
+    "HockeySDK.Xamarin": "4.1.5",
+    "Microsoft.CSharp": "4.3.0",
+    "Mono.Data.Sqlite.Portable": "1.0.3.5",
+    "Serilog": "2.5.0",
+    "Serilog.Sinks.RollingFile": "3.3.0",
+    "Serilog.Sinks.Xamarin": "0.1.29",
+    "SQLite.Net.Core-PCL": "3.1.1",
+    "Xamarin.Android.Support.v4": "25.3.1",
+    "Xamarin.Forms": "2.3.4.247"
+  },
+  "frameworks": {
+    "MonoAndroid,Version=v7.1": {}
+  },
+  "runtimes": {
+    "win": {}
+  }
+}

@@ -411,7 +411,7 @@ namespace HikingPathFinder.App.Views
             Position position = null;
             try
             {
-                position = await this.geolocator.GetPositionAsync(timeoutMilliseconds: 100, includeHeading: false);
+                position = await this.geolocator.GetPositionAsync(timeout: TimeSpan.FromMilliseconds(100), includeHeading: false);
             }
             catch (Exception ex)
             {
@@ -481,13 +481,13 @@ namespace HikingPathFinder.App.Views
         {
             base.OnAppearing();
 
-            const int MinimumTimeForUpdateInSeconds = 5;
-            const int MinimumDistanceForUpdateInMeters = 2;
+            TimeSpan minimumTimeForUpdate = TimeSpan.FromSeconds(5);
+            const double MinimumDistanceForUpdateInMeters = 2;
 
             Task.Run(async () =>
             {
                 await this.geolocator.StartListeningAsync(
-                    MinimumTimeForUpdateInSeconds,
+                    minimumTimeForUpdate,
                     MinimumDistanceForUpdateInMeters,
                     includeHeading: false);
             });

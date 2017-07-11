@@ -67,7 +67,7 @@
             <!-- Button controls -->
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                 <Button Image="plan_tour.png" Text="Plan Tour" Command="{Binding PlanTourCommand}" AutomationId="PlanTourButton" />
-                <Button Text="Reset" Command="{Binding ResetTourParameterCommand}" AutomationId="ResetTourParemeterButton" />
+                <Button Image="reset_tour.png" Text="Reset" Command="{Binding ResetTourParameterCommand}" AutomationId="ResetTourParemeterButton" />
             </StackLayout>
 
         </StackLayout>

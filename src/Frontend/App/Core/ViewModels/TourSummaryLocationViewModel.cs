@@ -6,37 +6,8 @@ namespace HikingPathFinder.App.ViewModels
     /// <summary>
     /// View model for a single location displayed in the tour summary
     /// </summary>
-    public class TourSummaryLocationViewModel
+    public class TourSummaryLocationViewModel : LocationViewModel
     {
-        /// <summary>
-        /// Location to display
-        /// </summary>
-        private readonly Location location;
-
-        /// <summary>
-        /// Image to display
-        /// </summary>
-        public string ImagePath
-        {
-            get
-            {
-                // TODO get image source depending on location type
-                // return "Assets/Location/Summit.png";
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Name and altitude to display
-        /// </summary>
-        public string Name
-        {
-            get
-            {
-                return string.Format("{0} ({1} m)", this.location.Name, (int)this.location.Elevation);
-            }
-        }
-
         /// <summary>
         /// Command called when user clicked on the item; this is used to jump to the tour
         /// location in the list.
@@ -48,9 +19,8 @@ namespace HikingPathFinder.App.ViewModels
         /// </summary>
         /// <param name="location">location to display</param>
         public TourSummaryLocationViewModel(Location location)
+            : base(location)
         {
-            this.location = location;
-
             this.ItemClicked = new Command(() =>
             {
                 // TODO jump to tour location in segment list

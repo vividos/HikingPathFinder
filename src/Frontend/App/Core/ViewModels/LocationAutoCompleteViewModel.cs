@@ -5,36 +5,15 @@ namespace HikingPathFinder.App.ViewModels
     /// <summary>
     /// View model for a single Location in an auto complete view
     /// </summary>
-    public class LocationAutoCompleteViewModel
+    public class LocationAutoCompleteViewModel : LocationViewModel
     {
-        /// <summary>
-        /// Location to use in the view model
-        /// </summary>
-        private readonly Location location;
-
-        /// <summary>
-        /// Returns the name of the location object
-        /// </summary>
-        public string Name
-        {
-            get { return this.location.Name; }
-        }
-
-        /// <summary>
-        /// Returns the location object
-        /// </summary>
-        public Location Location
-        {
-            get { return this.location; }
-        }
-
         /// <summary>
         /// Creates a new view model from given location
         /// </summary>
         /// <param name="location">location to use</param>
         public LocationAutoCompleteViewModel(Location location)
+            : base(location)
         {
-            this.location = location;
         }
 
         /// <summary>
@@ -44,7 +23,7 @@ namespace HikingPathFinder.App.ViewModels
         /// <returns>name of location</returns>
         public override string ToString()
         {
-            return this.location.Name;
+            return this.Location.Name;
         }
     }
 }

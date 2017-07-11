@@ -24,6 +24,11 @@ namespace HikingPathFinder.App.ViewModels
         private static Common.Logging.ILog log = App.GetLogger<PlanTourViewModel>();
 
         /// <summary>
+        /// List of all locations available in the system
+        /// </summary>
+        private List<Location> locationList;
+
+        /// <summary>
         /// Backing field for StartLocation
         /// </summary>
         private LocationAutoCompleteViewModel startLocation;
@@ -62,7 +67,7 @@ namespace HikingPathFinder.App.ViewModels
         /// <summary>
         /// List of tour locations, not including start/stop locations
         /// </summary>
-        public ObservableCollection<LocationAutoCompleteViewModel> TourLocationList { get; set; }
+        public ObservableCollection<LocationAutoCompleteViewModel> AvailableTourLocationList { get; set; }
 
         /// <summary>
         /// Start location
@@ -140,7 +145,7 @@ namespace HikingPathFinder.App.ViewModels
         }
 
         /// <summary>
-        /// End location
+        /// Currently selected tour location
         /// </summary>
         public LocationAutoCompleteViewModel TourLocation
         {
@@ -158,7 +163,7 @@ namespace HikingPathFinder.App.ViewModels
                     this.PlanTourParameters.TourLocationList =
                         new List<LocationRef>
                         {
-                        LocationRef.FromLocation(value.Location)
+                            LocationRef.FromLocation(value.Location)
                         };
                 }
                 else
@@ -243,6 +248,7 @@ namespace HikingPathFinder.App.ViewModels
         private void SetupBindings()
         {
             this.StartStopLocationList = new ObservableCollection<LocationAutoCompleteViewModel>();
+            this.AvailableTourLocationList = new ObservableCollection<LocationAutoCompleteViewModel>();
 
             this.PlanTourCommand = new Command(
                 async () => await this.PlanTourAndNavigateAsync(),
@@ -338,18 +344,28 @@ namespace HikingPathFinder.App.ViewModels
         {
             var dataService = DependencyService.Get<DataService>();
 
-            var locationList = await dataService.GetLocationListAsync(CancellationToken.None);
+            this.locationList = await dataService.GetLocationListAsync(CancellationToken.None);
 
             this.StartStopLocationList =
                 new ObservableCollection<LocationAutoCompleteViewModel>(
-                    from location in locationList
+                    from location in this.locationList
                     select new LocationAutoCompleteViewModel(location));
 
-            this.TourLocationList =
+            this.AvailableTourLocationList =
                 new ObservableCollection<LocationAutoCompleteViewModel>(
-                    from location in locationList
+                    from location in this.locationList
                     where location.IsTourLocation
                     select new LocationAutoCompleteViewModel(location));
+        }
+
+        /// <summary>
+        /// Finds Location object by location ref
+        /// </summary>
+        /// <param name="locationRefToFind">location reference to find</param>
+        /// <returns>found location object, or null when not found</returns>
+        private Location FindLocationByRef(LocationRef locationRefToFind)
+        {
+            return this.locationList.Find(location => location.Id == locationRefToFind.Id);
         }
 
         #region INotifyPropertyChanged implementation

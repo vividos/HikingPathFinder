@@ -6,8 +6,8 @@
     <ContentPage.Resources>
         <ResourceDictionary>
 
-            <!-- Data template for the start or stop autocomplete view -->
-            <DataTemplate x:Key="StartStopSuggestionItemTemplate">
+            <!-- Data template for the start, stop or tour location in an autocomplete view -->
+            <DataTemplate x:Key="LocationSuggestionItemTemplate">
                 <ViewCell Height="30">
                     <ViewCell.View>
                         <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
@@ -35,7 +35,7 @@
                 Placeholder="Start location"
                 SelectedItem="{Binding StartLocation}"
                 ShowSearchButton="False"
-                SuggestionItemDataTemplate="{StaticResource StartStopSuggestionItemTemplate}"
+                SuggestionItemDataTemplate="{StaticResource LocationSuggestionItemTemplate}"
                 Suggestions="{Binding StartStopLocationList, Mode=TwoWay}" />
 
             <!-- Tour location controls -->
@@ -49,8 +49,8 @@
                 Placeholder="Tour location"
                 SelectedItem="{Binding TourLocation}"
                 ShowSearchButton="False"
-                SuggestionItemDataTemplate="{StaticResource StartStopSuggestionItemTemplate}"
-                Suggestions="{Binding TourLocationList, Mode=TwoWay}" />
+                SuggestionItemDataTemplate="{StaticResource LocationSuggestionItemTemplate}"
+                Suggestions="{Binding AvailableTourLocationList, Mode=TwoWay}" />
 
             <!-- End location controls -->
             <Label Text="End Location" />
@@ -59,7 +59,7 @@
                 Placeholder="End location"
                 SelectedItem="{Binding EndLocation}"
                 ShowSearchButton="False"
-                SuggestionItemDataTemplate="{StaticResource StartStopSuggestionItemTemplate}"
+                SuggestionItemDataTemplate="{StaticResource LocationSuggestionItemTemplate}"
                 Suggestions="{Binding StartStopLocationList, Mode=TwoWay}" />
 
             <!-- Tour parameter controls -->

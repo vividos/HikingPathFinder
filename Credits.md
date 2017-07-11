@@ -42,6 +42,8 @@ ruler - distance.png - Austin Andrews @Templarian
 church - church.png - Austin Andrews @Templarian
 castle - castle.png - Austin Andrews @Templarian
 bridge - bridge.png - Austin Andrews @Templarian
+arrow-up - up.png - Austin Andrews @Templarian
+arrow-down - down.png - Austin Andrews @Templarian
 
 The Google Material Icons are licensed under the "Apache License 2.0":
 https://github.com/google/material-design-icons/blob/master/LICENSE

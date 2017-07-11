@@ -141,5 +141,10 @@
   <ItemGroup>
     <None Include="project.json" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Icons\delete.png" />
+    <Content Include="Assets\Icons\down.png" />
+    <Content Include="Assets\Icons\up.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

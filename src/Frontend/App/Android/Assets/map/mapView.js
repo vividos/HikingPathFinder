@@ -51,7 +51,10 @@ function MapView(options) {
  */
 MapView.prototype.updateMyLocation = function (options) {
 
-    console.log("updating my position: lat=" + options.latitude + ", long=" + options.longitude);
+    if (this.myLocationMarker === null)
+        return;
+
+    console.log("updating my location: lat=" + options.latitude + ", long=" + options.longitude);
 
     this.myPositionMarker.setLatLng([options.latitude, options.longitude]);
     this.myPositionMarker.addTo(this.map);
@@ -63,7 +66,7 @@ MapView.prototype.updateMyLocation = function (options) {
     this.myPositionMarker.update();
 
     if (options.zoomTo) {
-        console.log("also zooming to my position");
+        console.log("also zooming to my location");
         this.map.panTo([options.latitude, options.longitude]);
     }
 };
@@ -120,7 +123,7 @@ MapView.prototype.addLocationList = function (locationList) {
 };
 
 /**
- * Creats a marker that contains an external SVG icon as marker icon using L.VectorMarkers.
+ * Creates a marker that contains an external SVG icon as marker icon using L.VectorMarkers.
  * @param {string} options additional VectorMarkers options, apart from svgPath
  * @returns icon div to display as marker
  */

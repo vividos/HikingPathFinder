@@ -17,7 +17,7 @@ function MapView(options) {
     if (this.options.callback === undefined)
         this.options.callback = callAction;
 
-    console.log("#1 osm");
+    console.log("#1 imagery");
     var imageryProvider = Cesium.createOpenStreetMapImageryProvider({
         url: 'https://a.tile.openstreetmap.org/',
         maximumLevel: 18
@@ -141,7 +141,7 @@ MapView.prototype.zoomToLocation = function (options) {
 
     console.log("zooming to: lat=" + options.latitude + ", long=" + options.longitude);
 
-    var cameraPos = Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude, 7000.0);
+    var cameraPos = Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude, 5000.0);
 
     this.viewer.scene.camera.flyTo({
         destination: cameraPos,
@@ -230,7 +230,6 @@ MapView.prototype.imageUrlFromLocationType = function (locationType) {
  * Adds list of tracks to the map
  * @param {array} listOfTracks An array of tracks
  */
-
 MapView.prototype.addTracksList = function (listOfTracks) {
 
     console.log("adding list of tracks, with " + listOfTracks.length + " entries");

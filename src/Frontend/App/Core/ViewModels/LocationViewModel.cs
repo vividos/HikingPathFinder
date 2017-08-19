@@ -31,6 +31,11 @@ namespace HikingPathFinder.App.ViewModels
         {
             get
             {
+                if (this.Location == null)
+                {
+                    return "<No location>";
+                }
+
                 return string.Format("{0} ({1} m)", this.Location.Name, (int)this.Location.Elevation);
             }
         }
@@ -38,7 +43,7 @@ namespace HikingPathFinder.App.ViewModels
         /// <summary>
         /// Creates new location view model
         /// </summary>
-        /// <param name="location">location to use</param>
+        /// <param name="location">location to use; may be null</param>
         public LocationViewModel(Location location)
         {
             this.Location = location;

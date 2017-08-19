@@ -1,4 +1,5 @@
-﻿using Rg.Plugins.Popup.Pages;
+﻿using HikingPathFinder.App.ViewModels;
+using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
 using System;
 using Xamarin.Forms.Xaml;
@@ -7,7 +8,7 @@ namespace HikingPathFinder.App.Views
 {
     /// <summary>
     /// Popup page that shows the tour location list, containing start, end and tour locations,
-    /// and a button to start tour planning and reset list.
+    /// and buttons to start tour planning and to reset the list.
     /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TourLocationListPopupPage : PopupPage
@@ -18,6 +19,8 @@ namespace HikingPathFinder.App.Views
         public TourLocationListPopupPage()
         {
             this.CloseWhenBackgroundIsClicked = true;
+
+            this.frameContainer.BindingContext = new PlanTourLocationsViewModel();
 
             this.InitializeComponent();
         }

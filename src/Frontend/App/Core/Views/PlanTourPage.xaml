@@ -52,6 +52,11 @@
                 SuggestionItemDataTemplate="{StaticResource LocationSuggestionItemTemplate}"
                 Suggestions="{Binding AvailableTourLocationList, Mode=TwoWay}" />
 
+            <controls:PlanTourLocationsView
+                PlanTourParameters="{Binding PlanTourParameters}"
+                IsStartLocationVisible="False"
+                IsEndLocationVisible="False" />
+
             <!-- End location controls -->
             <Label Text="End Location" />
 

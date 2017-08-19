@@ -358,16 +358,6 @@ namespace HikingPathFinder.App.ViewModels
                     select new LocationAutoCompleteViewModel(location));
         }
 
-        /// <summary>
-        /// Finds Location object by location ref
-        /// </summary>
-        /// <param name="locationRefToFind">location reference to find</param>
-        /// <returns>found location object, or null when not found</returns>
-        private Location FindLocationByRef(LocationRef locationRefToFind)
-        {
-            return this.locationList.Find(location => location.Id == locationRefToFind.Id);
-        }
-
         #region INotifyPropertyChanged implementation
         /// <summary>
         /// Event that gets signaled when a property has changed
